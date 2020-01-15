@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.dao.OpusMapper">
+
+	<!-- 显示所有 -->
+	<select id="findAll" resultType="com.qst.entity.Opus">
+		select *from tb_opus where status =0
+	</select>
+	<!-- 某件作品的详情 -->
+	<select id="opusDetail" parameterType="int" resultType="com.qst.entity.Opus">
+		select
+		*from tb_opus where id=#{id}
+	</select>
+	<!-- 更新点赞后的票数 -->
+	<update id="dealWithLikeTimes" parameterType="com.qst.entity.Opus">
+		update tb_opus set
+		opus_like_times=#{opus_like_times} where id=#{id}
+	</update>
+	<!-- 搜索作品 -->
+	<select id="opusSearch" parameterType="String" resultType="com.qst.entity.Opus">
+		select *from tb_opus where author_name like "%"#{search}"%"
+	</select>
+	<!-- 搜索作家 -->
+	<select id="opusSearchByName" parameterType="String"
+		resultType="com.qst.entity.Opus">
+		select *from tb_opus where opus_name like "%"#{search}"%"
+	</select>
+	<!-- 根据画的类型搜索 -->
+	<select id="opusSearchByTipic" parameterType="String"
+		resultType="com.qst.entity.Opus">
+		select *from tb_opus where opus_tipic like "%"#{search}"%"
+	</select>
+	<!-- 加入购物车 -->
+	<insert id="addCart" parameterType="com.qst.entity.Cart">
+		insert into tb_cart
+		(opus_id,user_id,opus_image,opus_name,author_name,opus_price)
+		values(#{opus_id},#{user_id},#{opus_image},#{opus_name},#{author_name},#{opus_price})
+	</insert>
+
+	<!-- 显示购物车商品 -->
+	<select id="displayCart" resultType="com.qst.entity.Cart">
+		select *from tb_cart where
+		user_id=#{id}
+	</select>
+
+	<!-- 清空购物车 -->
+	<delete id="clearCart">
+		delete from tb_cart where user_id=#{id}
+	</delete>
+
+	<!-- 删除购物车中某件作品 -->
+	<delete id="deleteCartOpus">
+		delete from tb_cart where id=#{id}
+	</delete>
+
+	<!-- 删除某件作品 -->
+	<delete id="deleteOpus">
+		delete from tb_opus where id=#{id}
+	</delete>
+	
+	
+	<!-- 删除某个订单 -->
+	<delete id="deleteOrder">
+		delete from tb_order where id=#{id}
+	</delete>
+	
+	<!-- 删除某个评论 -->
+	<delete id="deleteDiscussmsg">
+		delete from tb_discussmsg where id=#{id}
+	</delete>
+
+
+	<!-- 添加评论 -->
+	<insert id="addDiscuss" parameterType="com.qst.entity.Discuss">
+		insert into tb_discussMsg
+		(user_id,user_name,opus_id,opus_name,discuss_msg,discuss_date)
+		values(#{user_id},#{user_name},#{opus_id},#{opus_name},#{discuss_msg},#{discuss_date})
+	</insert>
+
+	<!-- 查找某件作品的全部评论信息 -->
+	<select id="seekDiscussMsg" resultType="com.qst.entity.Discuss">
+		select *from
+		tb_discussMsg where opus_id=#{id}
+	</select>
+	
+	<!-- 查找全部评论信息 -->
+	<select id="seekDiscussMsgAll" resultType="com.qst.entity.Discuss">
+		select *from tb_discussMsg 
+	</select>
+
+	<insert id="addOrder" parameterType="com.qst.entity.Order">
+		insert into
+		tb_order(user_id,opus_id,user_name,opus_name,user_address,opus_price,order_date)
+		values(#{user_id},#{opus_id},#{user_name},#{opus_name},#{user_address},#{opus_price},#{order_date})
+	</insert>
+	<!-- 查询某个人的订单 -->
+	<select id="seekOrder" resultType="com.qst.entity.Order">
+		select *from tb_order where
+		user_id=#{id}
+	</select>
+
+	<!-- 查询某个作品的订单 -->
+	<select id="seekOrderByOpus" resultType="com.qst.entity.Order">
+		select *from tb_order
+		where opus_id=#{id}
+	</select>
+
+	<!-- 查询所有订单 -->
+	<select id="seekOrderAll" resultType="com.qst.entity.Order">
+		select *from tb_order
+	</select>
+
+
+	<insert id="upload" parameterType="com.qst.entity.Opus">
+		insert into tb_opus
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="opus_name != null">
+				opus_name,
+			</if>
+			<if test="author_name != null">
+				author_name,
+			</if>
+			<if test="opus_image != null">
+				opus_image,
+			</if>
+			<if test="opus_create_time != null">
+				opus_create_time,
+			</if>
+			<if test="opus_synopsis != null">
+				opus_synopsis,
+			</if>
+			<if test="opus_like_times != null">
+				opus_like_times,
+			</if>
+			<if test="opus_price != null">
+				opus_price,
+			</if>
+			<if test="opus_tipic != null">
+				opus_tipic,
+			</if>
+			<if test="opus_heat != null">
+				opus_heat,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="user_id != null">
+				user_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="opus_name != null">
+				#{opus_name,jdbcType=VARCHAR},
+			</if>
+			<if test="author_name != null">
+				#{author_name,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_image != null">
+				#{opus_image,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_create_time != null">
+				#{opus_create_time,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_synopsis != null">
+				#{opus_synopsis,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_like_times != null">
+				#{opus_like_times,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_price != null">
+				#{opus_price,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_tipic != null">
+				#{opus_tipic,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_heat != null">
+				#{opus_heat,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="user_id != null">
+				#{user_id,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateOpus" parameterType="com.qst.entity.Opus">
+		update tb_opus
+		<set>
+			<if test="opus_name != null">
+				opus_name=#{opus_name,jdbcType=VARCHAR},
+			</if>
+			<if test="author_name != null">
+				author_name=#{author_name,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_image != null">
+				opus_image=#{opus_image,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_create_time != null">
+				opus_create_time=#{opus_create_time,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_synopsis != null">
+				opus_synopsis=#{opus_synopsis,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_like_times != null">
+				opus_like_times=#{opus_like_times,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_price != null">
+				opus_price=#{opus_price,jdbcType=DOUBLE},
+			</if>
+			<if test="opus_tipic != null">
+				opus_tipic=#{opus_tipic,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status=#{status,jdbcType=INTEGER},
+			</if>
+			<if test="user_id != null">
+				user_id=#{user_id,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询某个人上传的作品 -->
+	<select id="seekOpusByUserId" resultType="com.qst.entity.Opus">
+		select *from tb_opus
+		where user_id=#{id}
+	</select>
+
+	<!-- 显示所有 -->
+	<select id="getOpusAll" resultType="com.qst.entity.Opus">
+		select *from tb_opus where
+		status =0 or status =1
+	</select>
+
+	<!-- 显示所有 -->
+	<select id="getOpusByStatus" resultType="com.qst.entity.Opus">
+		select *from tb_opus
+		where status =#{status}
+	</select>
+
+	<!-- 修改作品状态 -->
+	<update id="modifyOpusByStatus">
+		update tb_opus set status=#{param1} where
+		id=#{param2}
+	</update>
+	
+	<!-- 根据价格排序 -->
+	<select id="priceSort" resultType="com.qst.entity.Opus">
+		select *from tb_opus where status =0 order by opus_price desc
+	</select>
+	<!-- 根据热度排序 -->
+	<select id="heatSort" resultType="com.qst.entity.Opus">
+		select *from tb_opus where status =0 order by opus_heat desc
+	</select>
+	<!-- 根据点赞排序 -->
+	<select id="timesSort" resultType="com.qst.entity.Opus">
+		select *from tb_opus where status =0 order by opus_like_times desc
+	</select>
+	
+	<!-- 根据最新作品 -->
+	<select id="timeSort" resultType="com.qst.entity.Opus">
+		select *from tb_opus where status =0 order by id desc
+	</select>
+</mapper>
+

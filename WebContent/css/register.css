@@ -1,0 +1,58 @@
+.background {
+	/* height: 200px; */
+	/* margin:150px -10px 0px -10px; */
+	/* background-image: url(../image/login-background.jpg);
+	background-size: cover; */
+	
+}
+
+.top {
+	width: 80%;
+	height: 40px;
+	margin-left: 10%;
+	text-align: center;
+	line-height: 40px;
+	font-size: 20px;
+}
+
+.top img {
+	width: 100%;
+	height: 100%;
+}
+
+form {
+	width: 30%;
+	/* height:300px; */
+	float: right;
+	position: absolute;
+	left: 33%;
+	top: 20%;
+	background-color: white;
+	border: 2px solid #9fd4fc;
+	border-radius: 4px;
+	text-align: center;
+}
+
+form input {
+	width: 200px;
+	height: 30px;
+	border-radius: 4px;
+	border: 2px solid #9fd4fc;
+	margin-top: 6px;
+}
+
+#btn {
+	width: 200px;
+	height: 30px;
+	background-color: #9fd4fc;
+}
+
+a {
+	text-decoration: none;
+}
+
+.tip {
+	float: right;
+	font-size: 14px;
+	margin-top: 10px;
+}

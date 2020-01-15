@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.dao.OpusMapper">
+
+	<!-- 显示所有 -->
+	<select id="findAll" resultType="com.qst.entity.Opus">
+		select *from tb_opus
+	</select>
+	<!-- 某件作品的详情 -->
+	<select id="opusDetail" parameterType="int" resultType="com.qst.entity.Opus">
+		select
+		*from tb_opus where id=#{id}
+	</select>
+	<!-- 更新点赞后的票数 -->
+	<update id="dealWithLikeTimes" parameterType="com.qst.entity.Opus">
+		update tb_opus set
+		opus_like_times=#{opus_like_times} where id=#{id}
+	</update>
+	<!-- 搜索作品 -->
+	<select id="opusSearch" parameterType="String" resultType="com.qst.entity.Opus">
+		select *from tb_opus where author_name=#{search}
+	</select>
+	<!-- 加入购物车 -->
+	<insert id="addCart" parameterType="com.qst.entity.Cart">
+		insert into tb_cart
+		(opus_id,user_id,opus_image,opus_name,author_name,opus_price)
+		values(#{opus_id},#{user_id},#{opus_image},#{opus_name},#{author_name},#{opus_price})
+	</insert>
+
+	<!-- 显示购物车商品 -->
+	<select id="displayCart" resultType="com.qst.entity.Cart">
+		select *from tb_cart where
+		user_id=#{id}
+	</select>
+
+	<!-- 清空购物车 -->
+	<delete id="clearCart">
+		delete from tb_cart where user_id=#{id}
+	</delete>
+
+	<!-- 删除购物车中某件作品 -->
+	<delete id="deleteCartOpus">
+		delete from tb_cart where id=#{id}
+	</delete>
+
+	<!-- 添加评论 -->
+	<insert id="addDiscuss" parameterType="com.qst.entity.Discuss">
+		insert into tb_discussMsg
+		(user_id,user_name,opus_id,opus_name,discuss_msg,discuss_date)
+		values(#{user_id},#{user_name},#{opus_id},#{opus_name},#{discuss_msg},#{discuss_date})
+	</insert>
+
+	<!-- 查找某件作品的全部评论信息 -->
+	<select id="seekDiscussMsg" resultType="com.qst.entity.Discuss">
+		select *from
+		tb_discussMsg where opus_id=#{id}
+	</select>
+
+	<insert id="addOrder" parameterType="com.qst.entity.Order">
+		insert into
+		tb_order(user_id,opus_id,user_name,opus_name,user_address,opus_price,order_date)
+		values(#{user_id},#{opus_id},#{user_name},#{opus_name},#{user_address},#{opus_price},#{order_date})
+	</insert>
+	<!-- 查询某个人的订单 -->
+	<select id="seekOrder" resultType="com.qst.entity.Order">
+		select *from tb_order where
+		user_id=#{id}
+	</select>
+
+	<insert id="upload" parameterType="com.qst.entity.Opus">
+		insert into tb_opus
+		(opus_name,author_name,opus_image,opus_create_time,opus_synopsis,opus_like_times,opus_heat,opus_price,opus_tipic)
+		values(#{opus_name},#{author_name},#{opus_image},#{opus_create_time},#{opus_synopsis},#{opus_like_times},#{opus_heat},#{opus_price},#{opus_tipic})
+	</insert>
+
+</mapper>
+

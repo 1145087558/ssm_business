@@ -1,0 +1,161 @@
+.top {
+	width: 100%;
+	height: 40px;
+	/* border:1px solid black; */
+}
+
+.top button {
+	float: right;
+	margin-right: 20px;
+	background-color: red;
+	border: none;
+}
+
+.top .person {
+	float: right;
+	height: 100px;
+	width: 160px;
+	border: 1px solid black;
+	display: none;
+}
+
+.top li {
+	list-style: none;
+}
+
+.container {
+	margin-top: 40px;
+	height: 40px;
+	width: 80%;
+	/* line-height:40px; */
+}
+
+input {
+	height: 40px;
+	border: 2px solid red;
+}
+
+#search-btn {
+	width: 20%;
+	position: absolute;
+	left: 80%;
+	background-color: red;
+}
+
+.menu{
+	width:100%;
+	height:60px;
+	line-height:60px;
+    margin-top:30px; 
+	background-image:url("../image/menu-background.jpg");
+	/* opacity: 0.7; */
+}
+
+.menu li{
+	display: inline;
+	font-size:18px;
+	/* width:160px; */
+	margin-left:60px; 
+}
+.dropdown-menu{
+	background: #f5f5f5;
+/* 	opacity: 0.5; */
+}
+.dropdown-menu li{
+	line-height:40px;
+}
+
+.dropdown-menu-type li{
+	display: inline-block;
+}
+.dropbtn {
+	background-color: red;
+	width: 200px;
+	height: 40px;
+	color: white;
+	font-size: 18px;
+	border: none;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #ea322f;
+	width: 200px;
+	text-align: center;
+	font-size: 18px;
+	/* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 1); */
+	/* margin-left: 10px; */
+}
+
+.dropdown-content a {
+	color: black;
+	text-decoration: none;
+	display:block;
+	border: 1px solid white;
+	height:40px;
+}
+
+.dropdown-content a:hover {
+	background-color: red;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.dropdown:hover .dropbtn {
+	background-color: red;
+}
+
+
+#dp {
+	position: relative;
+	display: inline-block;
+	float: right;
+	margin-right: 60px;
+}
+
+#dpct {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	width: 100px;
+	margin-right: 10px;
+}
+
+#dp:hover #dpct {
+	display: block;
+}
+
+#dpct p {
+	font-size: 16px;
+}
+
+.menu a{
+	color:black;
+	height:60px;
+}
+
+#type{
+	position: relative;
+	display: inline-block;
+	margin-left:60px;
+}
+#art-type{
+	display: none;
+	position: absolute;
+	background-color:#f5f5f5;
+	width: 160px;
+	z-index: 100;
+}
+#type:hover #art-type{
+	display:block;
+}

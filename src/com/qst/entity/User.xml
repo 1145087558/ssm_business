@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.dao.UserMapper">
+	<insert id="userRegister" parameterType="com.qst.entity.User">
+		insert into tb_user
+		(tel,pwd,name) values(#{tel},#{pwd},#{name})
+	</insert>
+
+	<insert id="addUser" parameterType="com.qst.entity.User">
+		insert into tb_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tel != null">
+				tel,
+			</if>
+			<if test="pwd != null">
+				pwd,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="synopsis != null">
+				synopsis,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tel != null">
+				#{tel,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				#{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="synopsis != null">
+				#{synopsis,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="userLogin" parameterType="com.qst.entity.User"
+		resultType="com.qst.entity.User">
+		select *from tb_user where tel=#{tel} and pwd=#{pwd}
+	</select>
+
+	<select id="getUserById" parameterType="com.qst.entity.User"
+		resultType="com.qst.entity.User">
+		select *from tb_user where id=#{id}
+	</select>
+
+	<select id="getUserByStatus"
+		resultType="com.qst.entity.User">
+		select *from tb_user where status=#{status}
+	</select>
+	
+	<select id="getUserAll"
+		resultType="com.qst.entity.User">
+		select *from tb_user where status=0 or status=1
+	</select>
+	
+	<select id="getOrdinaryUserAll"
+		resultType="com.qst.entity.User">
+		select *from tb_user where status=0 or status=2
+	</select>
+
+	<update id="modifyBalance" parameterType="com.qst.entity.User">
+		update tb_user set
+		balance=#{balance} where id=#{id}
+	</update>
+
+	<update id="modifyPersonMsg" parameterType="com.qst.entity.User">
+		update tb_user set
+		name=#{name},address=#{address},synopsis=#{synopsis}
+		where id=#{id}
+	</update>
+	
+	<update id="modifyPassword">
+		update tb_user set pwd=#{pwd} where id=#{id}
+	</update>
+	
+	<update id="modifyUserStatus">
+		update tb_user set status=#{param2} where id=#{param1}
+	</update>
+
+    <delete id="deleteUser">
+        delete tb_user from tb_user where id=#{id}
+    </delete>
+</mapper>
