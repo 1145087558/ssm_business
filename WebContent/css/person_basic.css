@@ -1,0 +1,26 @@
+.content{
+	width: 80%;
+	margin: 60px 0px 0px 10%;
+}
+.content-left{
+	width: 16%;
+	height: 400px;
+	float: left;
+	/*border:1px solid bisque;*/
+	text-align: center;
+	background: #f5f8fa;
+}
+.content-left a{
+	color: black;
+	text-decoration: none;
+}
+.content-left p{
+	line-height: 40px;
+}
+.content-right{
+	width: 83%;
+	/*height: 400px;*/
+	float: right;
+/*	border: 1px solid bisque;*/
+	background: #f5f8fa;
+}

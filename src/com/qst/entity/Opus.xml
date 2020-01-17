@@ -6,7 +6,8 @@
 
 	<!-- 显示所有 -->
 	<select id="findAll" resultType="com.qst.entity.Opus">
-		select *from tb_opus where status =0
+		select *from tb_opus where
+		status =0
 	</select>
 	<!-- 某件作品的详情 -->
 	<select id="opusDetail" parameterType="int" resultType="com.qst.entity.Opus">
@@ -59,13 +60,13 @@
 	<delete id="deleteOpus">
 		delete from tb_opus where id=#{id}
 	</delete>
-	
-	
+
+
 	<!-- 删除某个订单 -->
 	<delete id="deleteOrder">
 		delete from tb_order where id=#{id}
 	</delete>
-	
+
 	<!-- 删除某个评论 -->
 	<delete id="deleteDiscussmsg">
 		delete from tb_discussmsg where id=#{id}
@@ -84,10 +85,11 @@
 		select *from
 		tb_discussMsg where opus_id=#{id}
 	</select>
-	
+
 	<!-- 查找全部评论信息 -->
 	<select id="seekDiscussMsgAll" resultType="com.qst.entity.Discuss">
-		select *from tb_discussMsg 
+		select *from
+		tb_discussMsg
 	</select>
 
 	<insert id="addOrder" parameterType="com.qst.entity.Order">
@@ -247,23 +249,27 @@
 		update tb_opus set status=#{param1} where
 		id=#{param2}
 	</update>
-	
+
 	<!-- 根据价格排序 -->
 	<select id="priceSort" resultType="com.qst.entity.Opus">
-		select *from tb_opus where status =0 order by opus_price desc
+		select *from tb_opus where
+		status =0 order by opus_price desc
 	</select>
 	<!-- 根据热度排序 -->
 	<select id="heatSort" resultType="com.qst.entity.Opus">
-		select *from tb_opus where status =0 order by opus_heat desc
+		select *from tb_opus where
+		status =0 order by opus_heat desc
 	</select>
 	<!-- 根据点赞排序 -->
 	<select id="timesSort" resultType="com.qst.entity.Opus">
-		select *from tb_opus where status =0 order by opus_like_times desc
+		select *from tb_opus where
+		status =0 order by opus_like_times desc
 	</select>
-	
+
 	<!-- 根据最新作品 -->
 	<select id="timeSort" resultType="com.qst.entity.Opus">
-		select *from tb_opus where status =0 order by id desc
+		select *from tb_opus where
+		status =0 order by id desc
 	</select>
 </mapper>
 

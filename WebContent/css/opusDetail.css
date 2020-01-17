@@ -41,9 +41,9 @@
 	height: 40px;
 	border: 2px solid red;
 	border-radius: 20px;
-	margin: 20px 0px 0px 15px; 
+	margin: 20px 0px 0px 15px;
 	background-color: white;
-	display:inline-block;
+	display: inline-block;
 }
 
 .introduction {
@@ -51,7 +51,7 @@
 	border: 2px solid #f5f5f5;
 	display: inline-block;
 	margin-top: 20px;
-	margin-left:10%;
+	margin-left: 10%;
 }
 
 .introduction .box {
@@ -104,21 +104,22 @@
 	margin: 40px 0px 0px 0px;
 }
 
-.discuss p{
-	margin-left:10%;
+.discuss p {
+	margin-left: 10%;
 }
+
 .discuss textarea {
 	width: 80%;
 	height: 60px;
-	margin-left:10%;
+	margin-left: 10%;
 	border: 2px solid #f5f5f5;
 }
 
 .discuss input {
 	width: 100px;
 	float: right;
-	margin:10px 10% 0px 0px;
-	border-radius:4px;
+	margin: 10px 10% 0px 0px;
+	border-radius: 4px;
 	background-color: red;
 	opacity: 0.7;
 	color: white;
@@ -126,11 +127,10 @@
 
 .under {
 	width: 80%;
-	height:60px; 
-	margin:0px 0px 0px 10%;
+	height: 60px;
+	margin: 0px 0px 0px 10%;
 	/* border: 2px solid #f5f5f5; */
 }
-
 
 /*模态框样式*/
 .tenant-model {

@@ -5,42 +5,64 @@
 <html>
 <head>
 <title>墨韵书院-首页</title>
-<link rel="stylesheet"
-	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/register.css">
 <link
 	href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
 	rel="stylesheet">
-<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-<script
-	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/amazeui.css">
+<link rel="stylesheet" href="css/dlstyle.css">
 </head>
 
 <body>
-	<div class="background">
-		<img src="image/background.jpg" width="100%" height="100%" />
+	<div class="login-boxtitle">
+		<a href="home.html"></a>
 	</div>
-	<form action="login.form" method="post">
-		<div class="top">用户登录</div>
-		<p>
-			<input type="text" placeholder="手机号" name="tel" />
-		</p>
-		<p>
-			<input type="password" placeholder="密码" name="pwd" />
-		</p>
-		<p>
-			<input type="submit" value="登录" id="btn" />
-		</p>
-		<p class="tip">
-			还未注册？去<a href="register.jsp">注册</a>
-		</p>
-	</form>
 
+	<div class="login-banner">
+		<div class="login-main">
+			<div class="login-banner-bg">
+				<span></span><img src="image/login-background.jpg" />
+			</div>
+			<div class="login-box">
+
+				<h3 class="title">登录商城</h3>
+
+				<div class="clear"></div>
+
+				<div class="login-form">
+					<form>
+						<div class="user-name">
+							<label for="user"><i class="am-icon-user"></i></label> <input
+								type="text" name="" id="user" placeholder="邮箱/手机/用户名">
+						</div>
+						<div class="user-pass">
+							<label for="password"><i class="am-icon-lock"></i></label> <input
+								type="password" name="" id="password" placeholder="请输入密码">
+						</div>
+					</form>
+				</div>
+
+				<div class="login-links">
+					<label for="remember-me"><input id="remember-me"
+						type="checkbox">记住密码</label> <a href="#" class="am-fr">忘记密码</a> <a
+						href="register.jsp" class="zcnext am-fr am-btn-default">注册</a> <br />
+				</div>
+				<div class="am-cf">
+					<input type="submit" name="" value="登 录"
+						class="am-btn am-btn-primary am-btn-sm">
+				</div>
+				<div class="partner">
+					<h3>合作账号</h3>
+					<div class="am-btn-group">
+						<li><a href="#"><i class="am-icon-qq am-icon-sm"></i><span>QQ登录</span></a></li>
+						<li><a href="#"><i class="am-icon-weibo am-icon-sm"></i><span>微博登录</span>
+						</a></li>
+						<li><a href="#"><i class="am-icon-weixin am-icon-sm"></i><span>微信登录</span>
+						</a></li>
+					</div>
+				</div>
+
+			</div>
+		</div>
 	</div>
-	<c:if test="${error!=null}">
-		<script type="text/javascript">
-alert("账号或者密码错误!");
-</script>
-	</c:if>
 </body>
 </html>

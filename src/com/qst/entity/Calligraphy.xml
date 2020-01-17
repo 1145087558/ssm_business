@@ -5,10 +5,12 @@
 <mapper namespace="com.qst.dao.CalligraphyMapper">
 
 	<select id="displaylist" resultType="com.qst.entity.Calligraphy">
-		select *from tb_calligraphy where type_status=#{type_status} or type_status=0
+		select *from tb_calligraphy
+		where type_status=#{type_status} or type_status=0
 	</select>
 	<select id="artContent" resultType="com.qst.entity.Calligraphy">
-		select *from tb_calligraphy where id=#{id}
+		select *from tb_calligraphy
+		where id=#{id}
 	</select>
 </mapper>
 

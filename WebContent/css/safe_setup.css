@@ -1,0 +1,32 @@
+.content-right .set{
+	height: 100px;
+	width:80%;
+	margin-left: 10%;
+	/*border: 1px solid bisque;*/
+}
+.content-right .set .set-left{
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+	display: inline-block;
+	background: #f99798;
+}
+.content-right .set .set-middle{
+	width: 70%;
+	display: inline-block;
+	margin-left: 20px;
+}
+.content-right .set .set-right{
+	width: 15%;
+	height: 100px;
+	float: right;
+	display: inline-block;
+}
+.content-right .set .set-right button{
+	width: 80px;
+	height: 30px;
+	background: deepskyblue;
+	border: none;
+	float: right;
+	margin-top: 30px;
+}

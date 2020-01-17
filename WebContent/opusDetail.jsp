@@ -90,90 +90,74 @@
 			</div>
 		</div>
 	</div>
-		<div class="menu">
+	<div class="menu">
 		<ul>
-			<li class="dropdown" id="type">
-				<span style="font-size: 20px;">艺术品分类</span>
+			<li class="dropdown" id="type"><span style="font-size: 20px;">艺术品分类</span>
 				<div class="dropdown-content" id="art-type">
-					<a href="">类型</a>
-					<a href="">题材</a>
-					<a href="">地域</a>
-				</div>
-			</li>
+					<a href="">类型</a> <a href="">题材</a> <a href="">地域</a>
+				</div></li>
 
 			<li><a href="findAll.form">艺淘宝</a></li>
 			<li><a href="allAuthor.form">艺术家</a></li>
-			<li class="dropdown" id="type">
-				<span style="font-size: 20px;">书画知识</span>
+			<li class="dropdown" id="type"><span style="font-size: 20px;">书画知识</span>
 				<div class="dropdown-content" id="art-type">
-					<a href="calligraphy.form?type_status=1">书法知识</a>
-					<a href="calligraphy.form?type_status=2">书画技法</a>
-					<a href="calligraphy.form?type_status=3">文房四宝</a>
-					<a href="calligraphy.form?type_status=4">国画知识</a>
-					<a href="calligraphy.form?type_status=5">书画保养知识</a>
-					<a href="calligraphy.form?type_status=6">书画装裱知识</a>
-					<a href="calligraphy.form?type_status=7">中国书画流派</a>
-				</div>
-				</li>
-			<li class="dropdown" id="type">
-			  <span style="font-size: 20px;">艺术动态</span>
+					<a href="calligraphy.form?type_status=1">书法知识</a> <a
+						href="calligraphy.form?type_status=2">书画技法</a> <a
+						href="calligraphy.form?type_status=3">文房四宝</a> <a
+						href="calligraphy.form?type_status=4">国画知识</a> <a
+						href="calligraphy.form?type_status=5">书画保养知识</a> <a
+						href="calligraphy.form?type_status=6">书画装裱知识</a> <a
+						href="calligraphy.form?type_status=7">中国书画流派</a>
+				</div></li>
+			<li class="dropdown" id="type"><span style="font-size: 20px;">艺术动态</span>
 				<div class="dropdown-content" id="art-type">
-					<a href="#">书画大赛动态信息</a>
-					<a href="#">艺术展览信息</a>
-				</div>
-			</li>
-			
-			<li class="dropdown" id="type">
-			 <span style="font-size: 20px;"> 中国名画艺术欣赏</span>
-		
+					<a href="#">书画大赛动态信息</a> <a href="#">艺术展览信息</a>
+				</div></li>
+
+			<li class="dropdown" id="type"><span style="font-size: 20px;">
+					中国名画艺术欣赏</span>
+
 				<div class="dropdown-content" id="art-type">
-					<a href="#">中国油画欣赏</a>
-					<a href="#">中国山水画欣赏</a>
-					<a href="#">中国花鸟画欣赏</a>
+					<a href="#">中国油画欣赏</a> <a href="#">中国山水画欣赏</a> <a href="#">中国花鸟画欣赏</a>
 					<a href="#">中国版画欣赏</a>
-				</div>
-			</li>
+				</div></li>
 			<li><a href="">名人榜</a></li>
-			<li class="dropdown" id="type">
-				 <span style="font-size: 20px;">关于我们</span>
-			
+			<li class="dropdown" id="type"><span style="font-size: 20px;">关于我们</span>
+
 				<div class="dropdown-content" id="art-type">
-					<a href="#">网站简介</a>
-					<a href="#">联系我们</a>
-					<a href="#">友情链接</a>
-				</div>
-			</li>
+					<a href="#">网站简介</a> <a href="#">联系我们</a> <a href="#">友情链接</a>
+				</div></li>
 		</ul>
 	</div>
 
 
 
-		<div class="row">
-			<div class="detail">
-				<div class="detail-left">
-					<img src="${opus.opus_image}"> <a
-						href="like_times.form?id=${opus.id}&like_times=${opus.opus_like_times+1}"
-						onclick="alert('操作成功,当前点赞数为：${opus.opus_like_times+1}')"><button>点赞</button>
-					</a> <a href="#" href="javascript:;" onclick="modalShow()"><button>分享</button>
-					</a>
-				</div>
-				<div class="detail-right">
-					<p>作品名称：${opus.opus_name}</p>
-					<p>作品作者：${opus.author_name}</p>
-					<p>作品类型：${opus.opus_tipic}</p>
-					<p>创建时间：${opus.opus_create_time }</p>
-					<p>作品简介：${opus.opus_synopsis }</p>
-					<br>
-					<p>
-						<span>点赞数：${opus.opus_like_times }</span><span
-							style="margin-left: 30px;">热度：${opus.opus_heat }</span>
-					</p>
-					<br>
-					<p>
-						<font color="red" size="5">价格：￥${opus.opus_price}元</font>
-					</p>
-					<p>
-						<%-- <c:if test="${sessionScope.user==null}">
+	<div class="row">
+		<div class="detail">
+			<div class="detail-left">
+				<img src="${opus.opus_image}"> <a
+					href="like_times.form?id=${opus.id}&like_times=${opus.opus_like_times+1}"
+					onclick="alert('操作成功,当前点赞数为：${opus.opus_like_times+1}')"><button>点赞</button>
+				</a> <a href="#" href="javascript:;" onclick="modalShow()"><button>分享</button>
+				</a>
+			</div>
+			<div class="detail-right">
+				<p>作品名称：${opus.opus_name}</p>
+				<p>作品作者：${opus.author_name}</p>
+				<p>作品类型：${opus.opus_tipic}</p>
+				<p>创建时间：${opus.opus_create_time }</p>
+				<p>作品简介：${opus.opus_synopsis }</p>
+				<br>
+				<p>
+					<span>点赞数：${opus.opus_like_times }</span><span
+						style="margin-left: 30px;">热度：${opus.opus_heat }</span>
+				</p>
+				<br>
+				<p>
+					<font color="red" size="5">价格：￥${opus.opus_price}元</font>
+				</p>
+				<p>
+					<%-- <c:if test="${sessionScope.user==null}">
 						<a href="login.jsp"><button style="background-color: red;">立即购买</button></a>
 						</c:if>
 						<c:if test="${sessionScope.user!=null&&sessionScope.user.balance<cart.opus_price}">
@@ -183,65 +167,65 @@
 						<c:if test="${sessionScope.user!=null&&sessionScope.user.balance>cart.opus_price}">
 						<a href="order.form?id=${opus.id}&name=${opus.opus_name}&price=${opus.opus_price}" onclick="alert('下单成功，可前往订单页面查看')">购买</a>
 						</c:if> --%>
-						 <a href=""><button>立即购买</button></a> 
-						<a href="cart.form?id=${opus.id}" onclick="alert('操作成功，可前往购物车查看')"><button>加入购物车</button>
-						</a>
-					</p>
-				</div>
-
-			</div>
-
-		</div>
-
-
-		<!-- 作品介绍 -->
-		<div class="row">
-			<div class="introduction">
-				<div class="box">
-					<div class="box-title">作品介绍</div>
-				</div>
-				<div class="intro-author">
-					<h4>作者简介</h4>
-					<p>${opus.opus_synopsis }</p>
-
-				</div>
-				<!-- <div class="intro-opus">作品介绍</div> -->
-				<div class="fingerpost">
-					<p>艺术品保养指南</p>
-					<p>1、保持展示环境安全清洁、温度湿度均衡，避免阳光直射；</p>
-					<p>2、预防外力碰撞损坏，切勿叠压码放；</p>
-					<p>3、建议使用专用清洁品及时除尘，避免腐蚀性化学液体接触艺术品。</p>
-				</div>
-
-			</div>
-
-		</div>
-		<div class="row">
-
-			<div class="discuss">
-				<p>
-					<font size="3">作品评论</font>
+					<a href=""><button>立即购买</button></a> <a
+						href="cart.form?id=${opus.id}" onclick="alert('操作成功，可前往购物车查看')"><button>加入购物车</button>
+					</a>
 				</p>
-				<form action="discuss.form" method="post">
-					<textarea name="discussMsg"></textarea>
-					<input type="hidden" name="id" value="${opus.id}"> <input
-						type="hidden" name="name" value="${opus.opus_name}"> <br>
-					<input type="submit" value="评论">
-				</form>
+			</div>
 
-				<p style="margin:100px 0px 0px 10%;">评论区：</p>
-				<div class="under">
-					
-					<c:forEach items="${disList}" var="discu">
-						<p>${discu.discuss_date}</p>
-						<p>用户${discu.user_name}: ${discu.discuss_msg}</p>
-					</c:forEach>
+		</div>
+
+	</div>
 
 
-				</div>
+	<!-- 作品介绍 -->
+	<div class="row">
+		<div class="introduction">
+			<div class="box">
+				<div class="box-title">作品介绍</div>
+			</div>
+			<div class="intro-author">
+				<h4>作者简介</h4>
+				<p>${opus.opus_synopsis }</p>
 
 			</div>
+			<!-- <div class="intro-opus">作品介绍</div> -->
+			<div class="fingerpost">
+				<p>艺术品保养指南</p>
+				<p>1、保持展示环境安全清洁、温度湿度均衡，避免阳光直射；</p>
+				<p>2、预防外力碰撞损坏，切勿叠压码放；</p>
+				<p>3、建议使用专用清洁品及时除尘，避免腐蚀性化学液体接触艺术品。</p>
+			</div>
+
 		</div>
+
+	</div>
+	<div class="row">
+
+		<div class="discuss">
+			<p>
+				<font size="3">作品评论</font>
+			</p>
+			<form action="discuss.form" method="post">
+				<textarea name="discussMsg"></textarea>
+				<input type="hidden" name="id" value="${opus.id}"> <input
+					type="hidden" name="name" value="${opus.opus_name}"> <br>
+				<input type="submit" value="评论">
+			</form>
+
+			<p style="margin: 100px 0px 0px 10%;">评论区：</p>
+			<div class="under">
+
+				<c:forEach items="${disList}" var="discu">
+					<p>${discu.discuss_date}</p>
+					<p>用户${discu.user_name}: ${discu.discuss_msg}</p>
+				</c:forEach>
+
+
+			</div>
+
+		</div>
+	</div>
 	</div>
 
 	<!-- 分享功能模态框 -->

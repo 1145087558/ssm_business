@@ -88,14 +88,12 @@
 			</div>
 		</div>
 	</div>
-		<div class="menu">
+	<div class="menu">
 		<ul>
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
-				data-toggle="dropdown"> 艺术品分类
-			</a>
+				data-toggle="dropdown"> 艺术品分类 </a>
 				<ul class="dropdown-menu">
-					<li>类型
-						<!-- <ul class="dropdown-menu-type">
+					<li>类型 <!-- <ul class="dropdown-menu-type">
 							<li>国画</li>
 							<li>版画</li>
 						</ul> -->
@@ -108,11 +106,10 @@
 			<li><a href="findAll.form">艺淘宝</a></li>
 			<li><a href="allAuthor.form">艺术家</a></li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
-				data-toggle="dropdown"> 书画知识
-			</a>
+				data-toggle="dropdown"> 书画知识 </a>
 				<ul class="dropdown-menu">
 					<li><a href="calligraphy.form?type_status=1">书法知识</a></li>
-					<li><a href="calligraphy.form?type_status=2">书画技法</a></li> 
+					<li><a href="calligraphy.form?type_status=2">书画技法</a></li>
 					<li><a href="calligraphy.form?type_status=3">文房四宝</a>
 					<li><a href="calligraphy.form?type_status=4">国画知识</a>
 					<li><a href="calligraphy.form?type_status=5">书画保养知识</a></li>
@@ -125,22 +122,22 @@
 		</ul>
 	</div>
 
-		<div class="perMSg">
-			<div class="first">
-				<p>更改会员信息</p>
-				<form action="person.form" method="post">
-					<label>您的名字</label><br> <input type="text" name="name"><br>
-					<!-- <label>您的手机号</label><br>
+	<div class="perMSg">
+		<div class="first">
+			<p>更改会员信息</p>
+			<form action="person.form" method="post">
+				<label>您的名字</label><br> <input type="text" name="name"><br>
+				<!-- <label>您的手机号</label><br>
 					<input type="text" name="tel"><br> -->
-					<label>您的收货地址</label><br> <input type="text" name="address"><br>
-					<label>您的个人简介</label><br>
-					<textarea name="synopsis"></textarea>
-					<br> <input type="submit" value="提交" class="per-btn">
-				</form>
+				<label>您的收货地址</label><br> <input type="text" name="address"><br>
+				<label>您的个人简介</label><br>
+				<textarea name="synopsis"></textarea>
+				<br> <input type="submit" value="提交" class="per-btn">
+			</form>
 
-			</div>
 		</div>
-			<!-- <div class="last">
+	</div>
+	<!-- <div class="last">
 				<p>更改密码</p>
 				<form action="" method="post">
 					<label>您的旧密码</label><br>
@@ -153,8 +150,8 @@
 				</form>
 			
 			</div> -->
-		<!-- </div> -->
-		
+	<!-- </div> -->
+
 </body>
 <script>
 	function display(x){

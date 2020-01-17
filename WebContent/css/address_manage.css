@@ -1,0 +1,21 @@
+.content-right label{
+	margin-left: 100px;
+}
+.content-right input{
+	margin-left: 100px;
+	width: 70%;
+	height: 40px;
+	border: 1px solid black;
+}
+.content-right textarea{
+	width: 70%;
+	height: 100px;
+	margin-left: 100px;
+}
+.content-right select{
+	width: 200px;
+	height: 40px;
+}
+.content-right #province{
+	margin-left: 100px;
+}

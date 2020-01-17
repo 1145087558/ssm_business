@@ -56,13 +56,13 @@
 }
 
 .calendar .date:not (.disabled ):hover, .calendar .pMDate:not (.disabled
-	):hover, .calendar .nMDate:not (.disabled ):hover, .calendar .month:hover
+	 ):hover, .calendar .nMDate:not (.disabled ):hover, .calendar .month:hover
 	{
 	background-color: #E2E2E2;
 }
 
 .calendar .date:not (.disabled ):active, .calendar .pMDate:not (.disabled
-	):active, .calendar .nMDate:not (.disabled ):active, .calendar .month:active
+	 ):active, .calendar .nMDate:not (.disabled ):active, .calendar .month:active
 	{
 	background-color: #22A7F0;
 	color: #FFF;
