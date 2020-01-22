@@ -18,6 +18,7 @@
 <script
 	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/amazeui.min.js"></script>
+<script type="text/javascript" src="js/1.14.0/jquery.validate.js"></script>
 </head>
 
 <body>
@@ -56,19 +57,19 @@
 										placeholder="确认密码">
 								</div>
 
+								<div class="am-cf">
+									<input type="submit" name="" value="注册"
+										class="am-btn am-btn-primary am-btn-sm am-fl">
+								</div>
+
 							</form>
 
 							<div class="login-links">
-								<label class="error"></label>
+								<label id="emailError"></label>
 								<!-- <label for="reader-me"> <input id="reader-me"
 									type="checkbox"> 点击表示您同意商城《服务协议》
 								</label> -->
 							</div>
-							<div class="am-cf">
-								<input type="submit" name="" value="注册"
-									class="am-btn am-btn-primary am-btn-sm am-fl">
-							</div>
-
 						</div>
 
 						<div class="am-tab-panel">
@@ -76,7 +77,7 @@
 								<div class="user-phone">
 									<label for="phone"><i
 										class="am-icon-mobile-phone am-icon-md"></i></label> <input type="tel"
-										name="tel" id="phone" placeholder="请输入手机号">
+										name="tel" id="tel" placeholder="请输入手机号">
 								</div>
 								<div class="verification">
 									<label for="code"><i class="am-icon-code-fork"></i></label> <input
@@ -87,26 +88,28 @@
 								</div>
 								<div class="user-pass">
 									<label for="password"><i class="am-icon-lock"></i></label> <input
-										type="password" name="pwd" id="password" placeholder="设置密码">
+										type="password" name="pwd" id="pwd" placeholder="设置密码">
 								</div>
 								<div class="user-pass">
 									<label for="passwordRepeat"><i class="am-icon-lock"></i></label>
-									<input type="password" name="" id="passwordRepeat"
+									<input type="password" name="" id="pwdRepeat"
 										placeholder="确认密码">
 								</div>
+
+
+								<div class="am-cf">
+									<input type="submit" name="" value="注册"
+										class="am-btn am-btn-primary am-btn-sm am-fl">
+								</div>
 							</form>
+
 							<div class="login-links">
-								<label class="error"></label>
+								<label id="telError"></label>
 								<!-- <label for="reader-me"> <input id="reader-me"
 									type="checkbox"> 点击表示您同意商城《服务协议》
 								</label> -->
-							</div>
-							<div class="am-cf">
-								<input type="submit" name="" value="注册"
-									class="am-btn am-btn-primary am-btn-sm am-fl">
-							</div>
 
-							<hr>
+							</div>
 						</div>
 
 						<script>
@@ -121,14 +124,13 @@
 
 			</div>
 		</div>
-		<script type="text/javascript" src="js/1.14.0/jquery.validate.js"></script>
 		<script type="text/javascript">
 			function sendMobileCode() {
 				$.ajax({
 					url : "sendPhoneCode.form",
 					type : "post",
 					data : {
-						"phone" : $("#phone").val()
+						"tel" : $("#tel").val()
 					},
 					success : function() {
 
@@ -178,7 +180,7 @@
 						}
 					},
 					errorPlacement : function(error, element) {
-						$(".error").html($(error).text());
+						$("#emailError").html($(error).text());
 					},
 					submitHandler : function(form) {
 						form.submit();
@@ -187,15 +189,15 @@
 
 				$("#telForm").validate({
 					rules : {
-						password : {
+						pwd : {
 							required : true,
 							minlength : 4
 						},
-						passwordRepeat : {
+						pwdRepeat : {
 							required : true,
 							equalTo : "#password"
 						},
-						phone : {
+						tel : {
 							required : true,
 							isMobile : true,
 							remote : {
@@ -203,8 +205,8 @@
 								type : "post",
 								dataType : "json",
 								data : {
-									phone : function() {
-										return $("#phone").val();
+									tel : function() {
+										return $("#tel").val();
 									}
 								}
 							}
@@ -215,15 +217,15 @@
 						}
 					},
 					messages : {
-						password : {
+						pwd : {
 							required : "请输入密码",
 							minlength : "密码至少4位"
 						},
-						passwordRepeat : {
+						pwdRepeat : {
 							required : "确认密码是必填的",
 							equalTo : "确认密码与密码不同"
 						},
-						phone : {
+						tel : {
 							required : "请输入手机号",
 							remote : "手机号已被注册"
 						},
@@ -233,7 +235,7 @@
 						}
 					},
 					errorPlacement : function(error, element) {
-						$(".error").html($(error).text());
+						$("#telError").html($(error).text());
 					},
 					submitHandler : function(form) {
 						form.submit();
@@ -254,7 +256,7 @@
 
 		<c:if test="${error!=null}">
 			<script type="text/javascript">
-				$(".error").html('${error}');
+				$("#telError").html('${error}');
 			</script>
 		</c:if>
 </body>

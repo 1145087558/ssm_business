@@ -27,6 +27,7 @@ import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.qst.entity.User;
 import com.qst.service.UserService;
 import com.qst.util.AlipayConfig;
+import com.qst.util.RegexMatche;
 
 @Controller
 public class UserController {
@@ -72,9 +73,23 @@ public class UserController {
 
 	// 登录
 	@RequestMapping("login.form")
-	public String login(User user, HttpServletRequest request) {
-		System.out.println("手机号：" + user.getTel() + "密码：" + user.getPwd());
-		user = userService.userLogin(user);
+	public String login(String name,String pwd, HttpServletRequest request) {
+		System.out.println("账号：" + name + "密码：" + pwd);
+		
+		User user = new User();
+		user.setPwd(pwd);
+		if(RegexMatche.isPhone(name)){
+			user.setTel(name);
+			user = userService.userLogin(user);
+		}else if(RegexMatche.isEmail(name)){
+			user.setEmail(name);
+			user = userService.userLogin(user);
+		}else{
+			user.setName(name);
+			user = userService.userLogin(user);
+		}
+		
+		
 		if (user == null) {
 			request.setAttribute("error", "error");
 			return "login";
@@ -169,7 +184,7 @@ public class UserController {
 		 * data = { new NameValuePair("Uid", "a1145087558"), new
 		 * NameValuePair("Key", "d41d8cd98f00b204e980"), new
 		 * NameValuePair("smsMob", phone), new NameValuePair("smsText",
-		 * "【二手交易平台】尊敬的用户，您好，您的验证码为：" + phoneCode + "，若非本人操作，请忽略此短信。") };
+		 * "【墨韵书院平台】尊敬的用户，您好，您的验证码为：" + phoneCode + "，若非本人操作，请忽略此短信。") };
 		 * post.setRequestBody(data);
 		 * 
 		 * client.executeMethod(post); Header[] headers =
@@ -224,9 +239,9 @@ public class UserController {
 	
 	//检查手机号是否被注册
 	@RequestMapping("checkPhone.form")
-	public void checkPhone(HttpServletResponse response,String phone) throws IOException{
+	public void checkPhone(HttpServletResponse response,String tel) throws IOException{
 		boolean confirm;
-		if(userService.checkPhone(phone)){
+		if(userService.checkPhone(tel)){
 			confirm = false;
 			String confirmJson = JSON.toJSONString(confirm);
 			response.getWriter().write(confirmJson);

@@ -20,7 +20,7 @@
 	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/db_business?characterEncoding=UTF-8" />
+			value="jdbc:mysql://localhost:3306/db_business?characterEncoding=UTF-8&amp;useSSL=false" />
 		<property name="username" value="root" />
 		<property name="password" value="123456" />
 	</bean>
@@ -72,7 +72,7 @@
 			<value>1677892776@qq.com</value>
 		</property>
 		<property name="password">
-			<value>kqrlliusvgtphcei</value>
+			<value>jgioajfbbxvjfief</value>
 		</property>
 		<property name="port">
 			<value>465</value>

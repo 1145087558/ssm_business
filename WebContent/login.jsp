@@ -10,6 +10,7 @@
 	rel="stylesheet">
 <link rel="stylesheet" href="css/amazeui.css">
 <link rel="stylesheet" href="css/dlstyle.css">
+<script type="text/javascript" src="js/jquery.js"></script>
 </head>
 
 <body>
@@ -29,14 +30,14 @@
 				<div class="clear"></div>
 
 				<div class="login-form">
-					<form>
+					<form action="login.form" method="post" id="loginForm">
 						<div class="user-name">
 							<label for="user"><i class="am-icon-user"></i></label> <input
-								type="text" name="" id="user" placeholder="邮箱/手机/用户名">
+								type="text" name="name" id="user" placeholder="邮箱/手机/用户名">
 						</div>
 						<div class="user-pass">
 							<label for="password"><i class="am-icon-lock"></i></label> <input
-								type="password" name="" id="password" placeholder="请输入密码">
+								type="password" name="pwd" id="password" placeholder="请输入密码">
 						</div>
 					</form>
 				</div>
@@ -48,7 +49,7 @@
 				</div>
 				<div class="am-cf">
 					<input type="submit" name="" value="登 录"
-						class="am-btn am-btn-primary am-btn-sm">
+						class="am-btn am-btn-primary am-btn-sm" onclick="formSubmit()">
 				</div>
 				<div class="partner">
 					<h3>合作账号</h3>
@@ -64,5 +65,12 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	
+	function formSubmit(){
+		$("#loginForm").submit();
+	}
+	
+	</script>
 </body>
 </html>

@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean checkEmail(String email) {
-		if(userMapper.getUserEmail(email)==null){
+		if(userMapper.getUserEmail(email)!=null){
 			return true;
 		}
 		return false;
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean checkPhone(String phone) {
-		if(userMapper.getUserTel(phone)==null){
+		if(userMapper.getUserTel(phone)!=null){
 			return true;
 		}
 		return false;
