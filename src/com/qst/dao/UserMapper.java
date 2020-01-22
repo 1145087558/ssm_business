@@ -33,5 +33,9 @@ public interface UserMapper {
 	List<User> getUserByStatus(int status);
 
 	List<User> getOrdinaryUserAll();
+
+	User getUserEmail(String email);
+
+	User getUserTel(String tel);
 	
 }

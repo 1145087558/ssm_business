@@ -26,6 +26,15 @@
 			<if test="synopsis != null">
 				synopsis,
 			</if>
+			<if test="balance != null">
+				balance,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="tel != null">
@@ -42,6 +51,15 @@
 			</if>
 			<if test="synopsis != null">
 				#{synopsis,jdbcType=VARCHAR},
+			</if>
+			<if test="balance != null">
+				#{balance,jdbcType=DOUBLE},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
 			</if>
 		</trim>
 	</insert>
@@ -69,6 +87,14 @@
 	<select id="getOrdinaryUserAll" resultType="com.qst.entity.User">
 		select *from tb_user
 		where status=0 or status=2
+	</select>
+	
+	<select id="getUserTel" resultType="com.qst.entity.User">
+		select *from tb_user where tel=#{tel}
+	</select>
+	
+	<select id="getUserEmail" resultType="com.qst.entity.User">
+		select *from tb_user where email=#{email}
 	</select>
 
 	<update id="modifyBalance" parameterType="com.qst.entity.User">

@@ -1,15 +1,24 @@
 package com.qst.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.httpclient.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -23,7 +32,10 @@ import com.qst.util.AlipayConfig;
 public class UserController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
+
+	@Autowired
+	private JavaMailSenderImpl mailSender;
 
 	// 注册
 	@RequestMapping("register.form")
@@ -32,6 +44,30 @@ public class UserController {
 		user.setName(user.getTel());
 		userService.userRegister(user);
 		return "login";
+	}
+
+	// 邮箱注册
+	@RequestMapping("emailRegister.form")
+	public String emailRegister(User user) {
+		
+		user.setName(user.getTel());
+		userService.addUser(user);
+		sendEmail(user.getEmail());
+		return "login";
+	}
+
+	// 手机号码注册
+	@RequestMapping("telRegister.form")
+	public String telRegister(User user,HttpServletRequest request) {
+		String code = request.getParameter("code");
+		String phoneCode = (String)request.getSession().getAttribute("phoneCode");
+		if(code.equals(phoneCode)){
+			userService.addUser(user);
+			return "login";
+		}else{
+			request.setAttribute("error", "验证码错误");
+			return "register";
+		}
 	}
 
 	// 登录
@@ -91,10 +127,11 @@ public class UserController {
 	@RequestMapping("doWallerPaySuccess")
 	public String doWallerPaySuccess(HttpServletRequest request) {
 
-		//String orderSn = (String) request.getSession().getAttribute("orderSn");
+		// String orderSn = (String)
+		// request.getSession().getAttribute("orderSn");
 		double balance = (double) request.getSession().getAttribute("totalprice");
 
-		//int id = (int) request.getSession().getAttribute("orderIds");
+		// int id = (int) request.getSession().getAttribute("orderIds");
 		User user = (User) request.getSession().getAttribute("user");
 		double balan = user.getBalance() + balance;
 		user.setBalance(balan);
@@ -116,5 +153,88 @@ public class UserController {
 
 		return "redirect:findAll.form";
 	}
+
+	// 发送短信验证
+	@RequestMapping("sendPhoneCode.form")
+	public void sendPhoneCode(HttpServletRequest request, String phone) throws HttpException, IOException {
+
+		String phoneCode = smsCode();
+		System.out.println(phoneCode);
+		request.getSession().setAttribute("phoneCode", phoneCode);
+		/*
+		 * HttpClient client = new HttpClient(); PostMethod post = new
+		 * PostMethod("http://utf8.api.smschinese.cn");
+		 * post.addRequestHeader("Content-Type",
+		 * "application/x-www-form-urlencoded;charset=UTF-8"); NameValuePair[]
+		 * data = { new NameValuePair("Uid", "a1145087558"), new
+		 * NameValuePair("Key", "d41d8cd98f00b204e980"), new
+		 * NameValuePair("smsMob", phone), new NameValuePair("smsText",
+		 * "【二手交易平台】尊敬的用户，您好，您的验证码为：" + phoneCode + "，若非本人操作，请忽略此短信。") };
+		 * post.setRequestBody(data);
+		 * 
+		 * client.executeMethod(post); Header[] headers =
+		 * post.getResponseHeaders(); int statusCode = post.getStatusCode();
+		 * System.out.println("statusCode:" + statusCode); for (Header h :
+		 * headers) { System.out.println(h.toString()); } String result = new
+		 * String(post.getResponseBodyAsString().getBytes("utf-8"));
+		 * System.out.println(result);
+		 * 
+		 * post.releaseConnection();
+		 */
+	}
+
+	// 生成短信验证随机数
+	public String smsCode() {
+		String random = (int) ((Math.random() * 9 + 1) * 100000) + "";
+		return random;
+	}
+
+	public void sendEmail(String email) {
+		MimeMessage mimeMessage = mailSender.createMimeMessage();
+		MimeMessageHelper message;
+		try {
+			message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+			message.setFrom("1677892776@qq.com", "墨韵书院客服");
+			message.setTo(email);
+			message.setSubject("墨韵书院平台");
+			message.setText("用户:<br> 你好!<br>欢迎加入墨韵书院平台,您可以使用该平台进行买卖!", true);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		mailSender.send(mimeMessage);
+	}
 	
+	//检查邮箱是否被注册
+	@RequestMapping("checkEmail.form")
+	public void checkEmail(HttpServletResponse response,String email) throws IOException{
+		boolean confirm;
+		if(userService.checkEmail(email)){
+			confirm = false;
+			String confirmJson = JSON.toJSONString(confirm);
+			response.getWriter().write(confirmJson);
+		}else{
+			confirm = true;
+			String confirmJson = JSON.toJSONString(confirm);
+			response.getWriter().write(confirmJson);
+		}
+	}
+	
+	//检查手机号是否被注册
+	@RequestMapping("checkPhone.form")
+	public void checkPhone(HttpServletResponse response,String phone) throws IOException{
+		boolean confirm;
+		if(userService.checkPhone(phone)){
+			confirm = false;
+			String confirmJson = JSON.toJSONString(confirm);
+			response.getWriter().write(confirmJson);
+		}else{
+			confirm = true;
+			String confirmJson = JSON.toJSONString(confirm);
+			response.getWriter().write(confirmJson);
+		}
+	}
+
 }

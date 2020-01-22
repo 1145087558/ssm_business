@@ -9,6 +9,7 @@ public class User {
 	private String address;
 	private String synopsis;
 	private double balance;
+	private String email;
 	private Integer status;
 	public Integer getId() {
 		return id;
@@ -51,6 +52,12 @@ public class User {
 	}
 	public void setBalance(double balance) {
 		this.balance = balance;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public Integer getStatus() {
 		return status;

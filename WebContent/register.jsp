@@ -9,8 +9,7 @@
 	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- <link rel="stylesheet" href="css/register.css"> -->
 <link
-	href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
-	rel="stylesheet">
+	href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/amazeui.css">
 <link rel="stylesheet" href="css/amazeui.min.css">
 <link rel="stylesheet" href="css/dlstyle.css">
@@ -41,15 +40,15 @@
 
 					<div class="am-tabs-bd">
 						<div class="am-tab-panel am-active">
-							<form method="post">
+							<form method="post" action="emailRegister.form" id="emailForm">
 
 								<div class="user-email">
 									<label for="email"><i class="am-icon-envelope-o"></i></label> <input
-										type="email" name="" id="email" placeholder="请输入邮箱账号">
+										type="email" name="email" id="email" placeholder="请输入邮箱账号">
 								</div>
 								<div class="user-pass">
 									<label for="password"><i class="am-icon-lock"></i></label> <input
-										type="password" name="" id="password" placeholder="设置密码">
+										type="password" name="pwd" id="password" placeholder="设置密码">
 								</div>
 								<div class="user-pass">
 									<label for="passwordRepeat"><i class="am-icon-lock"></i></label>
@@ -60,9 +59,10 @@
 							</form>
 
 							<div class="login-links">
-								<label for="reader-me"> <input id="reader-me"
+								<label class="error"></label>
+								<!-- <label for="reader-me"> <input id="reader-me"
 									type="checkbox"> 点击表示您同意商城《服务协议》
-								</label>
+								</label> -->
 							</div>
 							<div class="am-cf">
 								<input type="submit" name="" value="注册"
@@ -72,22 +72,22 @@
 						</div>
 
 						<div class="am-tab-panel">
-							<form method="post">
+							<form method="post" action="telRegister.form" id="telForm">
 								<div class="user-phone">
 									<label for="phone"><i
 										class="am-icon-mobile-phone am-icon-md"></i></label> <input type="tel"
-										name="" id="phone" placeholder="请输入手机号">
+										name="tel" id="phone" placeholder="请输入手机号">
 								</div>
 								<div class="verification">
 									<label for="code"><i class="am-icon-code-fork"></i></label> <input
-										type="tel" name="" id="code" placeholder="请输入验证码"> <a
-										class="btn" href="javascript:void(0);"
+										type="tel" name="code" id="code" placeholder="请输入验证码">
+									<a class="btn" href="javascript:void(0);"
 										onclick="sendMobileCode();" id="sendMobileCode"> <span
 										id="dyMobileButton">获取</span></a>
 								</div>
 								<div class="user-pass">
 									<label for="password"><i class="am-icon-lock"></i></label> <input
-										type="password" name="" id="password" placeholder="设置密码">
+										type="password" name="pwd" id="password" placeholder="设置密码">
 								</div>
 								<div class="user-pass">
 									<label for="passwordRepeat"><i class="am-icon-lock"></i></label>
@@ -96,9 +96,10 @@
 								</div>
 							</form>
 							<div class="login-links">
-								<label for="reader-me"> <input id="reader-me"
+								<label class="error"></label>
+								<!-- <label for="reader-me"> <input id="reader-me"
 									type="checkbox"> 点击表示您同意商城《服务协议》
-								</label>
+								</label> -->
 							</div>
 							<div class="am-cf">
 								<input type="submit" name="" value="注册"
@@ -109,16 +110,153 @@
 						</div>
 
 						<script>
-									$(function() {
-									    $('#doc-my-tabs').tabs();
-									  })
-								</script>
+							$(function() {
+								$('#doc-my-tabs').tabs();
+
+							})
+						</script>
 
 					</div>
 				</div>
 
 			</div>
 		</div>
+		<script type="text/javascript" src="js/1.14.0/jquery.validate.js"></script>
+		<script type="text/javascript">
+			function sendMobileCode() {
+				$.ajax({
+					url : "sendPhoneCode.form",
+					type : "post",
+					data : {
+						"phone" : $("#phone").val()
+					},
+					success : function() {
+
+					}
+				});
+			}
+
+			$(function() {
+				$("#emailForm").validate({
+					rules : {
+						password : {
+							required : true,
+							minlength : 4
+						},
+						passwordRepeat : {
+							required : true,
+							equalTo : "#password"
+						},
+						email : {
+							required : true,
+							email : true,
+							remote : {
+								url : "checkEmail.form",
+								type : "post",
+								dataType : "json",
+								data : {
+									email : function() {
+										return $("#email").val();
+									}
+								}
+							}
+						}
+					},
+					messages : {
+						password : {
+							required : "请输入密码",
+							minlength : "密码至少4位"
+						},
+						passwordRepeat : {
+							required : "确认密码是必填的",
+							equalTo : "确认密码与密码不同"
+						},
+						email : {
+							email : "请输入一个正确的邮箱",
+							required : "请输入邮箱",
+							remote : "邮箱已被注册"
+						}
+					},
+					errorPlacement : function(error, element) {
+						$(".error").html($(error).text());
+					},
+					submitHandler : function(form) {
+						form.submit();
+					}
+				});
+
+				$("#telForm").validate({
+					rules : {
+						password : {
+							required : true,
+							minlength : 4
+						},
+						passwordRepeat : {
+							required : true,
+							equalTo : "#password"
+						},
+						phone : {
+							required : true,
+							isMobile : true,
+							remote : {
+								url : "checkPhone.form",
+								type : "post",
+								dataType : "json",
+								data : {
+									phone : function() {
+										return $("#phone").val();
+									}
+								}
+							}
+						},
+						code : {
+							required : true,
+							rangelength : [ 6, 6 ]
+						}
+					},
+					messages : {
+						password : {
+							required : "请输入密码",
+							minlength : "密码至少4位"
+						},
+						passwordRepeat : {
+							required : "确认密码是必填的",
+							equalTo : "确认密码与密码不同"
+						},
+						phone : {
+							required : "请输入手机号",
+							remote : "手机号已被注册"
+						},
+						code : {
+							required : "请输入验证码",
+							rangelength : "验证码格式不对"
+						}
+					},
+					errorPlacement : function(error, element) {
+						$(".error").html($(error).text());
+					},
+					submitHandler : function(form) {
+						form.submit();
+					}
+				});
+			});
+
+			jQuery.validator
+					.addMethod(
+							"isMobile",
+							function(value, element) {
+								var length = value.length;
+								var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+								return this.optional(element)
+										|| (length == 11 && mobile.test(value));
+							}, "请正确填写手机号码");
+		</script>
+
+		<c:if test="${error!=null}">
+			<script type="text/javascript">
+				$(".error").html('${error}');
+			</script>
+		</c:if>
 </body>
 
 </html>

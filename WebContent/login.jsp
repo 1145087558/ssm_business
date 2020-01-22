@@ -6,7 +6,7 @@
 <head>
 <title>墨韵书院-首页</title>
 <link
-	href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+	href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
 	rel="stylesheet">
 <link rel="stylesheet" href="css/amazeui.css">
 <link rel="stylesheet" href="css/dlstyle.css">

@@ -30,6 +30,10 @@ public interface UserService {
 
 	List<User> getOrdinaryUserAll();
 
+	boolean checkEmail(String email);
+
+	boolean checkPhone(String phone);
+
 	/*void investMoney(int id, double balan);*/
 
 }

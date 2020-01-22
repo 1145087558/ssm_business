@@ -86,6 +86,22 @@ public class UserServiceImpl implements UserService{
 		return userMapper.getOrdinaryUserAll();
 	}
 
+	@Override
+	public boolean checkEmail(String email) {
+		if(userMapper.getUserEmail(email)==null){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkPhone(String phone) {
+		if(userMapper.getUserTel(phone)==null){
+			return true;
+		}
+		return false;
+	}
+
 	//@Override
 	/*public void investMoney(int id, double balan) {
 		userMapper.investMoney(id,balan);
