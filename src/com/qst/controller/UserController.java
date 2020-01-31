@@ -79,12 +79,15 @@ public class UserController {
 		User user = new User();
 		user.setPwd(pwd);
 		if(RegexMatche.isPhone(name)){
+			System.out.println("手机号码登录");
 			user.setTel(name);
 			user = userService.userLogin(user);
 		}else if(RegexMatche.isEmail(name)){
+			System.out.println("邮箱登录");
 			user.setEmail(name);
 			user = userService.userLogin(user);
 		}else{
+			System.out.println("用户名登录");
 			user.setName(name);
 			user = userService.userLogin(user);
 		}

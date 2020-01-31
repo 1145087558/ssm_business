@@ -131,6 +131,7 @@ input {
 	background-color: #f9f9f9;
 	width: 100px;
 	margin-right: 10px;
+	z-index: 999;
 }
 
 #dp:hover #dpct {
