@@ -247,3 +247,26 @@ to {
 	margin-right: 15px;
 	cursor: pointer;
 }
+
+/* 放大镜 */
+
+.magnifier {
+	width: 200px;
+	height: 200px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: url('images/scope.png') repeat;
+	display: none;
+	cursor: move;
+}
+
+.big-img {
+	width: 400px;
+	height: 400px;
+	background-size: 800px 700px;
+	position: absolute;
+	left: 410px;
+	top: 0;
+	display: none;
+}
