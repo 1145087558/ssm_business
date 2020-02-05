@@ -39,6 +39,10 @@ public interface UserService {
 	
 	List<UserAddress> getUserAddress(int userId);
 
+	void modifyAddress(UserAddress userAddress);
+
+	void deleteAddress(int id);
+
 	/*void investMoney(int id, double balan);*/
 
 }

@@ -5,6 +5,7 @@ public class UserAddress {
 	private Integer id;
 	private String province;
 	private String city;
+	private String town;
 	private String area;
 	private String phone;
 	private String name;
@@ -28,6 +29,12 @@ public class UserAddress {
 	}
 	public void setCity(String city) {
 		this.city = city;
+	}
+	public String getTown() {
+		return town;
+	}
+	public void setTown(String town) {
+		this.town = town;
 	}
 	public String getArea() {
 		return area;

@@ -263,14 +263,32 @@ public class UserController {
 	// 获取用户地址
 	@RequestMapping("getAddress.form")
 	@ResponseBody
-	public List<UserAddress> getAddress(HttpServletRequest request){
-		User user = (User)request.getSession().getAttribute("user");
-		//Map<String, Object> result = new HashMap<>();
-		//result.put("addresss", "")
-		
-		//String result = JSON.toJSONString(userService.getUserAddress(user.getId()));
-		//response.getWriter().write(result);
+	public List<UserAddress> getAddress(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		// 传递json数据
 		return userService.getUserAddress(user.getId());
+	}
+
+	// 修改用户地址
+	@RequestMapping("modifyAddress.form")
+	public String modifyAddress(UserAddress userAddress) {
+		userService.modifyAddress(userAddress);
+		return "address_manage";
+	}
+
+	// 添加用户地址
+	@RequestMapping("addUserAddress.form")
+	public String addUserAddress(UserAddress userAddress, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		userAddress.setUser_id(user.getId());
+		userService.addUserAddress(userAddress);
+		return "address_manage";
+	}
+
+	// 删除用户地址
+	@RequestMapping("deleteAddress.form")
+	public void deleteAddress(int id) {
+		userService.deleteAddress(id);
 	}
 
 }

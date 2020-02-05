@@ -114,6 +114,18 @@ public class UserServiceImpl implements UserService{
 		return userMapper.getUserAddress(userId);
 	}
 
+	@Override
+	public void modifyAddress(UserAddress userAddress) {
+		userMapper.modifyAddress(userAddress);
+		
+	}
+
+	@Override
+	public void deleteAddress(int id) {
+		
+		userMapper.deleteAddress(id);
+	}
+
 	//@Override
 	/*public void investMoney(int id, double balan) {
 		userMapper.investMoney(id,balan);

@@ -65,13 +65,16 @@
 	</insert>
 	
 	<insert id="addUserAddress" parameterType="com.qst.entity.UserAddress">
-		insert into tb_user
+		insert into tb_address
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="province != null">
 				province,
 			</if>
 			<if test="city != null">
 				city,
+			</if>
+			<if test="town != null">
+				town,
 			</if>
 			<if test="area != null">
 				area,
@@ -95,6 +98,9 @@
 			</if>
 			<if test="city != null">
 				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="town != null">
+				#{town,jdbcType=VARCHAR},
 			</if>
 			<if test="area != null">
 				#{area,jdbcType=VARCHAR},
@@ -181,8 +187,42 @@
 		update tb_user set status=#{param2} where
 		id=#{param1}
 	</update>
+	
+	<update id="modifyAddress" parameterType="com.qst.entity.UserAddress">
+		update tb_address
+		<set>
+			<if test="province != null">
+				province=#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city=#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="town != null">
+				town=#{town,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				area=#{area,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone=#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name=#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status=#{status,jdbcType=INTEGER},
+			</if>
+			<if test="user_id != null">
+				user_id=#{user_id,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 
 	<delete id="deleteUser">
-		delete tb_user from tb_user where id=#{id}
+		delete from tb_user where id=#{id}
+	</delete>
+	<delete id="deleteAddress">
+		delete from tb_address where id=#{id}
 	</delete>
 </mapper>

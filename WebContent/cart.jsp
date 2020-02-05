@@ -142,12 +142,12 @@
 			
 			<c:if test="${address.status ==1}">
 			<option value="${address.id}" selected="selected">
-			${address.province}${address.city}${address.area}</option>
+			${address.province}${address.city}${address.town}${address.area}</option>
 			</c:if>
 			
 			<c:if test="${address.status ==0}">
 			<option value="${address.id}">
-			${address.province}${address.city}${address.area}</option>
+			${address.province}${address.city}${address.town}${address.area}</option>
 			</c:if>
 			</c:forEach>
 			</select>

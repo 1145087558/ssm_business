@@ -19,24 +19,60 @@
 .tenant-model-body #province{
 	margin-left: 100px;
 }
+.content-right h4{
+	text-align: center;
+	color: #000;
+	background: red;
+	height: 25px;
+	padding-top: 5px;
+}
 
 .content-right label{
-	margin-left: 100px;
+	font-size: 18px;
 }
 .content-right input{
-	margin-left: 100px;
+	
 	width: 70%;
 	border: 1px solid black;
 }
+.content-right p{
+	display: inline-block;
+	margin-left: 20px;
+	margin-right: 40px;
+	font-size: 18px;
+}
 .content-right textarea{
 	width: 70%;
-	margin-left: 100px;
+	
 }
 .content-right select{
-	width: 150px;
+	width: 120px;
 }
 .content-right select:FIRST-CHILD option{
 	margin-left: 100px;
+}
+.content-right a{
+	font-size: 18px;
+	color: blue;
+	float: right;
+}
+.content-right .modify{
+	margin-right: 20px;
+}
+.content-right .delete{
+	margin-right: 50px;
+}
+
+.content-right button{
+	width: 200px;
+	color: black;
+	font-size: 18px;
+	background: white;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 8px;
+	border: 1px solid #000;
+	margin-top: 40px;
 }
 
 /*模态框样式*/

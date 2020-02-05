@@ -147,10 +147,6 @@
 				<h3>地址管理/Address Manage</h3>
 				<hr>
 				
-				
-				<a href="#" href="javascript:;" onclick="modalShow()"><button>分享</button>
-				</a>
-				
 			</div>
 		</div>
 		
@@ -162,9 +158,9 @@
 				style="margin-left: 20px; padding: 5px; font-weight: bold; height: 30px; line-height: 30px;">收获地址:</h4>
 			<span id="closeModel">×</span> </header>
 			<div class="tenant-model-body">
-				<form action="" method="post">
-					<label>收货人</label><p><input type="text" name=""></p>
-					<label>手机号码</label><p><input type="text" name=""></p>
+				<form action="" method="post" id="addressForm">
+					<label>收货人</label><p><input type="text" name="name"></p>
+					<label>手机号码</label><p><input type="text" name="phone"></p>
 					<label>所在地</label>
 						<p>
 							<select name="province" id="province">
@@ -177,8 +173,8 @@
 								<option value="请选择">请选择</option>
 							</select>
 						</p>	
-					<label>详细地址</label><p><textarea  name=""></textarea></p>
-					<input type="button" value="添加"/>
+					<label>详细地址</label><p><textarea  name="area"></textarea></p>
+					<input type="submit" value="添加"/>
 				</form>
 			</div>
 		</div>
@@ -191,12 +187,17 @@
 	 $("#order").click(function(){
 	 	$("form").css("display","inline");
 	 });
+	 
 	 function modalShow() {
+		 $("#addressForm").attr("action","addUserAddress.form");
+		 $(".tenant-model-body input[type='submit']").val("添加");
 			$("#tenant-model-box").show();
 			$("#closeModel").click(function() {
-				$("#searchTenant").val("");
-				$("#divSelectLi").empty();
 				$("#tenant-model-box").hide();
+				document.getElementById("addressForm").reset();
+				$("#tenant-model-box select option:first-child").text("请选择");
+				$("#tenant-model-box select option:first-child").val("");
+				$("#tenant-model-box textarea").text("");
 			});
 		}
 	 $(function(){
@@ -206,18 +207,71 @@
 			type:"post",
 			success:function(data){   
 				$.each(data,function(i,e){
-					$(".content-right").append('<label>收货地址'+(i+1)+'</label>'+
-					 '<label>收货人</label><p>'+e.name+'</p>'+
-					 '<label>手机号码</label><p>'+e.phone+'</p>'+
-					 '<label>所在地</label><p><select name="province">'+
+					$(".content-right").append('<div><h4>收货地址'+(i+1)+'</h4>'+
+					 '<label>收货人:</label><p>'+e.name+'</p>'+
+					 '<label>手机号码:</label><p>'+e.phone+'</p>'+
+					 '<label>所在地:</label><p><select name="province">'+
 					 '<option>'+e.province+'</option></select>'+
 					 '<select name="city"><option>'+e.city+'</option></select>'+
-					 '<select name="town"><option>请选择</option></select></p>'+	
-					 '<label>详细地址</label><p>'+e.area+'</p>');
+					 '<select name="town"><option>'+e.town+'</option></select></p>'+	
+					 '<div><label>详细地址:</label><p>'+e.area+'</p>'+
+					 '<a href="javascript:;" class="delete">删除</a>'+
+					 '<a href="javascript:;" class="modify">编辑</a></div>'+
+					 '<input type="hidden" name="id" value="'+e.id+'"></div>');
 				});
+				$(".content-right").append('<button onclick="modalShow()">添加收获地址</button>');
 			}
 		})
-		  
+		
+		$(".content-right").on("click",".modify",function(){
+			$(".tenant-model-body form").append('<input type="hidden" name="id">');
+			var obj = $(this).parent();
+			$(".tenant-model-body textarea").text($(this).prev().prev().text());
+			var id = obj.next().val();
+			$(".tenant-model-body input[name='id']").val(id);
+			var address = obj.prev();
+			var province = address.find("select[name='province'] option").text();
+			var city = address.find("select[name='city'] option").text();
+			var town = address.find("select[name='town'] option").text();
+			$("#province option:first-child").text(province);
+			$("#province option:first-child").val(province);
+			$("#city option:first-child").text(city);
+			$("#city option:first-child").val(city);
+			$("#town option:first-child").text(town);
+			$("#town option:first-child").val(town);
+			var phone = address.prev().prev();
+			$(".tenant-model-body input[name='phone']").val(phone.text());
+			var name = phone.prev().prev();
+			$(".tenant-model-body input[name='name']").val(name.text());
+			
+			$("#addressForm").attr("action","modifyAddress.form");
+			$(".tenant-model-body input[type='submit']").val("修改");
+			$("#tenant-model-box").show();
+			$("#closeModel").click(function() {
+				$("#tenant-model-box").hide();
+				document.getElementById("addressForm").reset();
+				$("#tenant-model-box select option:first-child").text("请选择");
+				$("#tenant-model-box select option:first-child").val("");
+				$("#tenant-model-box textarea").text("");
+			});
+		});
+		$(".content-right").on("click",".delete",function(){
+			var obj = $(this).parent().parent();
+			$.ajax({
+				url:"deleteAddress.form",
+				type:"post",
+				data:{
+					"id":obj.find("input[name='id']").val()
+				},
+				success:function(){
+					obj.remove();
+				},
+				error:function(){
+					obj.remove();
+				}
+			});
+			
+		});
 	 });
 </script>
 <script type="text/javascript" src="js/area.js" ></script>
