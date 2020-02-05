@@ -134,9 +134,12 @@
 	<div class="row">
 		<div class="detail">
 			<div class="detail-left">
+			<div class="wrap_con">
 				<img src="${opus.opus_image}">
 				<div class="magnifier"></div>
+				
 				<div class="big-img"></div>
+				</div>
 				 <a
 					href="like_times.form?id=${opus.id}&like_times=${opus.opus_like_times+1}"
 					onclick="alert('操作成功,当前点赞数为：${opus.opus_like_times+1}')"><button>点赞</button>
@@ -339,10 +342,10 @@
 <script type="text/javascript">
 	$(function(){
     var imagUrl = $(".detail-left img").attr("src");
-    $(".big-img").css("background-image","url('"+imagUrl+"') no-repeat")
-    
+    $(".big-img").css("background","url("+imagUrl+") no-repeat");
+    $(".big-img").css("background-size","1500px 760px");
 	//当鼠标移上时显示放大镜和大图
-	$('detail-left').mouseenter(function(){
+	$('.detail-left').mouseenter(function(){
 	$('.magnifier,.big-img').show();
 	$(this).mousemove(function(e){
 		
