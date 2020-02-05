@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.qst.entity.User;
+import com.qst.entity.UserAddress;
 
 public interface UserMapper {
 
@@ -24,11 +25,13 @@ public interface UserMapper {
 
 	void addUser(User user);
 
-	void modifyPassword(@Param(value="id")int id, @Param(value="pwd")String  pwd);
+	void addUserAddress(UserAddress userAddress);
+
+	void modifyPassword(@Param(value = "id") int id, @Param(value = "pwd") String pwd);
 
 	void deleteUser(int id);
 
-	void modifyUserStatus(int id,int status);
+	void modifyUserStatus(int id, int status);
 
 	List<User> getUserByStatus(int status);
 
@@ -37,5 +40,7 @@ public interface UserMapper {
 	User getUserEmail(String email);
 
 	User getUserTel(String tel);
-	
+
+	List<UserAddress> getUserAddress(int userId);
+
 }

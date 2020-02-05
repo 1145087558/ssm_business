@@ -33,6 +33,7 @@ import com.qst.entity.Discuss;
 import com.qst.entity.Opus;
 import com.qst.entity.Order;
 import com.qst.entity.User;
+import com.qst.entity.UserAddress;
 import com.qst.service.OpusService;
 import com.qst.service.UserService;
 import com.qst.util.AlipayConfig;
@@ -92,8 +93,7 @@ public class OpusController {
 	// 加入购物车
 	@RequestMapping("cart.form")
 	public ModelAndView cart(int id, HttpServletRequest request) {
-		Opus opus = new Opus();
-		opus = opusService.opusDetail(id);
+		Opus opus = opusService.opusDetail(id);
 		User user = (User) request.getSession().getAttribute("user");
 		System.out.println("手机号：" + user.getTel());
 		Cart cart = new Cart();
@@ -115,7 +115,10 @@ public class OpusController {
 	public String displayCart(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		List<Cart> cartList = opusService.displayCart(user.getId());
+		List<UserAddress> address = userService.getUserAddress(user.getId());
 		request.setAttribute("cartList", cartList);
+		request.setAttribute("addresss", address);
+		System.out.println(address.get(0));
 		System.out.println("用户输出L:" + user);
 		for (Cart c : cartList)
 			System.out.println(c.getOpus_id());
@@ -207,7 +210,8 @@ public class OpusController {
 
 	// 处理订单信息
 	@RequestMapping("orderWaller.form")
-	public void orderDealWith(String[] orderDatas,String[] cartIds, HttpServletRequest request,HttpServletResponse response) throws IOException {
+	public void orderDealWith(String[] orderDatas,String[] cartIds, String useraddress,int addressId,
+			HttpServletRequest request,HttpServletResponse response) throws IOException {
 		
 		int length = orderDatas.length;
 		String[] ids = new String[length];
@@ -238,8 +242,10 @@ public class OpusController {
 				order.setOpus_price(prices[i]);
 				order.setUser_id(user.getId());
 				order.setUser_name(user.getName());
-				order.setUser_address(user.getAddress());
+				order.setUser_address(useraddress);
+				order.setAddress_id(addressId);
 				order.setOrder_date(nowDate);
+				order.setStatus("已支付");
 				opusService.addOrder(order);
 				opusService.deleteCartOpus(cartId[i]);
 			}
@@ -307,6 +313,7 @@ public class OpusController {
 		order.setUser_name(user.getName());
 		order.setUser_address(user.getAddress());
 		order.setOrder_date(nowDate);
+		order.setStatus("已支付");
 		opusService.addOrder(order);
 		request.getSession().setAttribute("user", user);
 		return "redirect:seekOrder.form";
@@ -314,7 +321,8 @@ public class OpusController {
 
 	// 支付宝支付多件
 	@RequestMapping("orderPay.form")
-	public void zifubaoPay(String[] orderDatas, String[] cartIds,HttpServletRequest request, HttpServletResponse response)
+	public void zifubaoPay(String[] orderDatas, String[] cartIds,String useraddress,int addressId,
+			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		int length = orderDatas.length;
 		String[] ids = new String[length];
@@ -356,6 +364,8 @@ public class OpusController {
 		request.getSession().setAttribute("prices", prices);
 		request.getSession().setAttribute("names", names);
 		request.getSession().setAttribute("cartId", cartId);
+		request.getSession().setAttribute("useraddress", useraddress);
+		request.getSession().setAttribute("addressId", addressId);
 		response.setContentType("text/html;charset=UTF-8");
 		response.getWriter().write(alipayResponse.getBody());
 	}
@@ -369,6 +379,8 @@ public class OpusController {
 		String[] names = (String[]) request.getSession().getAttribute("names");
 		double[] prices = (double[]) request.getSession().getAttribute("prices");
 		Integer[] cartId = (Integer[]) request.getSession().getAttribute("cartId");
+		String useraddress = (String) request.getSession().getAttribute("useraddress");
+		Integer addressId = (Integer) request.getSession().getAttribute("addressId");
 		User user = (User) request.getSession().getAttribute("user");
 		Date date = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -381,8 +393,10 @@ public class OpusController {
 			order.setOpus_price(prices[i]);
 			order.setUser_id(user.getId());
 			order.setUser_name(user.getName());
-			order.setUser_address(user.getAddress());
+			order.setUser_address(useraddress);
+			order.setAddress_id(addressId);
 			order.setOrder_date(nowDate);
+			order.setStatus("已支付");
 			opusService.addOrder(order);
 			opusService.deleteCartOpus(cartId[i]);
 		}

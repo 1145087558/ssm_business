@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="css/basic.css">
 <link rel="stylesheet" href="css/cart.css">
 <link
-	href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+	href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
 	rel="stylesheet">
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script
@@ -136,6 +136,21 @@
 		<div class="sub_top">
 			<input type="checkbox" id="check" value="quanxuan" class="quanxuan"
 				onclick="checkAll()" /> <span>全选</span>
+			<p>配送至：</p>
+			<select id="user_address">
+			<c:forEach items="${addresss}" var="address">
+			
+			<c:if test="${address.status ==1}">
+			<option value="${address.id}" selected="selected">
+			${address.province}${address.city}${address.area}</option>
+			</c:if>
+			
+			<c:if test="${address.status ==0}">
+			<option value="${address.id}">
+			${address.province}${address.city}${address.area}</option>
+			</c:if>
+			</c:forEach>
+			</select>
 		</div>
 		<c:forEach items="${cartList}" var="cart">
 			<div class="parent_box">
@@ -247,6 +262,8 @@
 		
 		var orderDatas=[];
 		var cartIds=[];
+		var addressId = $("#user_address option:selected").val();
+		var useraddress = $("#user_address option:selected").text();
 		$("input[name='checkbox']:checked").each(function(i, item) {
 			if($(item).attr("id")=="check"){
 			}else{
@@ -261,12 +278,17 @@
 			url : "orderWaller.form",
 			data:{
 				"orderDatas":orderDatas,
-				"cartIds":cartIds
+				"cartIds":cartIds,
+				"useraddress":useraddress,
+				"addressId":addressId
 			},
 			traditional : true,
 			success : function(data) {
-				alert(data);
-				window.location.href = 'seekOrder.form';
+				if(data=="余额不足"){
+					alert(data);
+				}else{
+					window.location.href = 'seekOrder.form';
+				}
 			}
 		});
 	}
@@ -275,6 +297,8 @@
 	function pay() {
 		var orderDatas=[];
 		var cartIds=[];
+		var addressId = $("#user_address option:selected").val();
+		var useraddress = $("#user_address option:selected").text();
 		$("input[name='checkbox']:checked").each(function(i, item) {
 			if($(item).attr("id")=="check"){
 			}else{
@@ -290,7 +314,9 @@
 			url : "orderPay.form",
 			data:{
 				"orderDatas":orderDatas,
-				"cartIds":cartIds
+				"cartIds":cartIds,
+				"useraddress":useraddress,
+				"addressId":addressId
 			},
 			traditional : true,
 			success : function(data) {

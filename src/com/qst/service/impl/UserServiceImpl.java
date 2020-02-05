@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.qst.dao.UserMapper;
 import com.qst.entity.User;
+import com.qst.entity.UserAddress;
 import com.qst.service.UserService;
 @Service
 public class UserServiceImpl implements UserService{
@@ -100,6 +101,17 @@ public class UserServiceImpl implements UserService{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void addUserAddress(UserAddress userAddress) {
+		userMapper.addUserAddress(userAddress);
+	}
+
+	@Override
+	public List<UserAddress> getUserAddress(int userId) {
+		
+		return userMapper.getUserAddress(userId);
 	}
 
 	//@Override

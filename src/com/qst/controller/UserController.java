@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -13,10 +16,12 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.httpclient.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
@@ -25,6 +30,7 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.qst.entity.User;
+import com.qst.entity.UserAddress;
 import com.qst.service.UserService;
 import com.qst.util.AlipayConfig;
 import com.qst.util.RegexMatche;
@@ -50,7 +56,7 @@ public class UserController {
 	// 邮箱注册
 	@RequestMapping("emailRegister.form")
 	public String emailRegister(User user) {
-		
+
 		user.setName(user.getTel());
 		userService.addUser(user);
 		sendEmail(user.getEmail());
@@ -59,13 +65,13 @@ public class UserController {
 
 	// 手机号码注册
 	@RequestMapping("telRegister.form")
-	public String telRegister(User user,HttpServletRequest request) {
+	public String telRegister(User user, HttpServletRequest request) {
 		String code = request.getParameter("code");
-		String phoneCode = (String)request.getSession().getAttribute("phoneCode");
-		if(code.equals(phoneCode)){
+		String phoneCode = (String) request.getSession().getAttribute("phoneCode");
+		if (code.equals(phoneCode)) {
 			userService.addUser(user);
 			return "login";
-		}else{
+		} else {
 			request.setAttribute("error", "验证码错误");
 			return "register";
 		}
@@ -73,26 +79,25 @@ public class UserController {
 
 	// 登录
 	@RequestMapping("login.form")
-	public String login(String name,String pwd, HttpServletRequest request) {
+	public String login(String name, String pwd, HttpServletRequest request) {
 		System.out.println("账号：" + name + "密码：" + pwd);
-		
+
 		User user = new User();
 		user.setPwd(pwd);
-		if(RegexMatche.isPhone(name)){
+		if (RegexMatche.isPhone(name)) {
 			System.out.println("手机号码登录");
 			user.setTel(name);
 			user = userService.userLogin(user);
-		}else if(RegexMatche.isEmail(name)){
+		} else if (RegexMatche.isEmail(name)) {
 			System.out.println("邮箱登录");
 			user.setEmail(name);
 			user = userService.userLogin(user);
-		}else{
+		} else {
 			System.out.println("用户名登录");
 			user.setName(name);
 			user = userService.userLogin(user);
 		}
-		
-		
+
 		if (user == null) {
 			request.setAttribute("error", "error");
 			return "login";
@@ -224,35 +229,48 @@ public class UserController {
 
 		mailSender.send(mimeMessage);
 	}
-	
-	//检查邮箱是否被注册
+
+	// 检查邮箱是否被注册
 	@RequestMapping("checkEmail.form")
-	public void checkEmail(HttpServletResponse response,String email) throws IOException{
+	public void checkEmail(HttpServletResponse response, String email) throws IOException {
 		boolean confirm;
-		if(userService.checkEmail(email)){
+		if (userService.checkEmail(email)) {
 			confirm = false;
 			String confirmJson = JSON.toJSONString(confirm);
 			response.getWriter().write(confirmJson);
-		}else{
+		} else {
 			confirm = true;
 			String confirmJson = JSON.toJSONString(confirm);
 			response.getWriter().write(confirmJson);
 		}
 	}
-	
-	//检查手机号是否被注册
+
+	// 检查手机号是否被注册
 	@RequestMapping("checkPhone.form")
-	public void checkPhone(HttpServletResponse response,String tel) throws IOException{
+	public void checkPhone(HttpServletResponse response, String tel) throws IOException {
 		boolean confirm;
-		if(userService.checkPhone(tel)){
+		if (userService.checkPhone(tel)) {
 			confirm = false;
 			String confirmJson = JSON.toJSONString(confirm);
 			response.getWriter().write(confirmJson);
-		}else{
+		} else {
 			confirm = true;
 			String confirmJson = JSON.toJSONString(confirm);
 			response.getWriter().write(confirmJson);
 		}
+	}
+
+	// 获取用户地址
+	@RequestMapping("getAddress.form")
+	@ResponseBody
+	public List<UserAddress> getAddress(HttpServletRequest request){
+		User user = (User)request.getSession().getAttribute("user");
+		//Map<String, Object> result = new HashMap<>();
+		//result.put("addresss", "")
+		
+		//String result = JSON.toJSONString(userService.getUserAddress(user.getId()));
+		//response.getWriter().write(result);
+		return userService.getUserAddress(user.getId());
 	}
 
 }

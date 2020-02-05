@@ -3,6 +3,7 @@ package com.qst.service;
 import java.util.List;
 
 import com.qst.entity.User;
+import com.qst.entity.UserAddress;
 
 public interface UserService {
 
@@ -19,6 +20,8 @@ public interface UserService {
 	User getUserById(int userId);
 
 	void addUser(User user);
+	
+	void addUserAddress(UserAddress userAddress);
 
 	void modifyPassword(int id, String newpassword);
 
@@ -33,6 +36,8 @@ public interface UserService {
 	boolean checkEmail(String email);
 
 	boolean checkPhone(String phone);
+	
+	List<UserAddress> getUserAddress(int userId);
 
 	/*void investMoney(int id, double balan);*/
 

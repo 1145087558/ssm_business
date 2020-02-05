@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="css/address_manage.css">
 <link rel="stylesheet" href="css/basic.css">
 <link rel="stylesheet" href="css/person_basic.css">
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -146,6 +146,22 @@
 			<div class="content-right">
 				<h3>地址管理/Address Manage</h3>
 				<hr>
+				
+				
+				<a href="#" href="javascript:;" onclick="modalShow()"><button>分享</button>
+				</a>
+				
+			</div>
+		</div>
+		
+		<!--添加收获地址-->
+		<div id="tenant-model-box" class="tenant-model">
+		<div class="tenant-model-content">
+			<header class="tenant-model-header">
+			<h4
+				style="margin-left: 20px; padding: 5px; font-weight: bold; height: 30px; line-height: 30px;">收获地址:</h4>
+			<span id="closeModel">×</span> </header>
+			<div class="tenant-model-body">
 				<form action="" method="post">
 					<label>收货人</label><p><input type="text" name=""></p>
 					<label>手机号码</label><p><input type="text" name=""></p>
@@ -162,17 +178,47 @@
 							</select>
 						</p>	
 					<label>详细地址</label><p><textarea  name=""></textarea></p>
+					<input type="button" value="添加"/>
 				</form>
-				
 			</div>
 		</div>
+	</div>
+	
 </body>
 
 <script>
 	 
 	 $("#order").click(function(){
 	 	$("form").css("display","inline");
-	 })
+	 });
+	 function modalShow() {
+			$("#tenant-model-box").show();
+			$("#closeModel").click(function() {
+				$("#searchTenant").val("");
+				$("#divSelectLi").empty();
+				$("#tenant-model-box").hide();
+			});
+		}
+	 $(function(){
+		 
+		$.ajax({
+			url:"getAddress.form",
+			type:"post",
+			success:function(data){   
+				$.each(data,function(i,e){
+					$(".content-right").append('<label>收货地址'+(i+1)+'</label>'+
+					 '<label>收货人</label><p>'+e.name+'</p>'+
+					 '<label>手机号码</label><p>'+e.phone+'</p>'+
+					 '<label>所在地</label><p><select name="province">'+
+					 '<option>'+e.province+'</option></select>'+
+					 '<select name="city"><option>'+e.city+'</option></select>'+
+					 '<select name="town"><option>请选择</option></select></p>'+	
+					 '<label>详细地址</label><p>'+e.area+'</p>');
+				});
+			}
+		})
+		  
+	 });
 </script>
 <script type="text/javascript" src="js/area.js" ></script>
 	<script type="text/javascript" src="js/select.js" ></script>
