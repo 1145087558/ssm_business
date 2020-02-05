@@ -13,8 +13,74 @@
 	href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
 	rel="stylesheet">
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<style type="text/css">
+.magnifier{
+width: 200px;
+height: 200px;
+position: absolute;
+left:0;
+top: 0;
+background: url('images/scope.png') repeat;
+display: none;
+cursor: move;
+}
+.big-img{
+width: 400px;
+height: 400px;
+/* ${opus.opus_image} */
+background: url('images/1.png') no-repeat ;
+background-size:800px 700px;
+position: absolute;
+left:410px;
+top:0;
+display: none;
+}
+</style>
 <script
 	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript">	
+	$(function(){
+	//当鼠标移上时显示放大镜和大图
+	$('detail-left').mouseenter(function(){
+	$('.magnifier,.big-img').show();
+	$(this).mousemove(function(e){
+		
+	var m_left = e.pageX - $(this).offset().left - $('.magnifier').width()/2;
+	var m_top = e.pageY - $(this).offset().top - $('.magnifier').height()/2;
+	//边界值判断
+
+	//判断左右边界
+	if(m_left < 0){
+	m_left = 0;
+	}else if(m_left > $('.wrap_con').width() - $('.magnifier').width()){
+	m_left = $('.wrap_con').width() - $('.magnifier').width();
+	}
+	//判断上下边界
+	if(m_top < 0){
+	m_top = 0;
+	}else if(m_top > $('.wrap_con').height() - $('.magnifier').height()){
+	m_top = $('.wrap_con').height() - $('.magnifier').height();
+	}
+
+	$('.magnifier').css({left:m_left,top:m_top});
+
+	//处理大图，也就是放大镜放大后的图
+	/*
+	整体的思路为：当放大镜移动的时候让大图作为背景图移动，所以此处有一个等比缩放，而此处正好大图的宽度为700，小图的宽度为350.所以放大镜的宽度为:放大后的宽度 * 小图的宽度 / 大图的宽度即400 * 350 / 700 = 200
+	此处的宽和高时有讲究的，需要满足条件：
+	小图的宽度:大图的宽度 = 放大镜的left:放大后的left
+	*/
+	var d_w = 700 * m_left / 350;
+	var d_h = 700 * m_top / 350;
+	$('.big-img').css('background-position','-'+d_w+'px -'+d_h+'px');
+	});
+	}).mouseleave(function(){
+	$('.magnifier,.big-img').hide();
+	});
+	})
+	</script>
+	
 </head>
 
 <body>
@@ -135,7 +201,10 @@
 	<div class="row">
 		<div class="detail">
 			<div class="detail-left">
-				<img src="${opus.opus_image}"> <a
+				<img src="${opus.opus_image}">
+				<div class="magnifier"></div>
+				<div class="big-img"></div>
+				 <a
 					href="like_times.form?id=${opus.id}&like_times=${opus.opus_like_times+1}"
 					onclick="alert('操作成功,当前点赞数为：${opus.opus_like_times+1}')"><button>点赞</button>
 				</a> <a href="#" href="javascript:;" onclick="modalShow()"><button>分享</button>
