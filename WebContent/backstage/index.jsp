@@ -202,8 +202,8 @@
 			</dt>
 			<dd>
 				<ul>
-					<li><a data-href="charts-1.html" data-title="折线图"
-						href="javascript:void(0)">折线图</a></li>
+					<li><a data-href="mapAddress.html" data-title="地址分布图"
+						href="javascript:void(0)">地址分布图</a></li>
 					<li><a data-href="charts-2.html" data-title="时间轴折线图"
 						href="javascript:void(0)">时间轴折线图</a></li>
 					<li><a data-href="charts-3.html" data-title="区域图"
