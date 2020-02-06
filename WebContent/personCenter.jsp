@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/person_basic.css">
 <link rel="stylesheet" href="css/dcalendar.picker.css" />
 <link
-	href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+	href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
 	rel="stylesheet">
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script
