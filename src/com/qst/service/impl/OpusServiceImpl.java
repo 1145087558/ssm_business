@@ -178,4 +178,9 @@ public class OpusServiceImpl implements OpusService{
 		
 		return opusMapper.timeSort();
 	}
+	@Override
+	public List<Opus> liketoplist() {
+		// TODO Auto-generated method stub
+		return opusMapper.liketoplist();
+	}
 }

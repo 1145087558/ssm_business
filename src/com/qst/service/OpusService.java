@@ -8,7 +8,8 @@ import com.qst.entity.Opus;
 import com.qst.entity.Order;
 
 public interface OpusService {
-
+	public List<Opus> liketoplist();
+	
 	public List<Opus> findAll();
 
 	public Opus opusDetail(int id);
