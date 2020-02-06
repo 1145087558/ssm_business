@@ -138,7 +138,7 @@
 				<img src="${opus.opus_image}">
 				<div class="magnifier"></div>
 				
-				<div class="big-img"></div>
+				
 				</div>
 				 <a
 					href="like_times.form?id=${opus.id}&like_times=${opus.opus_like_times+1}"
@@ -147,6 +147,7 @@
 				</a>
 			</div>
 			<div class="detail-right">
+				<div class="big-img"></div>
 				<p>作品名称：${opus.opus_name}</p>
 				<p>作品作者：${opus.author_name}</p>
 				<p>作品类型：${opus.opus_tipic}</p>
@@ -374,8 +375,8 @@
 	此处的宽和高时有讲究的，需要满足条件：
 	小图的宽度:大图的宽度 = 放大镜的left:放大后的left
 	*/
-	var d_w = 700 * m_left / 350;
-	var d_h = 700 * m_top / 350;
+	var d_w = 1500 * m_left / 770;
+	var d_h = 760 * m_top / 320;
 	$('.big-img').css('background-position','-'+d_w+'px -'+d_h+'px');
 	});
 	}).mouseleave(function(){

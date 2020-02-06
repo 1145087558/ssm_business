@@ -32,6 +32,7 @@ position: relative;
 	border-radius: 20px;
 	margin: 20px 30px 20px 30px;
 	background-color: white;
+	
 }
 
 .detail-right {
@@ -41,6 +42,7 @@ position: relative;
 	display: inline-block;
 	font-size: 16px;
 	padding: 10px 10px 10px 10px;
+	position:relative;
 }
 
 .detail-right button {
@@ -268,10 +270,10 @@ to {
 }
 
 .big-img {
-	width: 650px;
-	height: 400px;
+	width: 100%;
+	height: 100%; 
 	position: absolute;
-	left: 770px;
+	left: 0px;
 	top: 0;
 	/* display: none; */
 }
