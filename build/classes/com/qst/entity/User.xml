@@ -119,7 +119,9 @@
 			</if>
 		</trim>
 	</insert>
-
+	<select id="usercount" parameterType="com.qst.entity.User">
+	select count(id) count from tb_user
+	</select>
 	<select id="userLogin" parameterType="com.qst.entity.User"
 		resultType="com.qst.entity.User">
 		select *from tb_user where pwd=#{pwd}
@@ -133,7 +135,11 @@
 			and name = #{name}
 		</if>
 	</select>
-
+	
+	<select id="mapUser" resultType="com.qst.entity.UserAddress">
+	select count(province) status,province from tb_address GROUP BY province
+	</select>
+	
 	<select id="getUserById" parameterType="com.qst.entity.User"
 		resultType="com.qst.entity.User">
 		select *from tb_user where id=#{id}

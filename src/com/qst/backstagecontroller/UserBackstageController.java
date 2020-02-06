@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
@@ -24,6 +26,7 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.qst.entity.User;
+import com.qst.entity.UserAddress;
 import com.qst.service.UserService;
 import com.qst.util.AlipayConfig;
 import com.qst.util.VerificationCode;
@@ -122,8 +125,9 @@ public class UserBackstageController {
 		request.setAttribute("users", users);
 
 		return "backstage/member-list";
+		
 	}
-
+	
 	// 获取删除用户列表
 	@RequestMapping("/getDeleteUserList.form")
 	public String getDeleteUserList(Model model) {
@@ -133,7 +137,8 @@ public class UserBackstageController {
 
 		return "backstage/member-del";
 	}
-
+	/*//等级管理
+	@RequestMapping*/
 	// 获取所有用户列表
 	@RequestMapping("/getUserAllList.form")
 	public String getUserAll(Model model) {
@@ -231,5 +236,12 @@ public class UserBackstageController {
 				userService.modifyUserStatus(i, status);
 		}
 	}
-
+	//地图统计用户地址数量
+	@RequestMapping("/mapUser.form")
+	@ResponseBody
+	public List<UserAddress> mapUser( HttpServletResponse resp,HttpServletRequest req) {
+		return  userService.mapUser();
+		
+		
+	}
 }

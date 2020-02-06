@@ -6,7 +6,7 @@ import com.qst.entity.User;
 import com.qst.entity.UserAddress;
 
 public interface UserService {
-
+	
 	void userRegister(User user);
 
 	User userLogin(User user);
@@ -30,7 +30,9 @@ public interface UserService {
 	void modifyUserStatus(int id,int status);
 
 	List<User> getUserByStatus(int status);
-
+	
+	List<UserAddress> mapUser();
+	
 	List<User> getOrdinaryUserAll();
 
 	boolean checkEmail(String email);

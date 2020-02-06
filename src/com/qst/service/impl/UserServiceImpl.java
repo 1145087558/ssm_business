@@ -126,6 +126,12 @@ public class UserServiceImpl implements UserService{
 		userMapper.deleteAddress(id);
 	}
 
+	@Override
+	public List<UserAddress> mapUser() {
+		// TODO Auto-generated method stub
+		return userMapper.mapUser();
+	}
+
 	//@Override
 	/*public void investMoney(int id, double balan) {
 		userMapper.investMoney(id,balan);

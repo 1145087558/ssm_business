@@ -267,6 +267,7 @@ public class UserController {
 		User user = (User) request.getSession().getAttribute("user");
 		// 传递json数据
 		return userService.getUserAddress(user.getId());
+		
 	}
 
 	// 修改用户地址

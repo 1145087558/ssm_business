@@ -47,4 +47,6 @@ public interface UserMapper {
 
 	void deleteAddress(int id);
 
+	List<UserAddress> mapUser();
+
 }
