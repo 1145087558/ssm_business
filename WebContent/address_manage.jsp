@@ -136,10 +136,10 @@
 			<div class="content-left">
 				<p>个人中心</p>
 				<hr>
-					<p><a href="person_center.jsp">个人资料</a></p>
+					<p><a href="personCenter.jsp">个人资料</a></p>
 					<p><a href="safe_setup.jsp">安全设置</a></p>
 					<p><a href="address_manage.jsp">收货地址</a></p>
-					<p><a href="">订单管理</a></p>
+					<p><a href="seekOrder.form">订单管理</a></p>
 					<p><a href="">收藏</a></p>
 					<p><a href="">评价</a></p>
 			</div>
