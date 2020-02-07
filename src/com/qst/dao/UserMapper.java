@@ -50,5 +50,6 @@ public interface UserMapper {
 	List<UserAddress> mapUser();
 
 	void modifyUser(User user);
-
+	
+	User getPasswordByid(@Param(value = "pwd") String pwd, @Param(value = "id") int id);
 }

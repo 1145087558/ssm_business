@@ -188,18 +188,16 @@ public class UserController {
 		 * HttpClient client = new HttpClient(); PostMethod post = new
 		 * PostMethod("http://utf8.api.smschinese.cn");
 		 * post.addRequestHeader("Content-Type",
-		 * "application/x-www-form-urlencoded;charset=UTF-8"); NameValuePair[]
-		 * data = { new NameValuePair("Uid", "a1145087558"), new
-		 * NameValuePair("Key", "d41d8cd98f00b204e980"), new
-		 * NameValuePair("smsMob", phone), new NameValuePair("smsText",
-		 * "【墨韵书院平台】尊敬的用户，您好，您的验证码为：" + phoneCode + "，若非本人操作，请忽略此短信。") };
-		 * post.setRequestBody(data);
+		 * "application/x-www-form-urlencoded;charset=UTF-8"); NameValuePair[] data = {
+		 * new NameValuePair("Uid", "a1145087558"), new NameValuePair("Key",
+		 * "d41d8cd98f00b204e980"), new NameValuePair("smsMob", phone), new
+		 * NameValuePair("smsText", "【墨韵书院平台】尊敬的用户，您好，您的验证码为：" + phoneCode +
+		 * "，若非本人操作，请忽略此短信。") }; post.setRequestBody(data);
 		 * 
-		 * client.executeMethod(post); Header[] headers =
-		 * post.getResponseHeaders(); int statusCode = post.getStatusCode();
-		 * System.out.println("statusCode:" + statusCode); for (Header h :
-		 * headers) { System.out.println(h.toString()); } String result = new
-		 * String(post.getResponseBodyAsString().getBytes("utf-8"));
+		 * client.executeMethod(post); Header[] headers = post.getResponseHeaders(); int
+		 * statusCode = post.getStatusCode(); System.out.println("statusCode:" +
+		 * statusCode); for (Header h : headers) { System.out.println(h.toString()); }
+		 * String result = new String(post.getResponseBodyAsString().getBytes("utf-8"));
 		 * System.out.println(result);
 		 * 
 		 * post.releaseConnection();
@@ -228,6 +226,23 @@ public class UserController {
 		}
 
 		mailSender.send(mimeMessage);
+	}
+
+	// 检查密码是否被注册
+	@RequestMapping("checkPassword.form")
+	public void checkPassword(HttpServletResponse response, HttpServletRequest req, String pwd) throws IOException {
+		boolean confirm;
+		User user = (User) req.getSession().getAttribute("user");
+		Integer id = user.getId();
+		if (userService.getPasswordByid(pwd, id)) {
+			confirm = true;
+			String confirmJson = JSON.toJSONString(confirm);
+			response.getWriter().write(confirmJson);
+		} else {
+			confirm = false;
+			String confirmJson = JSON.toJSONString(confirm);
+			response.getWriter().write(confirmJson);
+		}
 	}
 
 	// 检查邮箱是否被注册
@@ -299,13 +314,13 @@ public class UserController {
 
 		userService.modifyPassword(user.getId(), newpassword);
 
-		return "redirect:getUserList.form";
+		return "personCenter";
 	}
 
 	// 修改用户信息
 	@RequestMapping("modifyUser.form")
-	public String modifyUser(User user,HttpServletRequest request) {
-		
+	public String modifyUser(User user, HttpServletRequest request) {
+
 		userService.modifyUser(user);
 		user = userService.getUserById(user.getId());
 		request.getSession().setAttribute("user", user);

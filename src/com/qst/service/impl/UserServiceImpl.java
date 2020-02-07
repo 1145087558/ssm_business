@@ -138,6 +138,17 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
+	public boolean getPasswordByid(String pwd, int id) {
+		// TODO Auto-generated method stub
+		if(userMapper.getPasswordByid(pwd, id)!=null) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+
 	//@Override
 	/*public void investMoney(int id, double balan) {
 		userMapper.investMoney(id,balan);

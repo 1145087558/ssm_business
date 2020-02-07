@@ -17,6 +17,7 @@
 <script type="text/javascript" src="js/dcalendar.picker.js"></script>
 <script
 	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/1.14.0/jquery.validate.js"></script>
 </head>
 
 <body>

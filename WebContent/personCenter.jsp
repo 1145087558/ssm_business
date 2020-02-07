@@ -18,6 +18,7 @@
 <script
 	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/dcalendar.picker.js"></script>
+<script type="text/javascript" src="js/1.14.0/jquery.validate.js"></script>
 </head>
 
 <body>
@@ -35,8 +36,9 @@
 				<span style="font-size: 16px;">${sessionScope.user.tel}</span>
 				<div class="dropdown-content" id="dpct">
 					<a href="" id="order" data-toggle="modal" data-target="#editModal"
-						ng-click="entity={}">余额充值</a><!--  <a href="seekOrder.form">我的订单</a> --> <a
-						href="personCenter.jsp">个人中心</a> <a href="upload.jsp">上传作品</a> <a
+						ng-click="entity={}">余额充值</a>
+					<!--  <a href="seekOrder.form">我的订单</a> -->
+					<a href="personCenter.jsp">个人中心</a> <a href="upload.jsp">上传作品</a> <a
 						href="logout.form">退出</a>
 				</div>
 			</div>
@@ -138,61 +140,140 @@
 	</div>
 
 	<div class="content">
-			<div class="content-left">
-				<p>个人中心</p>
-				<hr>
-					<p><a href="personCenter.jsp">个人资料</a></p>
-					<p><a href="safe_setup.jsp">安全设置</a></p>
-					<p><a href="address_manage.jsp">收货地址</a></p>
-					<p><a href="seekOrder.form">订单管理</a></p>
-					<p><a href="">收藏</a></p>
-					<p><a href="">评价</a></p>
-			</div>
-			<div class="content-right">
-				<h3>个人资料/Personal information</h3>
-				<hr>
-				<form action="modifyUser.form" method="post">
-					<label>昵称</label>
-					<p><input type="text" name="name" value="${sessionScope.user.name}"></p>
-					<label>邮箱</label>
-					<p><input type="text" name="email" value="${sessionScope.user.email}"></p>
-					<label>电话</label>
-					<p><input type="tel" name="tel" value="${sessionScope.user.tel}"></p>
-					<label>介绍</label>
-					<p><input type="text" name="synopsis" value="${sessionScope.user.synopsis}"></p>
-					<p><label>性别</label>
+		<div class="content-left">
+			<p>个人中心</p>
+			<hr>
+			<p>
+				<a href="personCenter.jsp">个人资料</a>
+			</p>
+			<p>
+				<a href="safe_setup.jsp">安全设置</a>
+			</p>
+			<p>
+				<a href="address_manage.jsp">收货地址</a>
+			</p>
+			<p>
+				<a href="seekOrder.form">订单管理</a>
+			</p>
+			<p>
+				<a href="">收藏</a>
+			</p>
+			<p>
+				<a href="">评价</a>
+			</p>
+		</div>
+		<div class="content-right">
+			<h3>个人资料/Personal information</h3>
+			<hr>
+			<form action="modifyUser.form" method="post" id="modifyUserform">
+				<div id="Error"></div>
+				<label>昵称</label>
+				<p>
+					<input id="name" type="text" name="name"
+						value="${sessionScope.user.name}">
+				</p>
+				<label>邮箱</label>
+				<p>
+					<input id="email" type="text" name="email"
+						value="${sessionScope.user.email}">
+				</p>
+				<label>电话</label>
+				<p>
+					<input id="tel" type="tel" name="tel"
+						value="${sessionScope.user.tel}">
+				</p>
+				<label>介绍</label>
+				<p>
+					<input id="synopsis" type="text" name="synopsis"
+						value="${sessionScope.user.synopsis}">
+				</p>
+				<p>
+					<label>性别</label>
 					<c:choose>
-					<c:when test="${sessionScope.user.sex =='男'}">
-					<input type="radio" name="sex" class="sex" value="男" checked="checked">男
+						<c:when test="${sessionScope.user.sex =='男'}">
+							<input type="radio" name="sex" class="sex" value="男"
+								checked="checked">男
 					<input type="radio" name="sex" class="sex" value="女">女
-					<input type="radio" name="sex" class="sex" value="保密">保密</p>
-					</c:when>
-					<c:when test="${sessionScope.user.sex =='女'}">
+					<input type="radio" name="sex" class="sex" value="保密">保密
+				</p>
+				</c:when>
+				<c:when test="${sessionScope.user.sex =='女'}">
 					<input type="radio" name="sex" class="sex" value="男">男
-					<input type="radio" name="sex" class="sex" value="女" checked="checked">女
+					<input type="radio" name="sex" class="sex" value="女"
+						checked="checked">女
 					<input type="radio" name="sex" class="sex" value="保密">保密</p>
-					</c:when>
-					<c:when test="${sessionScope.user.sex =='保密'}">
-					<input type="radio" name="sex" class="sex" value="男">男
-					<input type="radio" name="sex" class="sex" value="女">女
-					<input type="radio" name="sex" class="sex" value="保密" checked="checked">保密</p>
-					</c:when>
-					<c:otherwise>
+				</c:when>
+				<c:when test="${sessionScope.user.sex =='保密'}">
 					<input type="radio" name="sex" class="sex" value="男">男
 					<input type="radio" name="sex" class="sex" value="女">女
+					<input type="radio" name="sex" class="sex" value="保密"
+						checked="checked">保密</p>
+				</c:when>
+				<c:otherwise>
+					<input type="radio" name="sex" class="sex" value="男">男
+					<input type="radio" name="sex" class="sex" value="女">女
 					<input type="radio" name="sex" class="sex" value="保密">保密</p>
-					</c:otherwise>
-					</c:choose>
-					<input type="hidden" name="id" value="${sessionScope.user.id }">
-					<input type="submit" value="修改">
-				</form>
-			</div>
+				</c:otherwise>
+				</c:choose>
+				<input type="hidden" name="id" value="${sessionScope.user.id }">
+				<input type="submit" value="修改">
+			</form>
+		</div>
 </body>
 
 <script>
-	 
-	 $("#order").click(function(){
-	 	$("form").css("display","inline");
-	 })
+	$(function() {
+		$("#modifyUserform").validate({
+			rules : {
+				name : {
+					required : true,
+					minlength : 2
+				},
+				email : {
+					required : false,
+					email : true
+				},
+				tel : {
+					
+					isMobile : true
+
+				}
+				
+			},
+			messages : {
+				name : {
+					required : "请输入姓名",
+					minlength : " 姓名至少2位"
+				},
+				email : {
+					email:"请输入正确的邮箱"
+					
+				},
+				tel : {
+					required : "请输入手机号码"
+					
+				}
+			
+			},
+			errorPlacement : function(error, element) {
+				$("#Error").html($(error).text());
+			},
+			submitHandler : function(form) {
+				form.submit();
+			}
+		});
+	});
+	jQuery.validator
+			.addMethod(
+					"isMobile",
+					function(value, element) {
+						var length = value.length;
+						var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+						return this.optional(element)
+								|| (length == 11 && mobile.test(value));
+					}, "请正确填写手机号码");
+	$("#order").click(function() {
+		$("form").css("display", "inline");
+	});
 </script>
 </html>
