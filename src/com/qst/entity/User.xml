@@ -20,6 +20,9 @@
 			<if test="name != null">
 				name,
 			</if>
+			<if test="sex != null">
+				sex,
+			</if>
 			<if test="address != null">
 				address,
 			</if>
@@ -45,6 +48,9 @@
 			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
 			</if>
 			<if test="address != null">
 				#{address,jdbcType=VARCHAR},
@@ -192,6 +198,40 @@
 	<update id="modifyUserStatus">
 		update tb_user set status=#{param2} where
 		id=#{param1}
+	</update>
+	
+	<update id="modifyUser" parameterType="com.qst.entity.User">
+		update tb_user
+		<set>
+			<if test="tel != null">
+				tel=#{tel,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				pwd=#{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name=#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex=#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address=#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="synopsis != null">
+				synopsis=#{synopsis,jdbcType=VARCHAR},
+			</if>
+			<if test="balance != null">
+				balance=#{balance,jdbcType=DOUBLE},
+			</if>
+			<if test="email != null">
+				email=#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status=#{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
 	</update>
 	
 	<update id="modifyAddress" parameterType="com.qst.entity.UserAddress">

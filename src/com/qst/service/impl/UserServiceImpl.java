@@ -132,6 +132,12 @@ public class UserServiceImpl implements UserService{
 		return userMapper.mapUser();
 	}
 
+	@Override
+	public void modifyUser(User user) {
+		userMapper.modifyUser(user);
+		
+	}
+
 	//@Override
 	/*public void investMoney(int id, double balan) {
 		userMapper.investMoney(id,balan);

@@ -141,29 +141,50 @@
 			<div class="content-left">
 				<p>个人中心</p>
 				<hr>
-					<p><a href="person_center.jsp">个人资料</a></p>
+					<p><a href="personCenter.jsp">个人资料</a></p>
 					<p><a href="safe_setup.jsp">安全设置</a></p>
 					<p><a href="address_manage.jsp">收货地址</a></p>
 					<p><a href="">订单管理</a></p>
 					<p><a href="">收藏</a></p>
 					<p><a href="">评价</a></p>
 			</div>
-			<form class="content-right">
+			<div class="content-right">
 				<h3>个人资料/Personal information</h3>
 				<hr>
-				<form action="" method="post">
+				<form action="modifyUser.form" method="post">
 					<label>昵称</label>
-					<p><input type="text" name="" placeholder="请输入"></p>
-					<label>姓名</label>
-					<p><input type="text" name=""></p>
-					<label>生日</label>
-					<p><input type="text" name="" placeholder="请选择"></p>
+					<p><input type="text" name="name" value="${sessionScope.user.name}"></p>
+					<label>邮箱</label>
+					<p><input type="text" name="email" value="${sessionScope.user.email}"></p>
 					<label>电话</label>
-					<p><input type="tel" name=""></p>
+					<p><input type="tel" name="tel" value="${sessionScope.user.tel}"></p>
+					<label>介绍</label>
+					<p><input type="text" name="synopsis" value="${sessionScope.user.synopsis}"></p>
 					<p><label>性别</label>
-					<input type="radio" name="" id="sex">男
-					<input type="radio" name="" id="sex">女
-					<input type="radio" name="" id="sex">保密</p>
+					<c:choose>
+					<c:when test="${sessionScope.user.sex =='男'}">
+					<input type="radio" name="sex" class="sex" value="男" checked="checked">男
+					<input type="radio" name="sex" class="sex" value="女">女
+					<input type="radio" name="sex" class="sex" value="保密">保密</p>
+					</c:when>
+					<c:when test="${sessionScope.user.sex =='女'}">
+					<input type="radio" name="sex" class="sex" value="男">男
+					<input type="radio" name="sex" class="sex" value="女" checked="checked">女
+					<input type="radio" name="sex" class="sex" value="保密">保密</p>
+					</c:when>
+					<c:when test="${sessionScope.user.sex =='保密'}">
+					<input type="radio" name="sex" class="sex" value="男">男
+					<input type="radio" name="sex" class="sex" value="女">女
+					<input type="radio" name="sex" class="sex" value="保密" checked="checked">保密</p>
+					</c:when>
+					<c:otherwise>
+					<input type="radio" name="sex" class="sex" value="男">男
+					<input type="radio" name="sex" class="sex" value="女">女
+					<input type="radio" name="sex" class="sex" value="保密">保密</p>
+					</c:otherwise>
+					</c:choose>
+					<input type="hidden" name="id" value="${sessionScope.user.id }">
+					<input type="submit" value="修改">
 				</form>
 			</div>
 </body>

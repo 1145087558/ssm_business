@@ -62,13 +62,10 @@
 				url : 'liketoplist.form',
 				dataType : 'json',
 				success : function(data) {
-					console.log(data);
 					$.each(data, function(i, e) {
 						name.push(e.opus_name);
 						like.push(e.opus_like_times);
-					});
-					console.log(name);
-					console.log(like);
+					});					
 					$('#container').highcharts(
 							{
 								chart : {
@@ -94,7 +91,7 @@
 								tooltip : {
 									headerFormat : '<span style="font-size:10px">{point.key}</span><table>',
 									pointFormat : '<tr><td style="color:{series.color};padding:0">{series.name}: </td>'
-											+ '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+											+ '<td style="padding:0"><b>{point.y} </b></td></tr>',
 									footerFormat : '</table>',
 									shared : true,
 									useHTML : true

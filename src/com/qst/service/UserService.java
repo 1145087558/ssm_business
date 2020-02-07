@@ -45,6 +45,8 @@ public interface UserService {
 
 	void deleteAddress(int id);
 
+	void modifyUser(User user);
+
 	/*void investMoney(int id, double balan);*/
 
 }

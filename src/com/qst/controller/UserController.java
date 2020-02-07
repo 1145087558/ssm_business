@@ -267,7 +267,7 @@ public class UserController {
 		User user = (User) request.getSession().getAttribute("user");
 		// 传递json数据
 		return userService.getUserAddress(user.getId());
-		
+
 	}
 
 	// 修改用户地址
@@ -290,6 +290,26 @@ public class UserController {
 	@RequestMapping("deleteAddress.form")
 	public void deleteAddress(int id) {
 		userService.deleteAddress(id);
+	}
+
+	// 修改密码
+	@RequestMapping("modifyPassword.form")
+	public String modifyPassword(String oldpassword, String newpassword, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+
+		userService.modifyPassword(user.getId(), newpassword);
+
+		return "redirect:getUserList.form";
+	}
+
+	// 修改用户信息
+	@RequestMapping("modifyUser.form")
+	public String modifyUser(User user,HttpServletRequest request) {
+		
+		userService.modifyUser(user);
+		user = userService.getUserById(user.getId());
+		request.getSession().setAttribute("user", user);
+		return "personCenter";
 	}
 
 }

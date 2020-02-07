@@ -49,4 +49,6 @@ public interface UserMapper {
 
 	List<UserAddress> mapUser();
 
+	void modifyUser(User user);
+
 }

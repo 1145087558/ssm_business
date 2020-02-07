@@ -6,6 +6,7 @@ public class User {
 	private String tel;
 	private String pwd;
 	private String name;
+	private String sex;
 	private String address;
 	private String synopsis;
 	private double balance;
@@ -34,6 +35,12 @@ public class User {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 	public String getAddress() {
 		return address;

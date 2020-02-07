@@ -13,7 +13,7 @@
 
 <link rel="stylesheet" href="css/dcalendar.picker.css" />
 <link
-	href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+	href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
 	rel="stylesheet">
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script
@@ -142,7 +142,7 @@
 			<div class="content-left">
 				<p>个人中心</p>
 				<hr>
-					<p><a href="person_center.jsp">个人资料</a></p>
+					<p><a href="personCenter.jsp">个人资料</a></p>
 					<p><a href="safe_setup.jsp">安全设置</a></p>
 					<p><a href="address_manage.jsp">收货地址</a></p>
 					<p><a href="">订单管理</a></p>
@@ -170,13 +170,13 @@
 							<div class="u-progress-bar-inner"></div>
 						</div>
 					</div>
-				<form action="" method="post">
+				<form action="modifyPassword.form" method="post">
 					<label>原密码</label>
-					<p><input type="text" name=""></p>
+					<p><input type="password" name="oldpassword"></p>
 					<label>新密码</label>
-					<p><input type="text" name=""></p>
-					<label>确认密码</label>
-					<p><input type="text" name="" ></p>
+					<p><input type="password" name="newpassword"></p>
+					<!-- <label>确认密码</label>
+					<p><input type="text" name="" ></p> -->
 					
 				</form>
 			</div>
