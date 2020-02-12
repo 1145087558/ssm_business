@@ -35,13 +35,11 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void modifyPersonMsg(User user) {
-		userMapper.modifyPersonMsg(user);
-		
+		userMapper.modifyPersonMsg(user);		
 	}
 
 	@Override
-	public List<User> getUserAll() {
-		
+	public List<User> getUserAll() {		
 		return userMapper.getUserAll();
 	}
 
