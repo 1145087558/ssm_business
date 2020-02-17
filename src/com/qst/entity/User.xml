@@ -179,7 +179,9 @@
 	<select id="getUserAddress" resultType="com.qst.entity.UserAddress">
 		select *from tb_address where user_id=#{userId} order by status desc
 	</select>
-
+	<select id="getPasswordByid" resultType="com.qst.entity.User" parameterType="com.qst.entity.User">
+	select * from tb_user where pwd=#{pwd} and id=#{id}
+	</select>
 	<update id="modifyBalance" parameterType="com.qst.entity.User">
 		update tb_user set
 		balance=#{balance} where id=#{id}

@@ -19,6 +19,7 @@
 <script
 	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/dcalendar.picker.js"></script>
+<script type="text/javascript" src="js/1.14.0/jquery.validate.js"></script>
 </head>
 
 <body>
@@ -36,9 +37,10 @@
 				<span style="font-size: 16px;">${sessionScope.user.tel}</span>
 				<div class="dropdown-content" id="dpct">
 					<a href="" id="order" data-toggle="modal" data-target="#editModal"
-						ng-click="entity={}">余额充值</a><!--  <a href="seekOrder.form">我的订单</a> --> <a
-						href="person_center.jsp">个人中心</a> <a href="upload.jsp">上传作品</a> <a
-						href="logout.form">退出</a>
+						ng-click="entity={}">余额充值</a>
+					<!--  <a href="seekOrder.form">我的订单</a> -->
+					<a href="person_center.jsp">个人中心</a> <a href="upload.jsp">上传作品</a>
+					<a href="logout.form">退出</a>
 				</div>
 			</div>
 		</div>
@@ -139,53 +141,119 @@
 	</div>
 
 	<div class="content">
-			<div class="content-left">
-				<p>个人中心</p>
-				<hr>
-					<p><a href="personCenter.jsp">个人资料</a></p>
-					<p><a href="safe_setup.jsp">安全设置</a></p>
-					<p><a href="address_manage.jsp">收货地址</a></p>
-					<p><a href="seekOrder.form">订单管理</a></p>
-					<p><a href="">收藏</a></p>
-					<p><a href="">评价</a></p>
+		<div class="content-left">
+			<p>个人中心</p>
+			<hr>
+			<p>
+				<a href="personCenter.jsp">个人资料</a>
+			</p>
+			<p>
+				<a href="safe_setup.jsp">安全设置</a>
+			</p>
+			<p>
+				<a href="address_manage.jsp">收货地址</a>
+			</p>
+			<p>
+				<a href="seekOrder.form">订单管理</a>
+			</p>
+			<p>
+				<a href="">收藏</a>
+			</p>
+			<p>
+				<a href="">评价</a>
+			</p>
+		</div>
+		<form class="content-right" action="modifyPassword.form" id="modifyPasswordform" method="post">
+			<h3>修改密码/Modify Password</h3>
+			<hr>
+			<div class="m-progress">
+				<div class="m-progress-list">
+					<span class="step-1 step"> <em class="u-progress-stage-bg"></em>
+						<i class="u-stage-icon-inner">1<em class="bg"></em></i>
+						<p class="stage-name">重置密码</p>
+					</span> <span class="step-2 step"> <em class="u-progress-stage-bg"></em>
+						<i class="u-stage-icon-inner">2<em class="bg"></em></i>
+						<p class="stage-name">完成</p>
+					</span> <span class="u-progress-placeholder"></span>
+				</div>
+				<div class="u-progress-bar total-steps-2">
+					<div class="u-progress-bar-inner"></div>
+				</div>
 			</div>
-			<form class="content-right">
-				<h3>修改密码/Modify Password</h3>
-				<hr>
-					<div class="m-progress">
-						<div class="m-progress-list">
-							<span class="step-1 step">
-                                <em class="u-progress-stage-bg"></em>
-                                <i class="u-stage-icon-inner">1<em class="bg"></em></i>
-                                <p class="stage-name">重置密码</p>
-                            </span>
-							<span class="step-2 step">
-                                <em class="u-progress-stage-bg"></em>
-                                <i class="u-stage-icon-inner">2<em class="bg"></em></i>
-                                <p class="stage-name">完成</p>
-                            </span>
-							<span class="u-progress-placeholder"></span>
-						</div>
-						<div class="u-progress-bar total-steps-2">
-							<div class="u-progress-bar-inner"></div>
-						</div>
-					</div>
-				<form action="modifyPassword.form" method="post">
-					<label>原密码</label>
-					<p><input type="password" name="oldpassword"></p>
-					<label>新密码</label>
-					<p><input type="password" name="newpassword"></p>
-					<!-- <label>确认密码</label>
-					<p><input type="text" name="" ></p> -->
-					
-				</form>
-			</div>
+			<div id="Error"></div>
+			<label>原密码</label>
+			<p>
+				<input type="password" name="oldpassword" id="oldpassword">
+			</p>
+			<label>新密码</label>
+			<p>
+				<input type="password" name="newpassword" id="newpassword">
+			</p>
+
+			<label>确认密码</label>
+			<p>
+				<input type="password" name="surepassword" id="surepassword">
+			</p>
+			<input type="submit" value="修改">
+			</form>
+	</div>
 </body>
 
 <script>
-	 
-	 $("#order").click(function(){
-	 	$("form").css("display","inline");
-	 })
+	$(function() {
+		$("#modifyPasswordform").validate({
+			rules : {
+				oldpassword : {
+					required : true,
+					minlength : 3,
+					remote : {
+						url : "checkPassword.form",
+						type : "post",
+						dataType : "json",
+						data : {
+							pwd : function() {
+								return $("#oldpassword").val();
+							}
+						}
+					}
+				},
+				newpassword : {
+					required : true,
+					minlength : 3
+				},
+				surepassword : {
+					required : true,
+					equalTo : "#newpassword"
+
+				}
+
+			},
+			messages : {
+				oldpassword : {
+					required : "请输入原密码",
+					minlength : "密码至少3位",
+					remote:"原密码错误!"
+				},
+				newpassword : {
+					required : "请输入新密码",
+					minlength : "密码至少3位"
+				},
+				surepassword : {
+					required : "请输入确认密码",
+					equalTo : "与新密码不相同"
+				}
+
+			},
+			errorPlacement : function(error, element) {
+				$("#Error").html($(error).text());
+			},
+			submitHandler : function(form) {
+				form.submit();
+			}
+		});
+		$("#order").click(function() {
+			$("form").css("display", "inline");
+		})
+	});
 </script>
 </html>

@@ -15,6 +15,7 @@
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script
 	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/1.14.0/jquery.validate.js"></script>
 </head>
 
 <body>
@@ -154,6 +155,7 @@
 
 </body>
 <script>
+
 	function display(x){
 		$(".cate-list").css("display","inline");
 	}

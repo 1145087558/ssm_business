@@ -35,13 +35,11 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void modifyPersonMsg(User user) {
-		userMapper.modifyPersonMsg(user);
-		
+		userMapper.modifyPersonMsg(user);		
 	}
 
 	@Override
-	public List<User> getUserAll() {
-		
+	public List<User> getUserAll() {		
 		return userMapper.getUserAll();
 	}
 
@@ -135,6 +133,17 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void modifyUser(User user) {
 		userMapper.modifyUser(user);
+		
+	}
+
+	@Override
+	public boolean getPasswordByid(String pwd, int id) {
+		// TODO Auto-generated method stub
+		if(userMapper.getPasswordByid(pwd, id)!=null) {
+			return true;
+		}else {
+			return false;
+		}
 		
 	}
 

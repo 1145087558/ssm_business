@@ -39,6 +39,7 @@ public interface UserService {
 
 	boolean checkPhone(String phone);
 	
+	boolean getPasswordByid(String pwd,int id);
 	List<UserAddress> getUserAddress(int userId);
 
 	void modifyAddress(UserAddress userAddress);
@@ -46,7 +47,7 @@ public interface UserService {
 	void deleteAddress(int id);
 
 	void modifyUser(User user);
-
+	
 	/*void investMoney(int id, double balan);*/
 
 }
