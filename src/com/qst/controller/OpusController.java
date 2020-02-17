@@ -120,7 +120,7 @@ public class OpusController {
 		List<UserAddress> address = userService.getUserAddress(user.getId());
 		request.setAttribute("cartList", cartList);
 		request.setAttribute("addresss", address);
-		System.out.println(address.get(0));
+		//System.out.println(address.get(0));
 		System.out.println("用户输出L:" + user);
 		for (Cart c : cartList)
 			System.out.println(c.getOpus_id());

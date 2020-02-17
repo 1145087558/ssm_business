@@ -8,7 +8,8 @@
 <link rel="stylesheet"
 	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/basic.css">
-<link rel="stylesheet" href="css/cart.css">
+<link rel="stylesheet" href="css/person_basic.css">
+<link rel="stylesheet" href="css/order.css">
 <link
 	href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
 	rel="stylesheet">
@@ -16,11 +17,6 @@
 <script
 	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<style type="text/css">
-td {
-	height: 50px;
-}
-</style>
 </head>
 
 <body>
@@ -134,7 +130,7 @@ td {
 		</ul>
 	</div>
 	<!-- <hr style="border:1px solid red;margin-top:-1px;width:100%;"> -->
-	<div class="cart">
+	<%-- <div class="cart">
 		<h2 style="text-align: center; margin-bottom: 20px;">订单管理</h2>
 		<table border="1" style="width: 100%; text-align: center;">
 			<tr>
@@ -153,15 +149,54 @@ td {
 			</c:forEach>
 		</table>
 	</div>
-
+ --%>
+ 
+ 
+ 
+ 		<div class="content">
+			<div class="content-left">
+				<p>个人中心</p>
+				<hr>
+					<p><a href="personCenter.jsp">个人资料</a></p>
+					<p><a href="safe_setup.jsp">安全设置</a></p>
+					<p><a href="address_manage.jsp">收货地址</a></p>
+					<p><a href="seekOrder.form">订单管理</a></p>
+					<p><a href="">收藏</a></p>
+					<p><a href="">评价</a></p>
+			</div>
+			<div class="content-right">
+				<h3>订单管理/Order Manage</h3>
+				<hr>
+				
+				<table class="table table-hover">
+					<thead><th>所有订单</th><th>待付款</th><th>待发货</th><th>待收货</th><th>待评价</th></thead>
+					<tbody>
+					<tr><td>商品</td><td>价格</td><td>商品操作</td><td>交易状态</td><td>交易操作</td></tr>
+					
+					<c:forEach items="${orderList}" var="order">
+						<tr><td style="width:200px;">订单编号:${order.id}</td><td colspan="3">交易时间:${order.order_date}</td><td></td><td></td><td></td></tr>
+					<tr>
+						<td>
+							<div class="opusMsg">
+								<div class="opusMsg-left">
+									<img src="image/c1.jpg" style="width:100%;height:100%;">
+								</div>
+								<div class="opusMsg-right">
+									<p>作品名称：${order.opus_name}</p>
+									<p>作者：</p>
+								</div>
+							</div>
+						</td>
+						<td style="line-height:100px;">888￥</td>
+						<td style="line-height:100px;"><a href="##">退款/退货</a></td>
+						<td style="line-height:100px;">已签收</td>
+						<td style="line-height:100px;"><a href="##">删除订单</a></td>
+					</tr>
+					</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
 </body>
 
-<script>
-	/* function display(x){
-		$(".cate-list").css("display","inline");
-	}
-	function hid(x){
-		$(".cate-list").css("display","none");
-	} */
-</script>
 </html>

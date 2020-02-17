@@ -32,7 +32,7 @@
 				<span style="font-size: 16px;">${sessionScope.user.tel}</span>
 				<div class="dropdown-content" id="dpct">
 					<a href="" id="order" data-toggle="modal" data-target="#editModal"
-						ng-click="entity={}">余额充值</a> <a href="seekOrder.form">我的订单</a> <a
+						ng-click="entity={}">余额充值</a> <!-- <a href="seekOrder.form">我的订单</a> --> <a
 						href="personCenter.jsp">个人中心</a> <a href="upload.jsp">上传作品</a> <a
 						href="logout.form">退出</a>
 				</div>

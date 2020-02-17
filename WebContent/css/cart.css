@@ -14,9 +14,9 @@
 }
 
 .left_box {
-	/* width: 25%; */
+	width: 20%;
 	height: 200px;
-	/* border: 1px solid red; */
+	/* border: 1px solid red;  */
 	display: inline-block;
 	margin-top: 17px;
 }
@@ -24,8 +24,8 @@
 .right_box {
 	width: 60%;
 	height: 200px;
-	/* 	border: 1px solid red; */
-	float: right;
+	/* border: 1px solid red;  */
+	/* float: right; */
 	display: inline-block;
 	margin-left: 10%;
 	padding-top: 20px;
