@@ -73,11 +73,12 @@
 				<thead>
 					<tr class="text-c">
 						<th width="25"><input type="checkbox" name="" value=""></th>
-						<th width="50">ID</th>
+						<th width="100">订单号</th>
 						<th width="120">作品名称</th>
-						<th width="100">用户名称</th>
+						<th width="80">用户名称</th>
 						<th width="80">价格</th>
 						<th width="100">下单时间</th>
+						<th width="80">支付方式</th>
 						<th>收获地址</th>
 						<th width="60">发布状态</th>
 						<th width="70">操作</th>
@@ -87,15 +88,24 @@
 					<c:forEach items="${orderList}" var="order">
 						<tr class="text-c">
 							<td><input name="id" type="checkbox" value="${order.id}"></td>
-							<td>${order.id}</td>
+							<td class="text-l">${order.order_number}</td>
 							<!-- <td><input type="text" class="input-text text-c" value="1"></td> -->
 							<td>${order.opus_name}</td>
 							<td>${order.user_name}</td>
-							<td class="text-l">${order.opus_price}</td>
-							<td class="text-l">${order.order_date}</td>
-							<td>${order.user_address}</td>
+							<td>${order.opus_price}</td>
+							<td>${order.order_date}</td>
+							<td>${order.order_type}</td>
+							<td class="text-l">${order.user_address}</td>
+							<c:choose>
+							<c:when test="${order.status == '已支付'}">
 							<td class="td-status"><span
 								class="label label-success radius">已支付</span></td>
+							</c:when>
+							<c:otherwise>
+							<td class="td-status"><span
+								class="label label-danger radius">${order.status}</span></td>
+							</c:otherwise>
+							</c:choose>
 							<td class="td-manage"><a title="删除" href="javascript:;"
 								onclick="picture_del(this,'${order.id}')" class="ml-5"
 								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
@@ -124,7 +134,7 @@ $('.table-sort').dataTable({
 	"bStateSave": true,//状态保存
 	"aoColumnDefs": [
 	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[0,6,8]}// 制定列不参与排序
+	  {"orderable":false,"aTargets":[0,9]}// 制定列不参与排序
 	]
 });
 

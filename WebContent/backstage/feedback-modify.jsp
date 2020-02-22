@@ -35,80 +35,38 @@
 </head>
 <body>
 	<article class="page-container">
-	<form action="modifyUser.form" method="post"
+	<form method="post" id="discussForm"
 		class="form form-horizontal" id="form-member-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span
 				class="c-red">*</span>用户名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="hidden" value="${user.id}" id="id" name="id"> <input
-					type="text" class="input-text" value="${user.name}" placeholder=""
-					id="name" name="name">
+				<input type="hidden" value="${discuss.id}" id="id" name="id"> <input
+					type="text" class="input-text" value="${discuss.user_name}" placeholder=""
+					id="user_name" name="user_name" readonly="readonly">
 			</div>
 		</div>
-		<!-- 	<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
-			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
-				<div class="radio-box">
-					<input name="sex" type="radio" id="sex-1" checked>
-					<label for="sex-1">男</label>
-				</div>
-				<div class="radio-box">
-					<input type="radio" id="sex-2" name="sex">
-					<label for="sex-2">女</label>
-				</div>
-				<div class="radio-box">
-					<input type="radio" id="sex-3" name="sex">
-					<label for="sex-3">保密</label>
-				</div>
-			</div>
-		</div> -->
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span
-				class="c-red">*</span>手机：</label>
+				class="c-red">*</span>作品名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="${user.tel}"
-					placeholder="" id="tel" name="tel" readonly="readonly">
-			</div>
-		</div>
-		<!-- <div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" placeholder="@" name="email" id="email">
-			</div>
-		</div> -->
-		<!-- <div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">附件：</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
-				<input class="input-text upload-url" type="text" name="uploadfile" id="uploadfile" readonly nullmsg="请添加附件！" style="width:200px">
-				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
-				<input type="file" multiple name="file-2" class="input-file">
-				</span> </div>
-		</div> -->
-		<!-- <div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">所在城市：</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select class="select" size="1" name="city">
-					<option value="" selected>请选择城市</option>
-					<option value="1">北京</option>
-					<option value="2">上海</option>
-					<option value="3">广州</option>
-				</select>
-				</span> </div>
-		</div> -->
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">地址：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="${user.address}"
-					placeholder="" id="address" name="address">
+				<input type="text" class="input-text" value="${discuss.opus_name}"
+					placeholder="" id="opus_name" name="opus_name" readonly="readonly">
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">介绍：</label>
+			<label class="form-label col-xs-4 col-sm-3">评论时间：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<textarea id="synopsis" name="synopsis" cols="" rows=""
+				<input type="text" class="input-text" value="${discuss.discuss_date}"
+					placeholder="" id="discuss_date" name="discuss_date" readonly="readonly">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">评论内容：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea id="discuss_msg" name="discuss_msg" cols="" rows=""
 					class="textarea" placeholder="说点什么...最少输入10个字符"
-					onKeyUp="$.Huitextarealength(this,100)">${user.synopsis}</textarea>
+					onKeyUp="$.Huitextarealength(this,100)">${discuss.discuss_msg}</textarea>
 				<p class="textarea-numberbar">
 					<em class="textarea-length">0</em>/100
 				</p>
@@ -116,8 +74,8 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<input class="btn btn-primary radius" type="submit"
-					value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				<input class="btn btn-primary radius" type="button"
+					value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="sumbitForm()">
 			</div>
 		</div>
 	</form>
@@ -147,32 +105,21 @@ $(function(){
 		increaseArea: '20%'
 	});
 	
-	$("#form-member-add").validate({
-		rules:{
-			name:{
-				required:true
-			},
-			tel:{
-				required:true
-			},
-			address:{
-				required:true
-			},
-			uploadfile:{
-				required:true
-			}
-			
+});
+
+function sumbitForm(){
+	$.ajax({
+		url:"updateDiscussmsg.form",
+		type:"post",
+		data:$("#discussForm").serialize(),
+		success:function(){
+			window.location.href="feedback-list.jsp";
 		},
-		submitHandler:function(form){
-			$(form).ajaxSubmit(function() {
-				/* window.parent.location.reload();
-				var index = parent.layer.getFrameIndex(window.name);
-				parent.layer.close(index); */
-				window.parent.location.reload();
-			});
+		error:function(){
+			window.parent.location.reload();
 		}
 	});
-});
+}
 </script>
 	<!--/请在上方写此页面业务相关的脚本-->
 </body>

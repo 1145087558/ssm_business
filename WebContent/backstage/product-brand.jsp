@@ -216,7 +216,10 @@ function picture_edit(title,url,id){
 	var index = layer.open({
 		type: 2,
 		title: title,
-		content: url
+		content: url,
+		end: function () {
+	        location.reload();
+	    }
 	});
 	layer.full(index);
 }
@@ -226,7 +229,10 @@ function picture_add(title,url){
 	var index = layer.open({
 		type: 2,
 		title: title,
-		content: url
+		content: url,
+		end: function () {
+	        location.reload();
+	    }
 	});
 	layer.full(index);
 }

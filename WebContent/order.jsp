@@ -174,7 +174,7 @@
 					<tr><td>商品</td><td>价格</td><td>商品操作</td><td>交易状态</td><td>交易操作</td></tr>
 					
 					<c:forEach items="${orderList}" var="order">
-						<tr><td style="width:200px;">订单编号:${order.id}</td><td colspan="3">交易时间:${order.order_date}</td><td></td><td></td><td></td></tr>
+						<tr><td style="width:200px;">订单编号:${order.order_number}</td><td colspan="3">交易时间:${order.order_date}</td><td></td><td></td><td></td></tr>
 					<tr>
 						<td>
 							<div class="opusMsg">
@@ -187,10 +187,17 @@
 								</div>
 							</div>
 						</td>
-						<td style="line-height:100px;">888￥</td>
-						<td style="line-height:100px;"><a href="##">退款/退货</a></td>
-						<td style="line-height:100px;">已签收</td>
-						<td style="line-height:100px;"><a href="##">删除订单</a></td>
+						<td style="line-height:100px;">${order.opus_price}￥</td>
+						<c:choose>
+						<c:when test="${order.status !='已退款'}">
+						<td style="line-height:100px;"><a href="javascript:;" onclick="refundRequest('${order.order_number}',this)">退款/退货</a></td>
+						</c:when>
+						<c:otherwise>
+						<td style="line-height:100px;"></td>
+						</c:otherwise>
+						</c:choose>
+						<td style="line-height:100px;">${order.status}</td>
+						<td style="line-height:100px;"><a href="javascript:;" onclick="deleteOrder(${order.id},this)">删除订单</a></td>
 					</tr>
 					</c:forEach>
 					</tbody>
@@ -199,4 +206,37 @@
 		</div>
 </body>
 
+<script type="text/javascript">
+
+function deleteOrder(id,obj){
+	$.ajax({
+		url:"deleteOrder.form",
+		type:"post",
+		data:{
+			"id":id
+		},
+		success:function(){
+			
+		}
+	})
+	var parent = $(obj).parent().parent();
+	parent.prev().remove();
+	parent.remove();
+}
+
+function refundRequest(orderNumber,obj){
+	$.ajax({
+		url:"refundRequest.form",
+		type:"post",
+		data:{
+			"out_trade_no":orderNumber
+		},
+		success:function(){
+			
+		}
+	})
+	$(obj).parent().next().text("已退款");
+	$(obj).parent().next().prev().text("");
+}
+</script>
 </html>

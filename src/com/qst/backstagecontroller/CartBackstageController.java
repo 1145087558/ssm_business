@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qst.entity.Opus;
 import com.qst.entity.Order;
@@ -49,7 +50,12 @@ public class CartBackstageController {
 	// 订单删除
 	@RequestMapping("deletOrder.form")
 	public void deletOrder(int id,HttpServletRequest request) {
-		opusService.deletOrder(id);
+		opusService.deleteOrder(id);
 	}
 
+	@RequestMapping("getOrderLike.form")
+	@ResponseBody
+	public List<Opus> getOrderLike() {
+		return opusService.getOrderLike();
+	}
 }

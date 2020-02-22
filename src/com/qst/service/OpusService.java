@@ -39,8 +39,12 @@ public interface OpusService {
 	public List<Discuss> seekDiscussMsg(int id);
 
 	public void addOrder(Order order);
+	
+	public void updateOrder(Order order);
 
 	public List<Order> seekOrder(int id);
+	
+	public Order seekOrderByNumber(String order_number);
 
 	public void upload(Opus opus);
 
@@ -60,13 +64,19 @@ public interface OpusService {
 
 	public List<Order> seekOrderAll();
 
-	public void deletOrder(int id);
+	public void deleteOrder(int id);
 
 	public List<Discuss> seekDiscussMsgAll();
 
 	public void deleteDiscussmsg(int id);
 
 	public List<Opus> timeSort();
+
+	public Discuss getDiscussMsg(int id);
+
+	public void updateDiscussMsg(Discuss discuss);
+
+	public List<Opus> getOrderLike();
 
 	
 }

@@ -144,8 +144,8 @@ public class OpusServiceImpl implements OpusService{
 		return opusMapper.seekOrderAll();
 	}
 	@Override
-	public void deletOrder(int id) {
-		opusMapper.deletOrder(id);
+	public void deleteOrder(int id) {
+		opusMapper.deleteOrder(id);
 		
 	}
 	@Override
@@ -182,5 +182,30 @@ public class OpusServiceImpl implements OpusService{
 	public List<Opus> liketoplist() {
 		// TODO Auto-generated method stub
 		return opusMapper.liketoplist();
+	}
+	@Override
+	public Order seekOrderByNumber(String order_number) {
+		
+		return opusMapper.seekOrderByNumber(order_number);
+	}
+	@Override
+	public void updateOrder(Order order) {
+		opusMapper.updateOrder(order);
+		
+	}
+	@Override
+	public Discuss getDiscussMsg(int id) {
+		
+		return opusMapper.getDiscussMsg(id);
+	}
+	@Override
+	public void updateDiscussMsg(Discuss discuss) {
+		
+		opusMapper.updateDiscuss(discuss);
+	}
+	@Override
+	public List<Opus> getOrderLike() {
+		
+		return opusMapper.getOrderLike();
 	}
 }

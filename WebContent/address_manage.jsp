@@ -146,7 +146,12 @@
 			<div class="content-right">
 				<h3>地址管理/Address Manage</h3>
 				<hr>
+			<div class="Caddress">
+				<div class="open_new">
+					<button class="open_btn" onclick="modalShow()">使用新地址</button>
+				</div>
 				
+			</div>
 			</div>
 		</div>
 		
@@ -160,7 +165,7 @@
 			<div class="tenant-model-body">
 				<form action="" method="post" id="addressForm">
 					<label>收货人</label><p><input type="text" name="name"></p>
-					<label>手机号码</label><p><input type="text" name="phone"></p>
+					<label>手机号码</label><p><input type="tel" name="phone"></p>
 					<label>所在地</label>
 						<p>
 							<select name="province" id="province">
@@ -207,42 +212,37 @@
 			type:"post",
 			success:function(data){   
 				$.each(data,function(i,e){
-					$(".content-right").append('<div><h4>收货地址'+(i+1)+'</h4>'+
-					 '<label>收货人:</label><p>'+e.name+'</p>'+
-					 '<label>手机号码:</label><p>'+e.phone+'</p>'+
-					 '<label>所在地:</label><p><select name="province">'+
-					 '<option>'+e.province+'</option></select>'+
-					 '<select name="city"><option>'+e.city+'</option></select>'+
-					 '<select name="town"><option>'+e.town+'</option></select></p>'+	
-					 '<div><label>详细地址:</label><p>'+e.area+'</p>'+
-					 '<a href="javascript:;" class="delete">删除</a>'+
-					 '<a href="javascript:;" class="modify">编辑</a></div>'+
-					 '<input type="hidden" name="id" value="'+e.id+'"></div>');
+				$(".content-right .Caddress").append('<div class="add_mi">'+
+						'<p style="border-bottom: 1px dashed #ccc; line-height: 28px;">'+
+						'<span>'+e.province+'</span><span>'+e.city+'</span>(<span>'+e.name+'</span>收)</p>'+
+						'<p><span>'+e.town+'</span>'+' '+'<span>'+e.area+'</span>'+' '+'<span>'+e.phone+'</span></p>'+
+						'<a href="javascript:;" class="delete">删除</a>'+
+						'<a href="javascript:;" class="modify">编辑</a>'+
+						'<input type="hidden" name="id" value="'+e.id+'"></div>');
 				});
-				$(".content-right").append('<button onclick="modalShow()">添加收获地址</button>');
 			}
 		})
 		
 		$(".content-right").on("click",".modify",function(){
 			$(".tenant-model-body form").append('<input type="hidden" name="id">');
-			var obj = $(this).parent();
-			$(".tenant-model-body textarea").text($(this).prev().prev().text());
-			var id = obj.next().val();
+			var obj1=$(this).prev().prev();
+			var obj2=$(this).prev().prev().prev();
+			$(".tenant-model-body textarea").text(obj1.find("span").eq(1).text());
+			var id = $(this).next().val();
 			$(".tenant-model-body input[name='id']").val(id);
-			var address = obj.prev();
-			var province = address.find("select[name='province'] option").text();
-			var city = address.find("select[name='city'] option").text();
-			var town = address.find("select[name='town'] option").text();
+			var province = obj2.find("span").eq(0).text();
+			var city = obj2.find("span").eq(1).text();
+			var town = obj1.find("span").eq(0).text();
 			$("#province option:first-child").text(province);
 			$("#province option:first-child").val(province);
 			$("#city option:first-child").text(city);
 			$("#city option:first-child").val(city);
 			$("#town option:first-child").text(town);
 			$("#town option:first-child").val(town);
-			var phone = address.prev().prev();
-			$(".tenant-model-body input[name='phone']").val(phone.text());
-			var name = phone.prev().prev();
-			$(".tenant-model-body input[name='name']").val(name.text());
+			var phone = obj1.find("span").eq(2).text();
+			$(".tenant-model-body input[name='phone']").val(phone);
+			var name = obj2.find("span").eq(2).text();
+			$(".tenant-model-body input[name='name']").val(name);
 			
 			$("#addressForm").attr("action","modifyAddress.form");
 			$(".tenant-model-body input[type='submit']").val("修改");
@@ -256,7 +256,7 @@
 			});
 		});
 		$(".content-right").on("click",".delete",function(){
-			var obj = $(this).parent().parent();
+			var obj = $(this).parent();
 			$.ajax({
 				url:"deleteAddress.form",
 				type:"post",

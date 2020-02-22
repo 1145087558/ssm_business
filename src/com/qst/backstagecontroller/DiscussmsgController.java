@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.qst.entity.Discuss;
@@ -27,10 +28,24 @@ public class DiscussmsgController {
 		return "backstage/feedback-list";
 	}
 
-	// 评论管理
+	// 获取评论
+	@RequestMapping("getDiscussmsg.form")
+	public String getDiscussMsg(int id, Model model) {
+
+		model.addAttribute("discuss", opusService.getDiscussMsg(id));
+		return "backstage/feedback-modify";
+	}
+
+	// 修改评论
+	@RequestMapping("updateDiscussmsg.form")
+	public void updateDiscussMsg(Discuss discuss) {
+		opusService.updateDiscussMsg(discuss);
+	}
+
+	// 删除评论
 	@RequestMapping("deleteDiscussmsg.form")
-	public void deleteDiscussmsg(int id,HttpServletRequest request) {
+	public void deleteDiscussmsg(int id, HttpServletRequest request) {
 		opusService.deleteDiscussmsg(id);
-		
+
 	}
 }

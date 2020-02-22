@@ -6,6 +6,8 @@ public class Order {
 	private int user_id;
 	private int opus_id;
 	private Integer address_id;
+	private String  order_number;
+	private String  order_type;
 	private String user_name;
 	private String opus_name;
 	private String user_address;
@@ -35,6 +37,18 @@ public class Order {
 	}
 	public void setAddress_id(Integer address_id) {
 		this.address_id = address_id;
+	}
+	public String getOrder_number() {
+		return order_number;
+	}
+	public void setOrder_number(String order_number) {
+		this.order_number = order_number;
+	}
+	public String getOrder_type() {
+		return order_type;
+	}
+	public void setOrder_type(String order_type) {
+		this.order_type = order_type;
 	}
 	public String getUser_name() {
 		return user_name;

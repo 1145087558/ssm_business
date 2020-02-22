@@ -8,7 +8,11 @@ import com.qst.entity.Opus;
 import com.qst.entity.Order;
 
 public interface OpusMapper {
+	
 	public List<Opus> liketoplist();
+	
+	public List<Opus> getOrderLike();
+	
 	public List<Opus> findAll();
 
 	public Opus opusDetail(int id);
@@ -30,6 +34,8 @@ public interface OpusMapper {
 	public void deleteCartOpus(int id);
 
 	public void addDiscuss(Discuss discuss);
+	
+	public Discuss getDiscussMsg(int id);
 
 	public List<Discuss> seekDiscussMsg(int id);
 
@@ -54,8 +60,12 @@ public interface OpusMapper {
 	public List<Order> seekOrderByOpus(int id);
 
 	public List<Order> seekOrderAll();
+	
+	public void updateOrder(Order order);
+	
+	public Order seekOrderByNumber(String order_number);
 
-	public void deletOrder(int id);
+	public void deleteOrder(int id);
 
 	public List<Discuss> seekDiscussMsgAll();
 
@@ -68,6 +78,8 @@ public interface OpusMapper {
 	public List<Opus> timesSort();
 
 	public List<Opus> timeSort();
+	
+	public void updateDiscuss(Discuss discuss);
 
 	
 

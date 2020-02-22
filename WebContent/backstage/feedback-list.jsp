@@ -71,7 +71,7 @@
 						<th width="100">用户名</th>
 						<th width="100">作品名</th>
 						<th width="120">评论时间</th>
-						<th>留言内容</th>
+						<th>评论内容</th>
 						<th width="100">操作</th>
 					</tr>
 				</thead>
@@ -90,7 +90,7 @@
 							<div class="f-12 c-999"><a href="http://www.h-ui.net/Hui-4.22-comment.shtml" target="_blank">http://www.h-ui.net/Hui-4.22-comment.shtml</a></div>
 						<div>留言内容</div></td> -->
 							<td class="td-manage"><a title="编辑" href="javascript:;"
-								onclick="member_edit('编辑','member-add.html','4','','510')"
+								onclick="member_edit('编辑','getDiscussmsg.form?id=${discuss.id}','4','','510')"
 								style="text-decoration: none"><i class="Hui-iconfont">&#xe6df;</i></a>
 								<a title="删除" href="javascript:;"
 								onclick="member_del(this,'${discuss.id}')" class="ml-5"

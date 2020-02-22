@@ -3,9 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qst.dao.OpusMapper">
-	<!--统计点赞数排名前十的作品  -->
+	<!--统计点赞数排名前十的作品 -->
 	<select id="liketoplist" resultType="com.qst.entity.Opus">
-	select opus_name ,opus_like_times  from tb_opus  ORDER BY opus_like_times desc limit 0,10
+		select opus_name ,opus_like_times from tb_opus ORDER BY opus_like_times desc
+		limit 0,10
+	</select>
+	<!--统计购买数排名前十的作品 -->
+	<select id="getOrderLike" resultType="com.qst.entity.Opus">
+		select opus_name ,COUNT(opus_name) as opus_like_times from tb_order group by opus_name ORDER BY opus_like_times desc
+		limit 0,10
 	</select>
 	<!-- 显示所有 -->
 	<select id="findAll" resultType="com.qst.entity.Opus">
@@ -75,6 +81,32 @@
 		delete from tb_discussmsg where id=#{id}
 	</delete>
 
+	<!-- 修改某个评论 -->
+	<update id="updateDiscuss" parameterType="com.qst.entity.Discuss">
+		update tb_discussmsg
+		<set>
+			<if test="user_id != null">
+				user_id=#{user_id,jdbcType=INTEGER},
+			</if>
+			<if test="opus_id != null">
+				opus_id=#{opus_id,jdbcType=INTEGER},
+			</if>
+			<if test="opus_name != null">
+				opus_name=#{opus_name,jdbcType=VARCHAR},
+			</if>
+			<if test="user_name != null">
+				user_name=#{user_name,jdbcType=VARCHAR},
+			</if>
+			<if test="discuss_msg != null">
+				discuss_msg=#{discuss_msg,jdbcType=VARCHAR},
+			</if>
+			<if test="discuss_date != null">
+				discuss_date=#{discuss_date,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
 
 	<!-- 添加评论 -->
 	<insert id="addDiscuss" parameterType="com.qst.entity.Discuss">
@@ -95,10 +127,16 @@
 		tb_discussMsg
 	</select>
 
+	<!-- 获取评论信息 -->
+	<select id="getDiscussMsg" resultType="com.qst.entity.Discuss">
+		select *from tb_discussMsg
+		where id=#{id}
+	</select>
+
 	<insert id="addOrder" parameterType="com.qst.entity.Order">
 		insert into
-		tb_order(user_id,opus_id,address_id,user_name,opus_name,user_address,opus_price,order_date)
-		values(#{user_id},#{opus_id},#{address_id},#{user_name},#{opus_name},#{user_address},#{opus_price},#{order_date})
+		tb_order(user_id,opus_id,address_id,order_number,order_type,user_name,opus_name,user_address,opus_price,status,order_date)
+		values(#{user_id},#{opus_id},#{address_id},#{order_number},#{order_type},#{user_name},#{opus_name},#{user_address},#{opus_price},#{status},#{order_date})
 	</insert>
 	<!-- 查询某个人的订单 -->
 	<select id="seekOrder" resultType="com.qst.entity.Order">
@@ -115,6 +153,12 @@
 	<!-- 查询所有订单 -->
 	<select id="seekOrderAll" resultType="com.qst.entity.Order">
 		select *from tb_order
+	</select>
+
+	<!-- 根据订单号查询订单 -->
+	<select id="seekOrderByNumber" resultType="com.qst.entity.Order">
+		select *from tb_order
+		where order_number=#{order_number}
 	</select>
 
 
@@ -224,6 +268,46 @@
 			</if>
 			<if test="user_id != null">
 				user_id=#{user_id,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateOrder" parameterType="com.qst.entity.Order">
+		update tb_order
+		<set>
+			<if test="user_id != null">
+				user_id=#{user_id,jdbcType=INTEGER},
+			</if>
+			<if test="opus_id != null">
+				opus_id=#{opus_id,jdbcType=INTEGER},
+			</if>
+			<if test="address_id != null">
+				address_id=#{address_id,jdbcType=INTEGER},
+			</if>
+			<if test="order_number != null">
+				order_number=#{order_number,jdbcType=VARCHAR},
+			</if>
+			<if test="order_type != null">
+				order_type=#{order_type,jdbcType=VARCHAR},
+			</if>
+			<if test="user_name != null">
+				user_name=#{user_name,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_name != null">
+				opus_name=#{opus_name,jdbcType=VARCHAR},
+			</if>
+			<if test="user_address != null">
+				user_address=#{user_address,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_price != null">
+				opus_price=#{opus_price,jdbcType=DOUBLE},
+			</if>
+			<if test="status != null">
+				status=#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="order_date != null">
+				order_date=#{order_date,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}

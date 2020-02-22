@@ -1,78 +1,27 @@
-.tenant-model-body label{
+.tenant-model-body label {
 	margin-left: 100px;
 }
-.tenant-model-body input{
+
+.tenant-model-body input {
 	margin-left: 100px;
 	width: 70%;
 	height: 40px;
 	border: 1px solid black;
 }
-.tenant-model-body textarea{
+
+.tenant-model-body textarea {
 	width: 70%;
 	height: 100px;
 	margin-left: 100px;
 }
-.tenant-model-body select{
+
+.tenant-model-body select {
 	width: 150px;
 	height: 40px;
 }
-.tenant-model-body #province{
-	margin-left: 100px;
-}
-.content-right h4{
-	text-align: center;
-	color: #000;
-	background: red;
-	height: 25px;
-	padding-top: 5px;
-}
 
-.content-right label{
-	font-size: 18px;
-}
-.content-right input{
-	
-	width: 70%;
-	border: 1px solid black;
-}
-.content-right p{
-	display: inline-block;
-	margin-left: 20px;
-	margin-right: 40px;
-	font-size: 18px;
-}
-.content-right textarea{
-	width: 70%;
-	
-}
-.content-right select{
-	width: 120px;
-}
-.content-right select:FIRST-CHILD option{
+.tenant-model-body #province {
 	margin-left: 100px;
-}
-.content-right a{
-	font-size: 18px;
-	color: blue;
-	float: right;
-}
-.content-right .modify{
-	margin-right: 20px;
-}
-.content-right .delete{
-	margin-right: 50px;
-}
-
-.content-right button{
-	width: 200px;
-	color: black;
-	font-size: 18px;
-	background: white;
-	text-align: center;
-	cursor: pointer;
-	border-radius: 8px;
-	border: 1px solid #000;
-	margin-top: 40px;
 }
 
 /*模态框样式*/
@@ -183,4 +132,71 @@ to {
 	.tenant-model-content {
 		width: 80%;
 	}
+}
+
+/* 地址管理样式 */
+.Caddress {
+	width: 100%;
+	margin: auto;
+	position: relative;
+	height: 160px;
+}
+
+.Caddress .add_mi p {
+	font-size: 14px;
+	line-height: 20px;
+	margin-bottom: 5px;
+	color: #666;
+	width: 203px;
+}
+
+.Caddress .add_mi span {
+	font-size: 15px;
+	line-height: 20px;
+	margin-bottom: 5px;
+	color: #666;
+	width: 203px;
+}
+
+.Caddress .add_mi {
+	height: 106px;
+	float: left;
+	margin-right: 30px;
+	margin-bottom:20px;
+	background: url(../image/mail.jpg) no-repeat;
+	padding: 6px 17px;
+	position: relative;
+}
+
+.open_new {
+	width: 100%;
+	text-align: right;
+}
+
+.open_btn {
+	height: 30px;
+	width: 120px;
+	border-radius: 10px;
+	background: red;
+	color: white;
+	outline: 0px;
+	margin-bottom: 10px;
+	border: 0px;
+}
+
+.Caddress a {
+	font-size: 14px;
+	color: #666;
+}
+
+.Caddress .modify {
+	position: absolute;
+	bottom: 15px;
+	right:50px;
+}
+
+.Caddress .delete {
+	position: absolute;
+	bottom: 15px;
+	right:10px;
 }

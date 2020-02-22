@@ -28,7 +28,9 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
 import com.qst.entity.Opus;
@@ -221,6 +223,8 @@ public class OpusController {
 		double[] prices = new double[length];
 		Integer[] cartId = new Integer[length];
 		double totalprice = 0;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		String orderSn = simpleDateFormat.format(Calendar.getInstance().getTime());
 		for (int i = 0; i < length; i++) {
 			ids[i] = orderDatas[i].substring(orderDatas[i].indexOf("id=") + 3, orderDatas[i].indexOf("&name"));
 			names[i] = orderDatas[i].substring(orderDatas[i].indexOf("name=") + 5, orderDatas[i].indexOf("&price"));
@@ -247,6 +251,8 @@ public class OpusController {
 				order.setUser_address(useraddress);
 				order.setAddress_id(addressId);
 				order.setOrder_date(nowDate);
+				order.setOrder_number(orderSn);
+				order.setOrder_type("余额");
 				order.setStatus("已支付");
 				opusService.addOrder(order);
 				opusService.deleteCartOpus(cartId[i]);
@@ -316,6 +322,8 @@ public class OpusController {
 		order.setUser_address(user.getAddress());
 		order.setOrder_date(nowDate);
 		order.setStatus("已支付");
+		order.setOrder_number(orderSn);
+		order.setOrder_type("支付宝");
 		opusService.addOrder(order);
 		request.getSession().setAttribute("user", user);
 		return "redirect:seekOrder.form";
@@ -398,6 +406,8 @@ public class OpusController {
 			order.setUser_address(useraddress);
 			order.setAddress_id(addressId);
 			order.setOrder_date(nowDate);
+			order.setOrder_number(orderSn);
+			order.setOrder_type("支付宝");
 			order.setStatus("已支付");
 			opusService.addOrder(order);
 			opusService.deleteCartOpus(cartId[i]);
@@ -408,6 +418,47 @@ public class OpusController {
 		request.setAttribute("orderList", orderList);
 		return "/order";
 	}
+	
+	/*商品退款*/
+	@RequestMapping("refundRequest.form")
+	public void refundRequest(String out_trade_no,HttpServletRequest request) {
+		System.out.println(out_trade_no);
+		Order order = opusService.seekOrderByNumber(out_trade_no);
+		if(order.getOrder_type().equals("余额")){
+			User user = (User)request.getSession().getAttribute("user");
+			user.setBalance(user.getBalance()+order.getOpus_price());
+			userService.modifyBalance(user);
+			order.setStatus("已退款");
+			opusService.updateOrder(order);
+			request.getSession().setAttribute("user",user);
+			
+		}else if(order.getOrder_type().equals("支付宝")){
+			try {
+				AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
+						AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.zifubao_public_key,
+						AlipayConfig.sign_type);
+				AlipayTradeRefundRequest aliRequest = new AlipayTradeRefundRequest();
+				aliRequest.setBizContent("{" +
+						"\"out_trade_no\":\"" + out_trade_no + "\"," +
+						"\"refund_amount\":\"" + order.getOpus_price() + "\"," +
+						"\"refund_reason\":\"正常退款\"" +
+						" }");
+				AlipayTradeRefundResponse response;
+				response = alipayClient.execute(aliRequest);
+				if (response.isSuccess()) {
+					System.out.println("支付宝退款成功");
+					order.setStatus("已退款");
+					opusService.updateOrder(order);
+				} else {
+					//response.getSubMsg();//失败会返回错误信息(出现交易信息被篡改一般是同一个订单被多次退款)
+					System.out.println(response.getSubMsg());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 
 	/* 查询某个人的订单信息 */
 
@@ -423,6 +474,13 @@ public class OpusController {
 		}
 		
 	}
+	
+	@RequestMapping("deleteOrder.form")
+	public void deleteOrder(Integer id) {
+		System.out.println(id);
+		opusService.deleteOrder(id);
+	}
+	
 
 	// 作品上传实现
 	@RequestMapping("upload.form")

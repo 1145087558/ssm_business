@@ -96,7 +96,7 @@
 	</header>
 	<aside class="Hui-aside">
 	<div class="menu_dropdown bk_2">
-		<dl id="menu-article">
+		<!-- <dl id="menu-article">
 			<dt>
 				<i class="Hui-iconfont">&#xe616;</i> 资讯管理<i
 					class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
@@ -107,7 +107,7 @@
 						href="javascript:void(0)">资讯管理</a></li>
 				</ul>
 			</dd>
-		</dl>
+		</dl> -->
 		<dl id="menu-picture">
 			<dt>
 				<i class="Hui-iconfont">&#xe613;</i> 订单管理<i
@@ -165,7 +165,7 @@
 						<li><a data-href="getDeleteUserList.form" data-title="删除的会员"
 							href="javascript:;">删除的会员</a></li>
 					</c:if>
-					<li><a data-href="member-level.html" data-title="等级管理"
+					<!-- <li><a data-href="member-level.html" data-title="等级管理"
 						href="javascript:;">等级管理</a></li>
 					<li><a data-href="member-scoreoperation.html"
 						data-title="积分管理" href="javascript:;">积分管理</a></li>
@@ -174,7 +174,7 @@
 					<li><a data-href="member-record-download.html"
 						data-title="下载记录" href="javascript:void(0)">下载记录</a></li>
 					<li><a data-href="member-record-share.html" data-title="分享记录"
-						href="javascript:void(0)">分享记录</a></li>
+						href="javascript:void(0)">分享记录</a></li> -->
 				</ul>
 			</dd>
 		</dl>
@@ -204,18 +204,18 @@
 				<ul>
 					<li><a data-href="mapAddress.html" data-title="地址分布图"
 						href="javascript:void(0)">地址分布图</a></li>
-					<li><a data-href="charts-2.html" data-title="时间轴折线图"
-						href="javascript:void(0)">时间轴折线图</a></li>
+					<!-- <li><a data-href="charts-2.html" data-title="时间轴折线图"
+						href="javascript:void(0)">时间轴折线图</a></li> -->
 					<li><a data-href="charts-3.html" data-title="区域图"
-						href="javascript:void(0)">区域图</a></li>
+						href="javascript:void(0)">销量排行榜</a></li>
 					<li><a data-href="charts-4.html" data-title="柱状图"
-						href="javascript:void(0)">柱状图</a></li>
+					<!-- 	href="javascript:void(0)">点赞排行榜</a></li>
 					<li><a data-href="charts-5.html" data-title="饼状图"
 						href="javascript:void(0)">饼状图</a></li>
 					<li><a data-href="charts-6.html" data-title="3D柱状图"
 						href="javascript:void(0)">3D柱状图</a></li>
 					<li><a data-href="charts-7.html" data-title="3D饼状图"
-						href="javascript:void(0)">3D饼状图</a></li>
+						href="javascript:void(0)">3D饼状图</a></li> -->
 				</ul>
 			</dd>
 		</dl>
