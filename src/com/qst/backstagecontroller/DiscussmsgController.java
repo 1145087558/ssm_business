@@ -20,7 +20,9 @@ public class DiscussmsgController {
 	@Autowired
 	OpusService opusService;
 
-	// 评论管理
+	/**
+	 * 评论管理，管理员获取所有的评论
+	 */
 	@RequestMapping("getDiscussmsgAll.form")
 	public String getOpusAll(HttpServletRequest request) {
 		List<Discuss> discussList = opusService.seekDiscussMsgAll();
@@ -28,7 +30,9 @@ public class DiscussmsgController {
 		return "backstage/feedback-list";
 	}
 
-	// 获取评论
+	/**
+	 * 评论管理，通过id获取单条评论
+	 */
 	@RequestMapping("getDiscussmsg.form")
 	public String getDiscussMsg(int id, Model model) {
 
@@ -36,13 +40,17 @@ public class DiscussmsgController {
 		return "backstage/feedback-modify";
 	}
 
-	// 修改评论
+	/**
+	 * 评论管理，对单条评论进行修改
+	 */
 	@RequestMapping("updateDiscussmsg.form")
 	public void updateDiscussMsg(Discuss discuss) {
 		opusService.updateDiscussMsg(discuss);
 	}
 
-	// 删除评论
+	/**
+	 * 评论管理，对某条评论进行删除
+	 */
 	@RequestMapping("deleteDiscussmsg.form")
 	public void deleteDiscussmsg(int id, HttpServletRequest request) {
 		opusService.deleteDiscussmsg(id);

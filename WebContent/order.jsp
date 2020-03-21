@@ -173,23 +173,23 @@
 					<tbody>
 					<tr><td>商品</td><td>价格</td><td>商品操作</td><td>交易状态</td><td>交易操作</td></tr>
 					
-					<c:forEach items="${orderList}" var="order">
+					<c:forEach items="${orderList}" var="order" varStatus="i">
 						<tr><td style="width:200px;">订单编号:${order.order_number}</td><td colspan="3">交易时间:${order.order_date}</td><td></td><td></td><td></td></tr>
 					<tr>
 						<td>
 							<div class="opusMsg">
 								<div class="opusMsg-left">
-									<img src="image/c1.jpg" style="width:100%;height:100%;">
+									<img src="${opusList[i.index].opus_image}" style="width:100%;height:100%;">
 								</div>
 								<div class="opusMsg-right">
 									<p>作品名称：${order.opus_name}</p>
-									<p>作者：</p>
+									<p>作者：${opusList[i.index].author_name}</p>
 								</div>
 							</div>
 						</td>
 						<td style="line-height:100px;">${order.opus_price}￥</td>
 						<c:choose>
-						<c:when test="${order.status !='已退款'}">
+						<c:when test="${order.status !='已退款'|| order.status !='退款中'}">
 						<td style="line-height:100px;"><a href="javascript:;" onclick="refundRequest('${order.order_number}',this)">退款/退货</a></td>
 						</c:when>
 						<c:otherwise>
@@ -226,7 +226,7 @@ function deleteOrder(id,obj){
 
 function refundRequest(orderNumber,obj){
 	$.ajax({
-		url:"refundRequest.form",
+		url:"refundSH.form",
 		type:"post",
 		data:{
 			"out_trade_no":orderNumber
@@ -235,7 +235,7 @@ function refundRequest(orderNumber,obj){
 			
 		}
 	})
-	$(obj).parent().next().text("已退款");
+	$(obj).parent().next().text("退款中");
 	$(obj).parent().next().prev().text("");
 }
 </script>

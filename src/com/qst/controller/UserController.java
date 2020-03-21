@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.httpclient.HttpException;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -27,10 +28,14 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
+import com.github.qcloudsms.SmsSingleSender;
+import com.github.qcloudsms.SmsSingleSenderResult;
+import com.github.qcloudsms.httpclient.HTTPException;
 import com.qst.entity.User;
 import com.qst.entity.UserAddress;
 import com.qst.service.UserService;
 import com.qst.util.AlipayConfig;
+import com.qst.util.PhoneUtil;
 import com.qst.util.RegexMatche;
 
 @Controller
@@ -42,7 +47,9 @@ public class UserController {
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 
-	// 注册
+	/**
+	 * 前端页面，用户通过手机号注册（无验证码）
+	 */
 	@RequestMapping("register.form")
 	public String register(User user) {
 		System.out.println("接收到的手机号和密码：" + user.getTel() + "*****" + user.getPwd());
@@ -51,7 +58,9 @@ public class UserController {
 		return "login";
 	}
 
-	// 邮箱注册
+	/**
+	 * 前端页面，用户通过邮箱注册
+	 */
 	@RequestMapping("emailRegister.form")
 	public String emailRegister(User user) {
 
@@ -61,7 +70,9 @@ public class UserController {
 		return "login";
 	}
 
-	// 手机号码注册
+	/**
+	 * 前端页面，用户通过手机号注册
+	 */
 	@RequestMapping("telRegister.form")
 	public String telRegister(User user, HttpServletRequest request) {
 		String code = request.getParameter("code");
@@ -75,7 +86,9 @@ public class UserController {
 		}
 	}
 
-	// 登录
+	/**
+	 * 前端页面，用户登录，可以通过用户名或者手机号或者邮箱登录
+	 */
 	@RequestMapping("login.form")
 	public String login(String name, String pwd, HttpServletRequest request) {
 		System.out.println("账号：" + name + "密码：" + pwd);
@@ -107,7 +120,9 @@ public class UserController {
 		return "redirect:findAll.form";
 	}
 
-	// 退出
+	/**
+	 * 前端页面，用户退出
+	 */
 	@RequestMapping("logout.form")
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
@@ -115,7 +130,9 @@ public class UserController {
 		return "redirect:findAll.form";
 	}
 
-	// 余额充值
+	/**
+	 * 前端页面，用户进行余额充值
+	 */
 	@RequestMapping("pay.form")
 	public void invest(double balance, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -144,7 +161,9 @@ public class UserController {
 
 	}
 
-	// 支付宝支付成功
+	/**
+	 * 前端页面，余额充值成功
+	 */
 	@RequestMapping("doWallerPaySuccess")
 	public String doWallerPaySuccess(HttpServletRequest request) {
 
@@ -162,7 +181,9 @@ public class UserController {
 		return "redirect:findAll.form";
 	}
 
-	// 更改个人信息
+	/**
+	 * 前端页面，修改用户个人信息
+	 */
 	@RequestMapping("person.form")
 	public String personMsg(String name, String tel, String address, String synopsis, HttpServletRequest request) {
 		System.out.println("个人信息：" + synopsis);
@@ -175,31 +196,28 @@ public class UserController {
 		return "redirect:findAll.form";
 	}
 
-	// 发送短信验证
+	/**
+	 * 前端页面，发送短信验证
+	 */
 	@RequestMapping("sendPhoneCode.form")
-	public void sendPhoneCode(HttpServletRequest request, String phone) throws HttpException, IOException {
+	public void sendPhoneCode(HttpServletRequest request, String tel) throws HttpException, IOException {
 
 		String phoneCode = smsCode();
 		System.out.println(phoneCode);
 		request.getSession().setAttribute("phoneCode", phoneCode);
-		/*
-		 * HttpClient client = new HttpClient(); PostMethod post = new
-		 * PostMethod("http://utf8.api.smschinese.cn");
-		 * post.addRequestHeader("Content-Type",
-		 * "application/x-www-form-urlencoded;charset=UTF-8"); NameValuePair[] data = {
-		 * new NameValuePair("Uid", "a1145087558"), new NameValuePair("Key",
-		 * "d41d8cd98f00b204e980"), new NameValuePair("smsMob", phone), new
-		 * NameValuePair("smsText", "【墨韵书院平台】尊敬的用户，您好，您的验证码为：" + phoneCode +
-		 * "，若非本人操作，请忽略此短信。") }; post.setRequestBody(data);
-		 * 
-		 * client.executeMethod(post); Header[] headers = post.getResponseHeaders(); int
-		 * statusCode = post.getStatusCode(); System.out.println("statusCode:" +
-		 * statusCode); for (Header h : headers) { System.out.println(h.toString()); }
-		 * String result = new String(post.getResponseBodyAsString().getBytes("utf-8"));
-		 * System.out.println(result);
-		 * 
-		 * post.releaseConnection();
-		 */
+		String[] params ={phoneCode};
+		SmsSingleSender ssender = new SmsSingleSender(PhoneUtil.appId, PhoneUtil.appkey);
+		SmsSingleSenderResult result;
+		try {
+			result = ssender.sendWithParam("86", tel, PhoneUtil.templateId, 
+			                      params, PhoneUtil.smsSign, "", "");
+			System.out.println(result);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (HTTPException e) {
+			e.printStackTrace();
+		}           
+		
 	}
 
 	// 生成短信验证随机数
@@ -207,7 +225,10 @@ public class UserController {
 		String random = (int) ((Math.random() * 9 + 1) * 100000) + "";
 		return random;
 	}
-
+	
+	/**
+	 * 前端页面，发送邮箱验证
+	 */
 	public void sendEmail(String email) {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper message;
@@ -226,7 +247,9 @@ public class UserController {
 		mailSender.send(mimeMessage);
 	}
 
-	// 检查密码是否被注册
+	/**
+	 * 前端页面，检查密码是否正确
+	 */
 	@RequestMapping("checkPassword.form")
 	public void checkPassword(HttpServletResponse response, HttpServletRequest req, String pwd) throws IOException {
 		boolean confirm;
@@ -243,7 +266,9 @@ public class UserController {
 		}
 	}
 
-	// 检查邮箱是否被注册
+	/**
+	 * 前端页面，检查邮箱是否被注册
+	 */
 	@RequestMapping("checkEmail.form")
 	public void checkEmail(HttpServletResponse response, String email) throws IOException {
 		boolean confirm;
@@ -258,7 +283,9 @@ public class UserController {
 		}
 	}
 
-	// 检查手机号是否被注册
+	/**
+	 * 前端页面，检查手机号是否被注册
+	 */
 	@RequestMapping("checkPhone.form")
 	public void checkPhone(HttpServletResponse response, String tel) throws IOException {
 		boolean confirm;
@@ -273,7 +300,9 @@ public class UserController {
 		}
 	}
 
-	// 获取用户地址
+	/**
+	 * 前端页面，获取用户收获地址
+	 */
 	@RequestMapping("getAddress.form")
 	@ResponseBody
 	public List<UserAddress> getAddress(HttpServletRequest request) {
@@ -283,14 +312,18 @@ public class UserController {
 
 	}
 
-	// 修改用户地址
+	/**
+	 * 前端页面，修改用户收获地址
+	 */
 	@RequestMapping("modifyAddress.form")
 	public String modifyAddress(UserAddress userAddress) {
 		userService.modifyAddress(userAddress);
 		return "address_manage";
 	}
 
-	// 添加用户地址
+	/**
+	 * 前端页面，添加用户收获地址
+	 */
 	@RequestMapping("addUserAddress.form")
 	public String addUserAddress(UserAddress userAddress, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -299,13 +332,17 @@ public class UserController {
 		return "address_manage";
 	}
 
-	// 删除用户地址
+	/**
+	 * 前端页面，删除用户收获地址
+	 */
 	@RequestMapping("deleteAddress.form")
 	public void deleteAddress(int id) {
 		userService.deleteAddress(id);
 	}
 
-	// 修改密码
+	/**
+	 * 前端页面，修改用户密码
+	 */
 	@RequestMapping("modifyPassword.form")
 	public String modifyPassword(String oldpassword, String newpassword, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -315,7 +352,9 @@ public class UserController {
 		return "personCenter";
 	}
 
-	// 修改用户信息
+	/**
+	 * 前端页面，修改用户个人信息
+	 */
 	@RequestMapping("modifyUser.form")
 	public String modifyUser(User user, HttpServletRequest request) {
 
@@ -323,6 +362,18 @@ public class UserController {
 		user = userService.getUserById(user.getId());
 		request.getSession().setAttribute("user", user);
 		return "personCenter";
+	}
+	
+	/**
+	 * 前端页面，获取当前登录用户的信息
+	 */
+	@RequestMapping("getSessionUser.form")
+	@ResponseBody
+	public User getSessionUser(HttpServletRequest request) {
+
+		User user= (User) request.getSession().getAttribute("user");
+		
+		return user;
 	}
 
 }

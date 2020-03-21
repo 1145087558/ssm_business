@@ -25,7 +25,9 @@ public class CartBackstageController {
 	@Autowired
 	UserService userService;
 
-	// 订单管理
+	/**
+	 * 订单管理，如果是普通用户只能查看自己作品的订单，如果是管理员则可以看到所有的订单
+	 */
 	@RequestMapping("getCartAll.form")
 	public String getOpusAll(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -47,12 +49,17 @@ public class CartBackstageController {
 		return "backstage/order-list";
 	}
 
-	// 订单删除
+	/**
+	 * 订单删除，根据订单id进行删除
+	 */
 	@RequestMapping("deletOrder.form")
 	public void deletOrder(int id,HttpServletRequest request) {
 		opusService.deleteOrder(id);
 	}
 
+	/**
+	 * 统计购买数排名前十的作品
+	 */
 	@RequestMapping("getOrderLike.form")
 	@ResponseBody
 	public List<Opus> getOrderLike() {

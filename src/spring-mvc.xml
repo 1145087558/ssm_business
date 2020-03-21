@@ -57,9 +57,13 @@
 
 	<!--配置拦截器 -->
 	<mvc:interceptors>
-		<mvc:interceptor>
+		<!-- <mvc:interceptor>
 			<mvc:mapping path="/backstage/*" />
 			<bean class="com.qst.util.LoginBackstageInterceptor" />
+		</mvc:interceptor> -->
+		<mvc:interceptor>
+			<mvc:mapping path="/*" />
+			<bean class="com.qst.util.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 	

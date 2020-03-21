@@ -3,6 +3,7 @@ package com.qst.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,22 +51,37 @@ public class OpusController {
 	UserService userService;
 	
 	
-	// 展示首页作品
+	/**
+	 * 前端页面，展示所有作品
+	 */
 	@RequestMapping("findAll.form")
 	public String findAll(HttpServletRequest request) {
-		List<Opus> opusList = opusService.findAll();
+		User user = (User)request.getSession().getAttribute("user");
+		List<Opus> opusList = null;
+		if(user != null){
+			opusList = opusService.recommend(user.getId());
+		}else{
+			opusList = opusService.findAll();
+		}
+		
 		request.setAttribute("opusList", opusList);
 		return "homepage";
 
 	}
 
-	// 作品详情信息
+	/**
+	 * 前端页面，获取作品的详细信息
+	 */
 	@RequestMapping("opusDetail.form")
 	public String opusDetail(int id, HttpServletRequest request) {
-		Opus opus = new Opus();
 		List<Discuss> disList = opusService.seekDiscussMsg(id);
 		System.out.println("要展示的作品详细信息的id:" + id);
-		opus = opusService.opusDetail(id);
+		Opus opus = opusService.opusDetail(id);
+		User user = (User) request.getSession().getAttribute("user");
+		if(user!=null){
+			opusService.addBrowse(opus.getOpus_tipic(), user.getId());
+		}
+		
 		request.setAttribute("disList", disList);
 		// System.out.println("第一条评论："+disList.get(0).getDiscuss_msg());
 		// System.out.println(disList.get(0).getDiscuss_date());
@@ -73,7 +89,9 @@ public class OpusController {
 		return "opusDetail";
 	}
 
-	// 作品点赞处理
+	/**
+	 * 前端页面，对作品进行点赞
+	 */
 	@RequestMapping("like_times.form")
 	public String likeTimes(int id, int like_times) {
 		System.out.println("Id:" + id);
@@ -85,7 +103,9 @@ public class OpusController {
 		return "index";
 	}
 
-	// 作品搜索（搜索作家名字）
+	/**
+	 * 前端页面，根据传的关键字(作品类型、作家名、作品名)进行搜索
+	 */
 	@RequestMapping("search.form")
 	public String searchOpus(String search, HttpServletRequest request) {
 		System.out.println("接收到的关键字：" + search);
@@ -94,7 +114,9 @@ public class OpusController {
 		return "homepage";
 	}
 
-	// 加入购物车
+	/**
+	 * 前端页面，根据所选择的作品加入购物车
+	 */
 	@RequestMapping("cart.form")
 	public ModelAndView cart(int id, HttpServletRequest request) {
 		Opus opus = opusService.opusDetail(id);
@@ -114,7 +136,9 @@ public class OpusController {
 		return new ModelAndView(rv);
 	}
 
-	// 显示购物车商品
+	/**
+	 * 前端页面，显示该用户购物车里的作品
+	 */
 	@RequestMapping("displayCart.form")
 	public String displayCart(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -131,7 +155,9 @@ public class OpusController {
 
 	}
 
-	// 清空购物车
+	/**
+	 * 前端页面，清空购物车
+	 */
 	@RequestMapping("clearCart.form")
 	public ModelAndView clearCart(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -141,7 +167,9 @@ public class OpusController {
 
 	}
 
-	// 删除购物车中的某一件作品
+	/**
+	 * 前端页面，根据id删掉购物车里的作品
+	 */
 	@RequestMapping("delete.form")
 	public ModelAndView deleteCartOpus(int id) {
 		opusService.deleteCartOpus(id);
@@ -149,7 +177,9 @@ public class OpusController {
 		return new ModelAndView(rv);
 	}
 
-	// 按最新时间排序
+	/**
+	 * 前端页面，根据作品上传的时间进行倒序，越先上传的靠前
+	 */
 	@RequestMapping("timeSort.form")
 	public String timeSort(HttpServletRequest request) {
 		List<Opus> opusList = opusService.timeSort();
@@ -158,7 +188,9 @@ public class OpusController {
 
 	}
 
-	// 按价格排序
+	/**
+	 * 前端页面，根据作品的价格进行倒序，价格越贵的靠前
+	 */
 	@RequestMapping("priceSort.form")
 	public String priceSort(HttpServletRequest request) {
 		List<Opus> opusList = opusService.priceSort();
@@ -166,7 +198,9 @@ public class OpusController {
 		return "homepage";
 	}
 	
-	// 按点赞数排序
+	/**
+	 * 前端页面，根据作品的点赞数进行倒序，点赞越多的靠前
+	 */
 	@RequestMapping("timesSort.form")
 	public String timesSort(HttpServletRequest request) {
 		List<Opus> opusList = opusService.timesSort();
@@ -174,14 +208,18 @@ public class OpusController {
 		return "homepage";
 
 	}
-	// 按热度排序
+	/**
+	 * 前端页面，根据作品的热度进行倒序，热度越高的靠前
+	 */
 	@RequestMapping("heatSort.form")
 	public String heatSort(HttpServletRequest request) {
 		List<Opus> opusList = opusService.heatSort();
 		request.setAttribute("opusList", opusList);
 		return "homepage";
 	}
-	// 按分类查询作品
+	/**
+	 * 前端页面，根据作品类型进行搜索
+	 */
 	@RequestMapping("seek.form")
 	public String classifySeek(String seek,HttpServletRequest request) {
 		System.out.println("controller层接收到的关键字：" + seek);
@@ -190,7 +228,9 @@ public class OpusController {
 		return "homepage";
 	}
 
-	// 处理评论信息
+	/**
+	 * 前端页面，对某个作品进行评论
+	 */
 	@RequestMapping("discuss.form")
 	public ModelAndView discuss(String discussMsg, int id, String name, HttpServletRequest request) {
 		System.out.println("id：" + id + "***********" + name + "**********" + discussMsg);
@@ -212,7 +252,9 @@ public class OpusController {
 		return new ModelAndView(rv);
 	}
 
-	// 处理订单信息
+	/**
+	 * 前端页面，根据用户的余额进行下单
+	 */
 	@RequestMapping("orderWaller.form")
 	public void orderDealWith(String[] orderDatas,String[] cartIds, String useraddress,int addressId,
 			HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -270,7 +312,9 @@ public class OpusController {
 
 	}
 
-	// 支付宝支付
+	/**
+	 * 前端页面，通过支付宝支付进行下单
+	 */
 	@RequestMapping("order.form")
 	public void zifubaoPay(int id, String name, double price, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -301,7 +345,9 @@ public class OpusController {
 		response.getWriter().write(alipayResponse.getBody());
 	}
 
-	// 支付宝支付成功
+	/**
+	 * 前端页面，支付宝支付成功生成订单
+	 */
 	@RequestMapping("doPaySuccess")
 	public String doPaySuccess(HttpServletRequest request) {
 
@@ -329,7 +375,9 @@ public class OpusController {
 		return "redirect:seekOrder.form";
 	}
 
-	// 支付宝支付多件
+	/**
+	 * 前端页面，支付宝支付多件作品
+	 */
 	@RequestMapping("orderPay.form")
 	public void zifubaoPay(String[] orderDatas, String[] cartIds,String useraddress,int addressId,
 			HttpServletRequest request, HttpServletResponse response)
@@ -380,7 +428,9 @@ public class OpusController {
 		response.getWriter().write(alipayResponse.getBody());
 	}
 
-	// 支付宝支付成功
+	/**
+	 * 前端页面，多件支付宝支付成功生成订单
+	 */
 	@RequestMapping("paySuccess.form")
 	public String doOrderPaySuccess(HttpServletRequest request) {
 
@@ -419,55 +469,34 @@ public class OpusController {
 		return "/order";
 	}
 	
-	/*商品退款*/
-	@RequestMapping("refundRequest.form")
-	public void refundRequest(String out_trade_no,HttpServletRequest request) {
-		System.out.println(out_trade_no);
+	/**
+	 * 前端页面，根据订单号把需要退款的交与后台审核
+	 */
+	@RequestMapping("refundSH.form")
+	public void refundSH(String out_trade_no,HttpServletRequest request) {
+	
 		Order order = opusService.seekOrderByNumber(out_trade_no);
-		if(order.getOrder_type().equals("余额")){
-			User user = (User)request.getSession().getAttribute("user");
-			user.setBalance(user.getBalance()+order.getOpus_price());
-			userService.modifyBalance(user);
-			order.setStatus("已退款");
-			opusService.updateOrder(order);
-			request.getSession().setAttribute("user",user);
-			
-		}else if(order.getOrder_type().equals("支付宝")){
-			try {
-				AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
-						AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.zifubao_public_key,
-						AlipayConfig.sign_type);
-				AlipayTradeRefundRequest aliRequest = new AlipayTradeRefundRequest();
-				aliRequest.setBizContent("{" +
-						"\"out_trade_no\":\"" + out_trade_no + "\"," +
-						"\"refund_amount\":\"" + order.getOpus_price() + "\"," +
-						"\"refund_reason\":\"正常退款\"" +
-						" }");
-				AlipayTradeRefundResponse response;
-				response = alipayClient.execute(aliRequest);
-				if (response.isSuccess()) {
-					System.out.println("支付宝退款成功");
-					order.setStatus("已退款");
-					opusService.updateOrder(order);
-				} else {
-					//response.getSubMsg();//失败会返回错误信息(出现交易信息被篡改一般是同一个订单被多次退款)
-					System.out.println(response.getSubMsg());
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		order.setStatus("退款中");
+		opusService.updateOrder(order);
 	}
 	
 
-	/* 查询某个人的订单信息 */
-
+	/**
+	 * 前端页面，查询个人订单信息
+	 */
 	@RequestMapping("seekOrder.form")
 	public String seekOrder(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		if(user!=null){
 			List<Order> orderList = opusService.seekOrder(user.getId());
+			List<Opus> opusList = new ArrayList<Opus>();
+			Opus opus = null;
+			for(int i=0;i<orderList.size();i++){
+				opus = opusService.opusDetail(orderList.get(i).getOpus_id());
+				opusList.add(opus);
+			}
 			request.setAttribute("orderList", orderList);
+			request.setAttribute("opusList", opusList);
 			return "order";
 		}else{
 			return "redirect:findAll.form";
@@ -475,6 +504,9 @@ public class OpusController {
 		
 	}
 	
+	/**
+	 * 前端页面，删除订单
+	 */
 	@RequestMapping("deleteOrder.form")
 	public void deleteOrder(Integer id) {
 		System.out.println(id);
@@ -482,7 +514,9 @@ public class OpusController {
 	}
 	
 
-	// 作品上传实现
+	/**
+	 * 前端页面，上传作品
+	 */
 	@RequestMapping("upload.form")
 	public ModelAndView uploadOpus(MultipartFile fName, String title, String type, String tipic, double price,
 			String create_time, String syponsis, String detail, HttpServletRequest request) {
@@ -534,5 +568,100 @@ public class OpusController {
 		return new ModelAndView(rv);
 
 	}
+	
+	/**
+	 * 前端页面，统计热度前十的作家
+	 */
+	@RequestMapping("getAuthorLike.form")
+	@ResponseBody
+	public List<Opus> getAuthorLike() {
+
+		return opusService.getAuthorLike();
+
+	}
+	
+	/**
+	 * 前端页面，根据信息删选作品
+	 */
+	@RequestMapping("getScreen.form")
+	@ResponseBody
+	public List<Opus> getScreen(String tipic,String address,String price) {
+
+		List<Opus> opus = null;
+		
+		if(tipic!=null){
+			if(tipic.equals("全部")){
+				tipic = null;
+			}
+		}
+		String minprice = null;
+		String maxprice = null;
+		if(price!=null){
+			int index = price.indexOf("-");
+			if(index !=-1){
+				minprice = price.substring(0,index);
+				maxprice = price.substring(index+1,price.length()-1);
+			}else{
+				price = price.substring(0,price.length()-3);
+				if(price =="1000"){
+					minprice = "0";
+					maxprice = price;
+				}else{
+					minprice = price;
+					maxprice = "1000000";
+				}
+			}
+			
+		}
+		
+		opus = opusService.getScreen(tipic,minprice,maxprice);
+      return opus;
+	}
+	
+	
+	/**
+	 * 前端页面，收藏作品
+	 */
+	@RequestMapping("addCollet.form")
+	public void addCollet(int opusId,HttpServletRequest request) {
+
+		User user = (User)request.getSession().getAttribute("user");
+		opusService.addCollet(opusId,user.getId());
+	}
+	
+	/**
+	 * 前端页面，收藏作品
+	 */
+	@RequestMapping("deleteCollet.form")
+	public void deleteCollet(int opusId,HttpServletRequest request) {
+
+		User user = (User)request.getSession().getAttribute("user");
+		opusService.deleteCollet(opusId,user.getId());
+	}
+	
+	/**
+	 * 前端页面，检查是否已经收藏作品
+	 */
+	@RequestMapping("checkCollet.form")
+	@ResponseBody
+	public String checkCollet(int opusId,HttpServletRequest request) {
+
+		User user = (User)request.getSession().getAttribute("user");
+		
+		return opusService.checkCollet(opusId,user.getId());
+	}
+	
+	/**
+	 * 前端页面，获取用户收藏的所有作品
+	 */
+	@RequestMapping("getCollet.form")
+	@ResponseBody
+	public List<Opus> getCollet(HttpServletRequest request) {
+
+		User user = (User)request.getSession().getAttribute("user");
+		
+		return opusService.getCollet(user.getId());
+	}
+
 
 }

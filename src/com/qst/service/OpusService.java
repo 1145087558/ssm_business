@@ -12,6 +12,8 @@ public interface OpusService {
 	
 	public List<Opus> findAll();
 
+	public List<Opus> recommend(int id);
+	
 	public Opus opusDetail(int id);
 
 	public void dealWithLikeTimes(Opus opus);
@@ -78,5 +80,20 @@ public interface OpusService {
 
 	public List<Opus> getOrderLike();
 
+	public List<Opus> getAuthorLike();
+
+	public List<Order> getOrderByStatus(String status);
+	
+	public void addBrowse(String type,int userId);
+
+	public List<Opus> getScreen(String tipic, String minprice, String maxprice);
+
+	void addCollet(int opusId, Integer id);
+
+	void deleteCollet(int opusId, Integer id);
+
+	String checkCollet(int opusId, Integer id);
+	
+	List<Opus> getCollet(int userId);
 	
 }

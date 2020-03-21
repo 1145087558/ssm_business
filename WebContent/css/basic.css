@@ -56,6 +56,7 @@ input {
 	font-size: 18px;
 	/* width:160px; */
 	margin-left: 60px;
+	cursor: pointer;
 }
 
 .dropdown-menu {

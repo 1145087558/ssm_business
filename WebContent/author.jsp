@@ -134,63 +134,73 @@
 		</ul>
 	</div>
 	<div class="content">
-		<div class="content-left">
-			<h3>艺术家筛选</h3>
-			<strong>艺术分类</strong>&nbsp;&nbsp;|&nbsp;&nbsp;<font color="red">全部
-			</font> <span>国画</span><span>油画</span><span>书法</span><span>版画</span>
-			<hr>
 
-			<strong>地区</strong>&nbsp;&nbsp;|&nbsp;&nbsp;<font color="red">全部
-			</font> <span>北京</span><span>上海</span><span>天津</span><span>山东</span> <span>河北</span><span>辽宁</span><span>浙江</span><span>江西</span>
-			<span>山西</span><span>吉林</span><span>安徽</span><span>河南</span> <span>广东</span><span>黑龙江</span><span>福建</span><span>江苏</span>
-			<span>内蒙古</span><span>湖北</span><span>四川</span><span>云南</span> <span>甘肃</span><span>青海</span><span>宁夏</span><span>新疆</span>
-			<hr>
+		<div id="box">
+			<dl>
+				<dt>艺术家分类：</dt>
+				<dd>全部</dd>
+				<dd>国画</dd>
+				<dd>油画</dd>
+				<dd>书法</dd>
+				<dd>版画</dd>
+			</dl>
+			<dl>
+				<dt>地区：</dt>
+				<dd>全部</dd>
+				<dd>北京</dd>
+				<dd>上海</dd>
+				<dd>天津</dd>
+				<dd>山东</dd>
+				<dd>河北</dd>
+				<dd>辽宁</dd>
+				<dd>浙江</dd>
+				<dd>江西</dd>
+				<dd>山西</dd>
+				<dd>吉林</dd>
+				<dd>安徽</dd>
+				<dd>河南</dd>
+				<dd>广东</dd>
+				<dd>黑龙江</dd>
+				<dd>福建</dd>
+				<dd>江苏</dd>
+				<dd>内蒙古</dd>
+				<dd>湖北</dd>
+				<dd>四川</dd>
+				<dd>云南</dd>
+				<dd>甘肃</dd>
+				<dd>青海</dd>
+				<dd>宁夏</dd>
+				<dd>新疆</dd>
 
-			<strong>拼音检索</strong>&nbsp;&nbsp;|&nbsp;&nbsp;<font color="red">全部
-			</font> <span>A</span><span>B</span><span>C</span><span>D</span> <span>E</span><span>F</span><span>G</span><span>H</span>
-			<span>I</span><span>J</span><span>K</span><span>L</span> <span>M</span><span>N</span><span>O</span><span>P</span>
-			<span>Q</span><span>R</span><span>S</span><span>T</span> <span>U</span><span>V</span><span>W</span><span>X</span>
-			<span>Y</span><span>Z</span>
-			<hr>
-
-		</div>
-		<div class="content-right">
-			<div id="myCarousel" class="carousel slide">
-				<!-- 轮播（Carousel）指标 -->
-				<ol class="carousel-indicators">
-					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-					<li data-target="#myCarousel" data-slide-to="1"></li>
-					<li data-target="#myCarousel" data-slide-to="2"></li>
-					<li data-target="#myCarousel" data-slide-to="2"></li>
-				</ol>
-				<!-- 轮播（Carousel）项目 -->
-				<div class="carousel-inner">
-					<div class="item active">
-						<img src="image/c1.jpg" alt="First slide">
-					</div>
-					<div class="item">
-						<img src="image/c2.jpg" alt="Second slide">
-					</div>
-					<div class="item">
-						<img src="image/c3.jpg" alt="Third slide">
-					</div>
-					<div class="item">
-						<img src="image/c4.jpg" alt="four slide">
-					</div>
-				</div>
-				<!-- 轮播（Carousel）导航 -->
-				<a class="left carousel-control" href="#myCarousel" role="button"
-					data-slide="prev"> <!-- <span
-						class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						<span class="sr-only">Previous</span> -->
-				</a> <a class="right carousel-control" href="#myCarousel" role="button"
-					data-slide="next"> </a>
-			</div>
+			</dl>
+			<dl>
+				<dt>价格：</dt>
+				<dd>1000元以下</dd>
+				<dd>2000-3000元</dd>
+				<dd>3000-5000元</dd>
+				<dd>5000-8000元</dd>
+				<dd>8000-10000元</dd>
+				<dd>10000元以上</dd>
+			</dl>
+			<!-- <dl style="border: none">
+			<dt>显卡：</dt>
+			<dd>独立显卡</dd>
+			<dd>集成显卡</dd>
+			<dd>核芯显卡</dd>
+		</dl> -->
+			<dl class="select" style="border-bottom-width: 0px;">
+				<dt>已选条件：</dt>
+				<!-- <dd>16英寸<span>x</span></dd>
+				<dd>核芯显卡<span>x</span></dd> -->
+			</dl>
 		</div>
 	</div>
 	<hr
 		style="width: 80%; margin: 0px 0px 20px 10%; border: 2hpx solid red;">
-	<div class="author-recommend">
+	<div class="recommend">
+	 
+	</div>
+	<!-- <div class="author-recommend">
 		<h3>艺术家推荐</h3>
 		<div class="author">
 			<img src="">
@@ -200,16 +210,106 @@
 	<div class="opus-display">
 		<h3>作品展览</h3>
 		<div class="opus"></div>
-	</div>
+	</div> -->
 
 </body>
 
 <script>
-	function display(x){
-		$(".cate-list").css("display","inline");
+	function display(x) {
+		$(".cate-list").css("display", "inline");
 	}
-	function hid(x){
-		$(".cate-list").css("display","none");
+	function hid(x) {
+		$(".cate-list").css("display", "none");
+	}
+</script>
+<script>
+
+	var dls = document.querySelectorAll('dl:not(.select)');
+	var selected = document.querySelector('.select');
+
+	for (var i = 0; i < dls.length; i++) {
+		dls[i].mark = false; //给每一行的dl标签添加一条属性，用于对应下面的dd标签。我们约定如果这个属性的值为true表示对应的标签没有创建。如果值为false表示对应的标签已经创建了
+		select(i);
+	}
+
+	function select(n) {
+		var dds = dls[n].querySelectorAll('dd');
+		var prev = null;
+		var dd = null; //每一行都需要创建一个dd标签，放到这里是为了如果标签已经被创建了，通过这个变量能够找到这个标签
+
+		for (var i = 0; i < dds.length; i++) {
+			dds[i].onclick = function() {
+				//给当前点击的添加一个高亮
+				//prev && (prev.className = '');
+
+				if (prev) {
+					prev.className = ''
+				}
+
+				this.className = 'active';
+
+				prev = this;
+
+				//创建dd标签
+				var parent = this.parentNode;
+				if (!parent.mark) { //这个条件满足说明对应的dd标签还没有创建
+					dd = document.createElement('dd');
+					dd.innerHTML = this.innerHTML;
+					selected.appendChild(dd);
+
+					parent.mark = true;
+
+				} else {
+					//走这里的时候说明对应的标签已经创建了，只需要把内容修改了就可以了
+					dd.innerHTML = this.innerHTML;
+				}
+
+				var span = document.createElement('span');
+				var This = this;
+				span.innerHTML = 'X';
+				span.onclick = function() {
+					
+					selected.removeChild(dd);
+					This.className = '';
+					parent.mark = false;
+					
+					getOpus();
+				};
+				dd.appendChild(span);
+				getOpus();
+			};
+		}
+	}
+	
+	function getOpus(){
+		var opusdata =[];
+		$(".select dd").each(function(i,e){
+			var text = $(e).text();
+			var index = text.indexOf("X");
+			text = text.slice(0,index);
+			opusdata.push(text);
+		});
+		
+		$.ajax({
+			url:"getScreen.form",
+			type:"post",
+			data:{
+				"tipic":opusdata[0],
+				"address":opusdata[1],
+				"price":opusdata[2]
+			},
+		    success:function(data){
+		    	$(".recommend").html("");
+		    	$.each(data,function(i,e){
+		    		$(".recommend").append('<div class="opus-box">'+
+		    		'<a href="opusDetail.form?id='+e.id+'"><div>'+
+                    '<img src="'+e.opus_image+'"><p style="margin-top: 10px;">'+
+                    '￥:在售'+e.opus_price+'元</p><p><span>'+
+                    e.author_name+'</span>&nbsp;&nbsp;<span>('+e.opus_name+')</span>'+
+					'</p></div></a></div>');
+		    	});
+		    }
+		})
 	}
 </script>
 </html>

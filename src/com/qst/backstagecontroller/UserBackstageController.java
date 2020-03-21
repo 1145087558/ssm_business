@@ -38,7 +38,9 @@ public class UserBackstageController {
 	@Autowired
 	UserService userService;
 
-	// 后台登录
+	/**
+	 * 用户管理，后台登录
+	 */
 	@RequestMapping("/backstageLogin.form")
 	public String backstageLogin(User user, HttpServletRequest request) {
 		System.out.println("手机号：" + user.getTel() + "密码：" + user.getPwd());
@@ -59,7 +61,9 @@ public class UserBackstageController {
 		return "backstage/index";
 	}
 
-	// 退出
+	/**
+	 * 用户管理，用户退出
+	 */
 	@RequestMapping("/logout.form")
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
@@ -67,7 +71,9 @@ public class UserBackstageController {
 		return "backstage/login";
 	}
 
-	// 绘画验证码
+	/**
+	 * 用户管理，登录时的验证码
+	 */
 	@RequestMapping("/drawImage.form")
 	public void drawImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		VerificationCode verificationCode = new VerificationCode();
@@ -86,7 +92,9 @@ public class UserBackstageController {
 		sos.close();
 	}
 
-	// 判断验证码
+	/**
+	 * 用户管理，检查验证码输入是否正确
+	 */
 	@RequestMapping("/checkCode.form")
 	public void checkCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -111,7 +119,9 @@ public class UserBackstageController {
 		}
 	}
 
-	// 获取普通用户列表
+	/**
+	 * 用户管理，获取所有的普通用户（包括已经被停用的用户）
+	 */
 	@RequestMapping("/getUserList.form")
 	public String getUserList(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -128,7 +138,9 @@ public class UserBackstageController {
 		
 	}
 	
-	// 获取删除用户列表
+	/**
+	 * 用户管理，获取所有被删除的用户（删除只是状态的修改）
+	 */
 	@RequestMapping("/getDeleteUserList.form")
 	public String getDeleteUserList(Model model) {
 
@@ -137,9 +149,10 @@ public class UserBackstageController {
 
 		return "backstage/member-del";
 	}
-	/*//等级管理
-	@RequestMapping*/
-	// 获取所有用户列表
+	
+	/**
+	 * 用户管理，获取所有的用户（普通用户+管理员）
+	 */
 	@RequestMapping("/getUserAllList.form")
 	public String getUserAll(Model model) {
 
@@ -149,7 +162,9 @@ public class UserBackstageController {
 		return "backstage/admin-role";
 	}
 
-	// 获取管理员列表
+	/**
+	 * 用户管理，获取所有的管理员
+	 */
 	@RequestMapping("/getAdminUser.form")
 	public String getAdminUser(Model model) {
 
@@ -159,7 +174,9 @@ public class UserBackstageController {
 		return "backstage/admin-list";
 	}
 
-	// 展示用户信息
+	/**
+	 * 用户管理，根据userId展示用户信息
+	 */
 	@RequestMapping("/showUser.form")
 	public String showUser(String type, int userId, Model model) {
 
@@ -175,7 +192,9 @@ public class UserBackstageController {
 		return "";
 	}
 
-	// 修改用户信息
+	/**
+	 * 用户管理，根据userId修改用户信息
+	 */
 	@RequestMapping("/modifyUser.form")
 	public String modifyUser(User user) {
 		userService.modifyPersonMsg(user);
@@ -183,7 +202,9 @@ public class UserBackstageController {
 		return "redirect:getUserList.form";
 	}
 
-	// 添加用户
+	/**
+	 * 用户管理，添加用户
+	 */
 	@RequestMapping("/addUser.form")
 	public String addUser(User user) {
 
@@ -192,7 +213,9 @@ public class UserBackstageController {
 		return "redirect:getUserList.form";
 	}
 
-	// 修改密码
+	/**
+	 * 用户管理，修改用户密码
+	 */
 	@RequestMapping("/modifyPassword.form")
 	public String modifyPassword(int id, String newpassword) {
 
@@ -201,7 +224,9 @@ public class UserBackstageController {
 		return "redirect:getUserList.form";
 	}
 
-	// 用户删除
+	/**
+	 * 用户管理，根据id删除用户
+	 */
 	@RequestMapping("/deleteUser.form")
 	public String deleteUser(int id) {
 
@@ -210,7 +235,9 @@ public class UserBackstageController {
 		return "redirect:getUserList.form";
 	}
 
-	// 多个用户删除
+	/**
+	 * 用户管理，删除多个用户
+	 */
 	@RequestMapping("/deletesUser.form")
 	public void deletesUser(Integer[] id) {
 
@@ -220,14 +247,18 @@ public class UserBackstageController {
 		}
 	}
 
-	// 用户启用停用
+	/**
+	 * 用户管理，根据修改用户的状态，来表示对用户的启用和停用
+	 */
 	@RequestMapping("/modifyUserStatus.form")
 	public void modifyUserStatus(int id, int status) {
 
 		userService.modifyUserStatus(id, status);
 	}
 
-	// 多个用户状态删除
+	/**
+	 * 用户管理，修改多个用户状态
+	 */
 	@RequestMapping("/modifyUsersStatus.form")
 	public void modifyUsersStatus(Integer[] id, int status, HttpServletResponse response) {
 
@@ -236,7 +267,10 @@ public class UserBackstageController {
 				userService.modifyUserStatus(i, status);
 		}
 	}
-	//地图统计用户地址数量
+	
+	/**
+	 * 用户管理，地图统计用户地址数量
+	 */
 	@RequestMapping("/mapUser.form")
 	@ResponseBody
 	public List<UserAddress> mapUser( HttpServletResponse resp,HttpServletRequest req) {

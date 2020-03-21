@@ -32,7 +32,9 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
 import com.qst.entity.Opus;
@@ -51,7 +53,9 @@ public class OpusBackstageController {
 	@Autowired
 	UserService userService;
 
-	// 展示首页作品
+	/**
+	 * 作品管理，统计点赞数排名前十的作品
+	 */
 	@RequestMapping("liketoplist.form")
 	@ResponseBody
 	public List<Opus> liketoplist(HttpServletRequest request, HttpServletResponse resp) {
@@ -60,7 +64,9 @@ public class OpusBackstageController {
 
 	}
 
-	// 管理上传作品
+	/**
+	 * 作品管理，如果是普通会员就获取自己所上传的作品，而管理员是获取所有已经上传的作品
+	 */
 	@RequestMapping("getOpusAll.form")
 	public String getOpusAll(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -77,13 +83,17 @@ public class OpusBackstageController {
 		return "backstage/product-brand";
 	}
 
-	// 作品上架和下架
+	/**
+	 * 作品管理，对上传的作品的进行上架或者下架(状态进行修改)
+	 */
 	@RequestMapping("modifyOpusByStatus.form")
 	public void modifyOpusByStatus(int status, int id) {
 		opusService.modifyOpusByStatus(status, id);
 	}
 
-	// 获取作品信息
+	/**
+	 * 作品管理，通过id来获取单个作品的信息
+	 */
 	@RequestMapping("getOpusById.form")
 	public String getOpusById(int id, Model model) {
 		Opus opus = opusService.opusDetail(id);
@@ -91,7 +101,9 @@ public class OpusBackstageController {
 		return "backstage/picture-modify";
 	}
 
-	// 作品搜索（搜索作家名字）
+	/**
+	 * 作品管理，根据传的关键字(作品类型、作家名、作品名)进行搜索
+	 */
 	@RequestMapping("search.form")
 	public String searchOpus(String search, HttpServletRequest request) {
 		System.out.println("接收到的关键字：" + search);
@@ -100,7 +112,9 @@ public class OpusBackstageController {
 		return "homepage";
 	}
 
-	// 作品上传实现
+	/**
+	 * 作品管理，通过id对已经上传过的作品的进行修改
+	 */
 	@RequestMapping("modifyOpus.form")
 	public void uploadOpus(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
 
@@ -153,7 +167,9 @@ public class OpusBackstageController {
 		opusService.updateOpus(opus);
 	}
 
-	// 作品上传实现
+	/**
+	 * 作品管理，上传作品，如果是普通用户上传的作品需要进行审核，如果是管理员则是直接上架
+	 */
 	@RequestMapping("addOpus.form")
 	public void addOpus(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -210,7 +226,9 @@ public class OpusBackstageController {
 		opusService.upload(opus);
 	}
 
-	// 作品上传无图片
+	/**
+	 * 作品管理，上传作品（没有上传图片）
+	 */
 	@RequestMapping("addOpusNoFile.form")
 	public String addOpusNoFile(Opus opus, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -226,7 +244,9 @@ public class OpusBackstageController {
 		return "redirect:getOpusAll.form";
 	}
 
-	// 作品修改无图片
+	/**
+	 * 作品管理，只修改了作品的信息，而没有重新上传图片
+	 */
 	@RequestMapping("modifyOpusNoFile.form")
 	public String modifyOpusNoFile(Opus opus, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
@@ -239,7 +259,9 @@ public class OpusBackstageController {
 		return "redirect:getOpusAll.form";
 	}
 
-	// 获取未审核作品
+	/**
+	 * 作品管理，获取所有未审核的作品
+	 */
 	@RequestMapping("getOpusWsh.form")
 	public String getOpusWsh(HttpServletRequest request) {
 
@@ -247,12 +269,78 @@ public class OpusBackstageController {
 		request.setAttribute("opusList", opusList);
 		return "backstage/picture-list";
 	}
+	
+	/**
+	 * 作品管理，获取所有退款未审核的订单
+	 */
+	@RequestMapping("getOrderWsh.form")
+	public String getOrderWsh(HttpServletRequest request) {
 
-	// 作品删除
+		List<Order> orderList = opusService.getOrderByStatus("退款中");
+		request.setAttribute("orderList", orderList);
+		return "backstage/ordersh-list";
+	}
+	
+	/**
+	 * 订单页面，对退款的申请不通过
+	 */
+	@RequestMapping("refundBTG.form")
+	public void refundBTG(String out_trade_no,HttpServletRequest request) {
+	
+		Order order = opusService.seekOrderByNumber(out_trade_no);
+		order.setStatus("已支付");
+		opusService.updateOrder(order);
+	}
+	
+	/**
+	 * 订单页面，根据所支付的类型进行退款
+	 */
+	@RequestMapping("refundRequest.form")
+	public void refundRequest(String out_trade_no,HttpServletRequest request) {
+		System.out.println(out_trade_no);
+		Order order = opusService.seekOrderByNumber(out_trade_no);
+		if(order.getOrder_type().equals("余额")){
+			User user = (User)request.getSession().getAttribute("user");
+			user.setBalance(user.getBalance()+order.getOpus_price());
+			userService.modifyBalance(user);
+			order.setStatus("已退款");
+			opusService.updateOrder(order);
+			request.getSession().setAttribute("user",user);
+			
+		}else if(order.getOrder_type().equals("支付宝")){
+			try {
+				AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
+						AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.zifubao_public_key,
+						AlipayConfig.sign_type);
+				AlipayTradeRefundRequest aliRequest = new AlipayTradeRefundRequest();
+				aliRequest.setBizContent("{" +
+						"\"out_trade_no\":\"" + out_trade_no + "\"," +
+						"\"refund_amount\":\"" + order.getOpus_price() + "\"," +
+						"\"refund_reason\":\"正常退款\"" +
+						" }");
+				AlipayTradeRefundResponse response;
+				response = alipayClient.execute(aliRequest);
+				if (response.isSuccess()) {
+					System.out.println("支付宝退款成功");
+					order.setStatus("已退款");
+					opusService.updateOrder(order);
+				} else {
+					//response.getSubMsg();//失败会返回错误信息(出现交易信息被篡改一般是同一个订单被多次退款)
+					System.out.println(response.getSubMsg());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * 作品管理，通过id删除已经上传的作品
+	 */
 	@RequestMapping("deleteOpus.form")
 	public void deleteOpus(int id, HttpServletRequest request) {
 
 		opusService.deleteOpus(id);
 	}
-
+	
 }

@@ -117,6 +117,11 @@
 				<ul>
 					<li><a data-href="getCartAll.form" data-title="订单管理"
 						href="javascript:void(0)">订单管理</a></li>
+						
+						<c:if test="${sessionScope.user.status==1}">
+						<li><a data-href="getOrderWsh.form" data-title="退款审核"
+							href="javascript:void(0)">退款审核</a></li>
+					</c:if>
 				</ul>
 			</dd>
 		</dl>
@@ -209,7 +214,8 @@
 					<li><a data-href="charts-3.html" data-title="区域图"
 						href="javascript:void(0)">销量排行榜</a></li>
 					<li><a data-href="charts-4.html" data-title="柱状图"
-					<!-- 	href="javascript:void(0)">点赞排行榜</a></li>
+					 	href="javascript:void(0)">点赞排行榜</a></li>
+					 <!--	
 					<li><a data-href="charts-5.html" data-title="饼状图"
 						href="javascript:void(0)">饼状图</a></li>
 					<li><a data-href="charts-6.html" data-title="3D柱状图"

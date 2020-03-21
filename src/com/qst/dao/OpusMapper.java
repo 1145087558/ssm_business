@@ -2,17 +2,19 @@ package com.qst.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
 import com.qst.entity.Opus;
 import com.qst.entity.Order;
 
 public interface OpusMapper {
-	
+
 	public List<Opus> liketoplist();
-	
+
 	public List<Opus> getOrderLike();
-	
+
 	public List<Opus> findAll();
 
 	public Opus opusDetail(int id);
@@ -20,9 +22,9 @@ public interface OpusMapper {
 	public void dealWithLikeTimes(Opus opus);
 
 	public List<Opus> opusSearch(String search);
-	
+
 	public List<Opus> opusSearchByName(String search);
-	
+
 	public List<Opus> opusSearchByTipic(String search);
 
 	public void addCart(Cart cart);
@@ -34,7 +36,7 @@ public interface OpusMapper {
 	public void deleteCartOpus(int id);
 
 	public void addDiscuss(Discuss discuss);
-	
+
 	public Discuss getDiscussMsg(int id);
 
 	public List<Discuss> seekDiscussMsg(int id);
@@ -60,9 +62,9 @@ public interface OpusMapper {
 	public List<Order> seekOrderByOpus(int id);
 
 	public List<Order> seekOrderAll();
-	
+
 	public void updateOrder(Order order);
-	
+
 	public Order seekOrderByNumber(String order_number);
 
 	public void deleteOrder(int id);
@@ -78,10 +80,25 @@ public interface OpusMapper {
 	public List<Opus> timesSort();
 
 	public List<Opus> timeSort();
-	
+
 	public void updateDiscuss(Discuss discuss);
 
+	public List<Opus> getAuthorLike();
+
+	public List<Order> getOrderByStatus(String status);
+
+	public void addBrowse(String type, int userId);
+
+	public Opus countBrowse(int id);
+
+	public List<Opus> getScreen(@Param(value = "tipic") String tipic, @Param(value = "minprice") String minprice,
+			@Param(value = "maxprice") String maxprice);
+
+	void addCollet(int opusId, Integer userId);
+
+	void deleteCollet(int opusId, Integer userId);
+
+	Integer checkCollet(int opusId, Integer userId);
 	
-
-
+	List<Opus> getCollet(int userId);
 }

@@ -140,11 +140,13 @@
 				
 				
 				</div>
+				<a class="like" href="javascript:;"  title="收藏">&#10084;</a>
 				 <a
 					href="like_times.form?id=${opus.id}&like_times=${opus.opus_like_times+1}"
 					onclick="alert('操作成功,当前点赞数为：${opus.opus_like_times+1}')"><button>点赞</button>
-				</a> <a href="#" href="javascript:;" onclick="modalShow()"><button>分享</button>
+				</a> <a href="javascript:;" onclick="modalShow()"><button>分享</button>
 				</a>
+				<!-- <p class="like">&#10084;</p> -->
 			</div>
 			<div class="detail-right">
 				<div class="big-img"></div>
@@ -338,6 +340,65 @@
 						
 		}
 	}
+	
+	
+	$(".like").click(function () {
+		var obj = $(this);
+		obj.toggleClass('cs');
+        var text = obj.attr("class")
+        if(text.indexOf("cs")!=-1){
+        	$.ajax({
+        		url:"addCollet.form",
+        		type:"post",
+        		data:{
+        			"opusId":${opus.id}
+        		},
+        		success:function(){
+        			
+        		},
+        		error:function(error){
+        			if (error.status == 403) {
+						window.location.href = "login.jsp";
+					}
+        		}
+        	});
+        	obj.attr("title","取消收藏");
+        }else{
+        	
+        	$.ajax({
+        		url:"deleteCollet.form",
+        		type:"post",
+        		data:{
+        			"opusId":${opus.id}
+        		},
+        		success:function(){
+        			
+        		},
+        		error:function(error){
+        			if (error.status == 403) {
+						window.location.href = "login.jsp";
+					}
+        		}
+        	});
+        	obj.attr("title","收藏");
+        }
+    })
+    
+    $(function(){
+    	$.ajax({
+    		url:"checkCollet.form",
+    		type:"post",
+    		data:{
+    			"opusId":${opus.id}
+    		},
+    		success:function(data){
+    			if(data=="success"){
+    				$(".like").toggleClass('cs');
+    				$(".like").attr("title","取消收藏");
+    			}
+    		}
+    	})
+    })
 </script>
 
 <script type="text/javascript">

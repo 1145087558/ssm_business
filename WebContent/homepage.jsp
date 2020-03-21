@@ -9,12 +9,14 @@
 	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/homepage.css">
 <link rel="stylesheet" href="css/basic.css">
+<link href="chat/css/chat.css" rel="stylesheet">
 <link
 	href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
 	rel="stylesheet">
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script
 	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/layer/2.4/layer.js"></script>
 </head>
 
 <body>
@@ -32,8 +34,9 @@
 				<span style="font-size: 16px;">${sessionScope.user.tel}</span>
 				<div class="dropdown-content" id="dpct">
 					<a href="" id="order" data-toggle="modal" data-target="#editModal"
-						ng-click="entity={}">余额充值</a> <!-- <a href="seekOrder.form">我的订单</a> --> <a
-						href="personCenter.jsp">个人中心</a> <a href="upload.jsp">上传作品</a> <a
+						ng-click="entity={}">余额充值</a>
+					<!-- <a href="seekOrder.form">我的订单</a> -->
+					<a href="personCenter.jsp">个人中心</a> <a href="upload.jsp">上传作品</a> <a
 						href="logout.form">退出</a>
 				</div>
 			</div>
@@ -97,7 +100,10 @@
 		<ul>
 			<li class="dropdown" id="type"><span style="font-size: 20px;">艺术品分类</span>
 				<div class="dropdown-content" id="art-type">
-					<a href="#">类型</a> <a href="#">题材</a> <a href="$">地域</a>
+					<a href="search.form?search=国画">国画</a> <a
+						href="search.form?search=油画">油画</a> <a
+						href="search.form?search=书法">书法</a> <a
+						href="search.form?search=版画">版画</a>
 				</div></li>
 
 			<li><a href="findAll.form">艺淘宝</a></li>
@@ -112,10 +118,7 @@
 						href="calligraphy.form?type_status=6">书画装裱知识</a> <a
 						href="calligraphy.form?type_status=7">中国书画流派</a>
 				</div></li>
-			<li class="dropdown" id="type"><span style="font-size: 20px;">艺术动态</span>
-				<div class="dropdown-content" id="art-type">
-					<a href="#">书画大赛动态信息</a> <a href="#">艺术展览信息</a>
-				</div></li>
+			<li><a href="collect.jsp">我的收藏</a></li>
 
 			<li class="dropdown" id="type"><span style="font-size: 20px;">
 					中国名画艺术欣赏</span>
@@ -124,7 +127,7 @@
 					<a href="#">中国油画欣赏</a> <a href="#">中国山水画欣赏</a> <a href="#">中国花鸟画欣赏</a>
 					<a href="#">中国版画欣赏</a>
 				</div></li>
-			<li><a href="">名人榜</a></li>
+			<li><a href="hof.jsp">名人榜</a></li>
 			<li class="dropdown" id="type"><span style="font-size: 20px;">关于我们</span>
 
 				<div class="dropdown-content" id="art-type">
@@ -156,6 +159,15 @@
 			</div>
 		</c:forEach>
 	</div>
+	
+	<!-- 在线客服 -->
+	<div class="suspend">
+		<dl>
+			<dt class="IE6PNG"></dt>
+			<dd class="suspendQQ"> <a href="javascript:void(0);" onclick="chat()"></a></dd>
+			<dd class="suspendTel"><a href="javascript:void(0);"></a></dd>
+			</dl>
+		</div>
 </body>
 
 <script>
@@ -171,21 +183,52 @@
 	 function perLeave(x){
 	 $(".personUl").css("display","none");
 	 } */
-	 
-	 $("#order").click(function(){
-	 	$("form").css("display","inline");
-	 });
-	 
-	 $(".content-top ul li").click(function(){
-		 if($(this).text()=="价格"){
-			 window.location.href="priceSort.form";
-		 }else if($(this).text()=="热度"){
-			 window.location.href="heatSort.form";
-		 }else if($(this).text()=="点赞"){
-			 window.location.href="timesSort.form";
-		 }else if($(this).text()=="最新作品"){
-			 window.location.href="timeSort.form";
-		 }
-	 });
+
+	$("#order").click(function() {
+		$("form").css("display", "inline");
+	});
+
+	$(".content-top ul li").click(function() {
+		if ($(this).text() == "价格") {
+			window.location.href = "priceSort.form";
+		} else if ($(this).text() == "热度") {
+			window.location.href = "heatSort.form";
+		} else if ($(this).text() == "点赞") {
+			window.location.href = "timesSort.form";
+		} else if ($(this).text() == "最新作品") {
+			window.location.href = "timeSort.form";
+		}
+	});
+	
 </script>
+<script type="text/javascript">
+			$(document).ready(function() {
+
+				$(".suspend").mouseover(function() {
+					$(this).stop();
+					$(this).animate({
+						width: 160
+					}, 400);
+				})
+
+				$(".suspend").mouseout(function() {
+					$(this).stop();
+					$(this).animate({
+						width: 40
+					}, 400);
+				});
+
+			});
+
+			function chat() {
+				layer.open({
+					type: 2,
+					title: '',
+					area: ['83%', '94%'],
+					fix: true, //不固定
+					maxmin: false,
+					content: 'chat/index.html',
+				});
+			}
+		</script>
 </html>
