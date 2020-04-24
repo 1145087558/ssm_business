@@ -56,17 +56,10 @@ public class OpusController {
 	 */
 	@RequestMapping("findAll.form")
 	public String findAll(HttpServletRequest request) {
-		User user = (User)request.getSession().getAttribute("user");
-		List<Opus> opusList = null;
-		if(user != null){
-			opusList = opusService.recommend(user.getId());
-		}else{
-			opusList = opusService.findAll();
-		}
 		
+		List<Opus> opusList = opusService.findAll();
 		request.setAttribute("opusList", opusList);
 		return "homepage";
-
 	}
 
 	/**
@@ -131,6 +124,8 @@ public class OpusController {
 		cart.setOpus_price(opus.getOpus_price());
 		System.out.println(cart);
 		opusService.addCart(cart);
+		opus.setStatus(4);
+		opusService.updateOpus(opus);
 		System.out.println("id:::" + cart.getOpus_id());
 		RedirectView rv = new RedirectView("displayCart.form");
 		return new ModelAndView(rv);
@@ -187,6 +182,18 @@ public class OpusController {
 		return "homepage";
 
 	}
+	
+	/**
+	 * 前端页面，根据用户浏览的记录进行推荐
+	 */
+	@RequestMapping("recommend.form")
+	public String recommend(HttpServletRequest request) {
+		User user = (User)request.getSession().getAttribute("user");
+		List<Opus> opusList = opusService.recommend(user.getId());
+		request.setAttribute("opusList", opusList);
+		return "homepage";
+	}
+	
 
 	/**
 	 * 前端页面，根据作品的价格进行倒序，价格越贵的靠前
@@ -323,7 +330,7 @@ public class OpusController {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String orderSn = simpleDateFormat.format(Calendar.getInstance().getTime());
 		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
-				AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key,
+				AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.zifubao_public_key,
 				AlipayConfig.sign_type);
 		AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
 		alipayRequest.setReturnUrl("http://localhost:8080/ssm_business/doPaySuccess");
@@ -402,7 +409,7 @@ public class OpusController {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String orderSn = simpleDateFormat.format(Calendar.getInstance().getTime());
 		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
-				AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key,
+				AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.zifubao_public_key,
 				AlipayConfig.sign_type);
 		AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
 		alipayRequest.setReturnUrl("http://localhost:8080/ssm_business/paySuccess.form");
@@ -466,7 +473,7 @@ public class OpusController {
 		request.getSession().setAttribute("user", user);
 		List<Order> orderList = opusService.seekOrder(user.getId());
 		request.setAttribute("orderList", orderList);
-		return "/order";
+		return "redirect:seekOrder.form";
 	}
 	
 	/**

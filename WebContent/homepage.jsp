@@ -139,10 +139,11 @@
 	<div class="content">
 		<div class="content-top">
 			<ul>
-				<li style="padding-right: 30px;">最新作品</li>
+				<li>最新作品</li>
 				<li>价格</li>
 				<li>热度</li>
 				<li>点赞</li>
+				<li>推荐</li>
 			</ul>
 		</div>
 
@@ -197,6 +198,8 @@
 			window.location.href = "timesSort.form";
 		} else if ($(this).text() == "最新作品") {
 			window.location.href = "timeSort.form";
+		}else if ($(this).text() == "推荐") {
+			window.location.href = "recommend.form";
 		}
 	});
 	

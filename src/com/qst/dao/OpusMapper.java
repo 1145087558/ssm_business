@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
 import com.qst.entity.Opus;
+import com.qst.entity.OpusType;
 import com.qst.entity.Order;
+import com.qst.entity.Tipic;
 
 public interface OpusMapper {
 
@@ -101,4 +103,18 @@ public interface OpusMapper {
 	Integer checkCollet(int opusId, Integer userId);
 	
 	List<Opus> getCollet(int userId);
+
+	public List<Tipic> getTipicAll();
+
+	public void addTipic(Tipic tipic);
+
+	public void deleteTipic(int id);
+
+	public List<Opus> getSoldOpus();
+
+	public List<OpusType> getTypeAll();
+
+	public void addType(OpusType opusType);
+
+	public void deleteType(int id);
 }

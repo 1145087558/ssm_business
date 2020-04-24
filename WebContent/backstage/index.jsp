@@ -120,7 +120,10 @@
 						
 						<c:if test="${sessionScope.user.status==1}">
 						<li><a data-href="getOrderWsh.form" data-title="退款审核"
-							href="javascript:void(0)">退款审核</a></li>
+							href="javascript:void(0)">退款审核</a>
+						</li>
+						<li><a data-href="getSoldOpus.form" data-title="已售作品"
+						href="javascript:void(0)">已售作品</a></li>
 					</c:if>
 				</ul>
 			</dd>
@@ -137,8 +140,15 @@
 					<!-- <li><a data-href="product-category.html" data-title="分类管理" href="javascript:void(0)">分类管理</a></li> -->
 					<c:if test="${sessionScope.user.status==1}">
 						<li><a data-href="getOpusWsh.form" data-title="作品审核"
-							href="javascript:void(0)">作品审核</a></li>
+							href="javascript:void(0)">作品审核</a>
+						</li>
 					</c:if>
+					<li><a data-href="getType.form" data-title="类型管理"
+						href="javascript:void(0)">类型管理</a>
+					</li>
+					<li><a data-href="getTipic.form" data-title="题材管理"
+						href="javascript:void(0)">题材管理</a>
+					</li>
 				</ul>
 			</dd>
 		</dl>

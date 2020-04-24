@@ -189,7 +189,7 @@
 						</td>
 						<td style="line-height:100px;">${order.opus_price}￥</td>
 						<c:choose>
-						<c:when test="${order.status !='已退款'|| order.status !='退款中'}">
+						<c:when test="${order.status =='已支付'}">
 						<td style="line-height:100px;"><a href="javascript:;" onclick="refundRequest('${order.order_number}',this)">退款/退货</a></td>
 						</c:when>
 						<c:otherwise>

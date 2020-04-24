@@ -1,20 +1,12 @@
 package com.qst.backstagecontroller;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-
-import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +30,9 @@ import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
 import com.qst.entity.Opus;
+import com.qst.entity.OpusType;
 import com.qst.entity.Order;
+import com.qst.entity.Tipic;
 import com.qst.entity.User;
 import com.qst.service.OpusService;
 import com.qst.service.UserService;
@@ -61,7 +55,6 @@ public class OpusBackstageController {
 	public List<Opus> liketoplist(HttpServletRequest request, HttpServletResponse resp) {
 
 		return opusService.liketoplist();
-
 	}
 
 	/**
@@ -99,6 +92,18 @@ public class OpusBackstageController {
 		Opus opus = opusService.opusDetail(id);
 		model.addAttribute("opus", opus);
 		return "backstage/picture-modify";
+	}
+
+	/**
+	 * 作品管理，把题材信息传到添加作品页面
+	 */
+	@RequestMapping("toAddOpus.form")
+	public String toAddOpus(Model model) {
+		List<Tipic> tipicList = opusService.getTipicAll();
+		model.addAttribute("tipicList", tipicList);
+		List<OpusType> typeList = opusService.getTypeAll();
+		model.addAttribute("typeList", typeList);
+		return "backstage/picture-add";
 	}
 
 	/**
@@ -269,7 +274,7 @@ public class OpusBackstageController {
 		request.setAttribute("opusList", opusList);
 		return "backstage/picture-list";
 	}
-	
+
 	/**
 	 * 作品管理，获取所有退款未审核的订单
 	 */
@@ -280,44 +285,41 @@ public class OpusBackstageController {
 		request.setAttribute("orderList", orderList);
 		return "backstage/ordersh-list";
 	}
-	
+
 	/**
 	 * 订单页面，对退款的申请不通过
 	 */
 	@RequestMapping("refundBTG.form")
-	public void refundBTG(String out_trade_no,HttpServletRequest request) {
-	
+	public void refundBTG(String out_trade_no, HttpServletRequest request) {
+
 		Order order = opusService.seekOrderByNumber(out_trade_no);
 		order.setStatus("已支付");
 		opusService.updateOrder(order);
 	}
-	
+
 	/**
 	 * 订单页面，根据所支付的类型进行退款
 	 */
 	@RequestMapping("refundRequest.form")
-	public void refundRequest(String out_trade_no,HttpServletRequest request) {
+	public void refundRequest(String out_trade_no, HttpServletRequest request) {
 		System.out.println(out_trade_no);
 		Order order = opusService.seekOrderByNumber(out_trade_no);
-		if(order.getOrder_type().equals("余额")){
-			User user = (User)request.getSession().getAttribute("user");
-			user.setBalance(user.getBalance()+order.getOpus_price());
+		if (order.getOrder_type().equals("余额")) {
+			User user = (User) request.getSession().getAttribute("user");
+			user.setBalance(user.getBalance() + order.getOpus_price());
 			userService.modifyBalance(user);
 			order.setStatus("已退款");
 			opusService.updateOrder(order);
-			request.getSession().setAttribute("user",user);
-			
-		}else if(order.getOrder_type().equals("支付宝")){
+			request.getSession().setAttribute("user", user);
+
+		} else if (order.getOrder_type().equals("支付宝")) {
 			try {
 				AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
-						AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.zifubao_public_key,
-						AlipayConfig.sign_type);
+						AlipayConfig.merchant_private_key, "json", AlipayConfig.charset,
+						AlipayConfig.zifubao_public_key, AlipayConfig.sign_type);
 				AlipayTradeRefundRequest aliRequest = new AlipayTradeRefundRequest();
-				aliRequest.setBizContent("{" +
-						"\"out_trade_no\":\"" + out_trade_no + "\"," +
-						"\"refund_amount\":\"" + order.getOpus_price() + "\"," +
-						"\"refund_reason\":\"正常退款\"" +
-						" }");
+				aliRequest.setBizContent("{" + "\"out_trade_no\":\"" + out_trade_no + "\"," + "\"refund_amount\":\""
+						+ order.getOpus_price() + "\"," + "\"refund_reason\":\"正常退款\"" + " }");
 				AlipayTradeRefundResponse response;
 				response = alipayClient.execute(aliRequest);
 				if (response.isSuccess()) {
@@ -325,9 +327,12 @@ public class OpusBackstageController {
 					order.setStatus("已退款");
 					opusService.updateOrder(order);
 				} else {
-					//response.getSubMsg();//失败会返回错误信息(出现交易信息被篡改一般是同一个订单被多次退款)
+					// response.getSubMsg();//失败会返回错误信息(出现交易信息被篡改一般是同一个订单被多次退款)
 					System.out.println(response.getSubMsg());
 				}
+			}catch (AlipayApiException e){
+				order.setStatus("已退款");
+				opusService.updateOrder(order);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -342,5 +347,66 @@ public class OpusBackstageController {
 
 		opusService.deleteOpus(id);
 	}
+
+	/**
+	 * 作品管理，获取所有题材
+	 */
+	@RequestMapping("getTipic.form")
+	public String getTipic(Model model) {
+
+		List<Tipic> tipicList = opusService.getTipicAll();
+
+		model.addAttribute("tipicList", tipicList);
+
+		return "backstage/tipic-list";
+	}
+
+	/**
+	 * 作品管理，添加题材
+	 */
+	@RequestMapping("addTipic.form")
+	public void addTipic(Tipic tipic) {
+
+		opusService.addTipic(tipic);
+	}
+
+	/**
+	 * 作品管理，删除题材
+	 */
+	@RequestMapping("deleteTipic.form")
+	public void deleteTipic(int id) {
+
+		opusService.deleteTipic(id);
+	}
 	
+	/**
+	 * 作品管理，获取所有类型
+	 */
+	@RequestMapping("getType.form")
+	public String getType(Model model) {
+
+		List<OpusType> typeList = opusService.getTypeAll();
+
+		model.addAttribute("typeList", typeList);
+
+		return "backstage/type-list";
+	}
+	
+	/**
+	 * 作品管理，添加类型
+	 */
+	@RequestMapping("addType.form")
+	public void addType(OpusType opusType) {
+
+		opusService.addType(opusType);
+	}
+	
+	/**
+	 * 作品管理，删除类型
+	 */
+	@RequestMapping("deleteType.form")
+	public void deleteType(int id) {
+
+		opusService.deleteType(id);
+	}
 }

@@ -10,7 +10,9 @@ import com.qst.dao.OpusMapper;
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
 import com.qst.entity.Opus;
+import com.qst.entity.OpusType;
 import com.qst.entity.Order;
+import com.qst.entity.Tipic;
 import com.qst.service.OpusService;
 
 @Service
@@ -300,6 +302,47 @@ public class OpusServiceImpl implements OpusService {
 	public List<Opus> getCollet(int userId) {
 		
 		return opusMapper.getCollet(userId);
+	}
+
+	@Override
+	public List<Tipic> getTipicAll() {
+		
+		return opusMapper.getTipicAll();
+	}
+
+	@Override
+	public void addTipic(Tipic tipic) {
+		opusMapper.addTipic(tipic);
+	}
+
+	@Override
+	public void deleteTipic(int id) {
+		
+		opusMapper.deleteTipic(id);
+	}
+
+	@Override
+	public List<Opus> getSoldOpus() {
+		
+		return opusMapper.getSoldOpus();
+	}
+
+	@Override
+	public List<OpusType> getTypeAll() {
+		
+		return opusMapper.getTypeAll();
+	}
+
+	@Override
+	public void addType(OpusType opusType) {
+		
+		opusMapper.addType(opusType);
+	}
+
+	@Override
+	public void deleteType(int id) {
+		
+		opusMapper.deleteType(id);
 	}
 	
 	

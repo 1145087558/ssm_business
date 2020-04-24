@@ -2,7 +2,7 @@ package com.qst.entity;
 
 public class Order {
 
-	private int id;
+	private Integer id;
 	private int user_id;
 	private int opus_id;
 	private Integer address_id;
@@ -14,10 +14,10 @@ public class Order {
 	private double opus_price;
 	private String order_date;
 	private String status;
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public int getUser_id() {

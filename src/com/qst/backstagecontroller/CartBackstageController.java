@@ -48,6 +48,16 @@ public class CartBackstageController {
 		}
 		return "backstage/order-list";
 	}
+	
+	/**
+	 * 订单管理，获取已售作品
+	 */
+	@RequestMapping("getSoldOpus.form")
+	public String getSoldOpus(HttpServletRequest request) {
+		List<Opus> opusList = opusService.getSoldOpus();
+		request.setAttribute("opusList", opusList);
+		return "backstage/order-brand";
+	}
 
 	/**
 	 * 订单删除，根据订单id进行删除

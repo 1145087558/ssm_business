@@ -2,7 +2,7 @@ package com.qst.entity;
 
 public class Opus {
 
-	private int id;
+	private Integer id;
 	private String opus_name;//作品标题
 	private String author_name;//作者
 	private String opus_image;//图片存储位置
@@ -12,12 +12,13 @@ public class Opus {
 	private Integer opus_heat;//热度
 	private double opus_price;//售卖价格
 	private String opus_tipic;
+	private String opus_type;
 	private Integer status;
 	private Integer user_id;
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getOpus_name() {
@@ -74,6 +75,12 @@ public class Opus {
 	public void setOpus_tipic(String opus_tipic) {
 		this.opus_tipic = opus_tipic;
 	}
+	public String getOpus_type() {
+		return opus_type;
+	}
+	public void setOpus_type(String opus_type) {
+		this.opus_type = opus_type;
+	}
 	public Integer getStatus() {
 		return status;
 	}
@@ -86,6 +93,7 @@ public class Opus {
 	public void setUser_id(Integer user_id) {
 		this.user_id = user_id;
 	}
+	
 	
 	
 }

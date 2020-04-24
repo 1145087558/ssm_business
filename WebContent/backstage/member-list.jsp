@@ -59,7 +59,9 @@
 					批量删除</a> <a href="javascript:;"
 				onclick="member_add('添加用户','member-add.jsp','','510')"
 				class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
-					添加用户</a></span> <span class="r">共有数据：<strong>${fn:length(users)}</strong>
+					添加用户</a> <a href="downloadUser.form"
+				class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i>
+					导出信息</a></span> <span class="r">共有数据：<strong>${fn:length(users)}</strong>
 				条
 			</span>
 		</div>

@@ -5,7 +5,9 @@ import java.util.List;
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
 import com.qst.entity.Opus;
+import com.qst.entity.OpusType;
 import com.qst.entity.Order;
+import com.qst.entity.Tipic;
 
 public interface OpusService {
 	public List<Opus> liketoplist();
@@ -95,5 +97,19 @@ public interface OpusService {
 	String checkCollet(int opusId, Integer id);
 	
 	List<Opus> getCollet(int userId);
+
+	public List<Tipic> getTipicAll();
+
+	public void addTipic(Tipic tipic);
+
+	public void deleteTipic(int id);
+
+	public List<Opus> getSoldOpus();
+
+	public List<OpusType> getTypeAll();
+
+	public void addType(OpusType opusType);
+
+	public void deleteType(int id);
 	
 }

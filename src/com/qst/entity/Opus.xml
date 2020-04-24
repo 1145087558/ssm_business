@@ -22,6 +22,11 @@
 		select *from tb_opus where
 		status =0
 	</select>
+	<!-- 获取已售商品 -->
+	<select id="getSoldOpus" resultType="com.qst.entity.Opus">
+		select *from tb_opus where
+		status =4
+	</select>
 	<!-- 某件作品的详情 -->
 	<select id="opusDetail" parameterType="int" resultType="com.qst.entity.Opus">
 		select
@@ -89,6 +94,16 @@
 	<delete id="deleteCollet">
 		delete from tb_collet where opus_id=#{param1} and user_id=#{param2}
 	</delete>
+	
+	<!-- 删除题材 -->
+	<delete id="deleteTipic">
+		delete from tb_tipic where id=#{id}
+	</delete>
+	
+	<!-- 删除类型 -->
+	<delete id="deleteType">
+		delete from tb_type where id=#{id}
+	</delete>
 
 	<!-- 修改某个评论 -->
 	<update id="updateDiscuss" parameterType="com.qst.entity.Discuss">
@@ -122,6 +137,16 @@
 		insert into tb_discussMsg
 		(user_id,user_name,opus_id,opus_name,discuss_msg,discuss_date)
 		values(#{user_id},#{user_name},#{opus_id},#{opus_name},#{discuss_msg},#{discuss_date})
+	</insert>
+	
+	<!-- 添加题材 -->
+	<insert id="addTipic" parameterType="com.qst.entity.Tipic">
+		insert into tb_tipic (tipic) values(#{tipic})
+	</insert>
+	
+	<!-- 添加类型 -->
+	<insert id="addType" parameterType="com.qst.entity.OpusType">
+		insert into tb_type (type) values(#{type})
 	</insert>
 
 	<!-- 查找某件作品的全部评论信息 -->
@@ -171,7 +196,7 @@
 	<!-- 查询某个人的订单 -->
 	<select id="seekOrder" resultType="com.qst.entity.Order">
 		select *from tb_order where
-		user_id=#{id}
+		user_id=#{id} order by id desc
 	</select>
 
 	<!-- 查询某个作品的订单 -->
@@ -194,6 +219,16 @@
 	<select id="seekOrderByNumber" resultType="com.qst.entity.Order">
 		select *from tb_order
 		where order_number=#{order_number}
+	</select>
+	
+	<!-- 查找所有的题材信息 -->
+	<select id="getTipicAll" resultType="com.qst.entity.Tipic">
+		select *from tb_tipic
+	</select>
+	
+	<!-- 查找所有的类型信息 -->
+	<select id="getTypeAll" resultType="com.qst.entity.OpusType">
+		select *from tb_type
 	</select>
 
 
@@ -220,6 +255,9 @@
 			</if>
 			<if test="opus_price != null">
 				opus_price,
+			</if>
+			<if test="opus_type != null">
+				opus_type,
 			</if>
 			<if test="opus_tipic != null">
 				opus_tipic,
@@ -255,6 +293,9 @@
 			</if>
 			<if test="opus_price != null">
 				#{opus_price,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_type != null">
+				#{opus_type,jdbcType=VARCHAR},
 			</if>
 			<if test="opus_tipic != null">
 				#{opus_tipic,jdbcType=VARCHAR},
@@ -297,6 +338,9 @@
 			</if>
 			<if test="opus_tipic != null">
 				opus_tipic=#{opus_tipic,jdbcType=VARCHAR},
+			</if>
+			<if test="opus_type != null">
+				opus_type=#{opus_type,jdbcType=VARCHAR},
 			</if>
 			<if test="status != null">
 				status=#{status,jdbcType=INTEGER},

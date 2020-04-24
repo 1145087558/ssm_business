@@ -32,10 +32,9 @@
 <title>订单管理</title>
 </head>
 <body>
-	<nav class="breadcrumb">
-	<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
-	产品管理 <span class="c-gray en">&gt;</span> 品牌管理 <a
-		class="btn btn-success radius r"
+	<nav class="breadcrumb"> <i class="Hui-iconfont">&#xe67f;</i> 首页
+	<span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span>
+	品牌管理 <a class="btn btn-success radius r"
 		style="line-height: 1.6em; margin-top: 3px"
 		href="javascript:location.replace(location.href);" title="刷新"><i
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
@@ -64,10 +63,10 @@
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"><a href="javascript:;" onclick="datadel()"
 				class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i>
-					批量删除</a><a class="btn btn-primary radius"
-				 href="downloadOder.form"><iclass="Hui-iconfont">&#xe600;</i> 导出信息</a></span> 
-				 <span class="r">共有数据：<strong>${fn:length(orderList)}</strong>
-				条
+					批量删除</a> <a href="javascript:;"
+				onclick="tipic_add('添加类型','type-add.jsp','400','300')"
+				class="btn btn-primary radius"><i class="icon-plus"></i> 添加类型</a></span> <span
+				class="r">共有数据：<strong>${fn:length(typeList)}</strong> 条
 			</span>
 		</div>
 		<div class="mt-20">
@@ -75,41 +74,19 @@
 				<thead>
 					<tr class="text-c">
 						<th width="25"><input type="checkbox" name="" value=""></th>
-						<th width="100">订单号</th>
-						<th width="120">作品名称</th>
-						<th width="80">用户名称</th>
-						<th width="80">价格</th>
-						<th width="100">下单时间</th>
-						<th width="80">支付方式</th>
-						<th>收获地址</th>
-						<th width="60">发布状态</th>
+						<th width="100">ID</th>
+						<th width="120">类型名称</th>
 						<th width="70">操作</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${orderList}" var="order">
+					<c:forEach items="${typeList}" var="types">
 						<tr class="text-c">
-							<td><input name="id" type="checkbox" value="${order.id}"></td>
-							<td class="text-l">${order.order_number}</td>
-							<!-- <td><input type="text" class="input-text text-c" value="1"></td> -->
-							<td>${order.opus_name}</td>
-							<td>${order.user_name}</td>
-							<td>${order.opus_price}</td>
-							<td>${order.order_date}</td>
-							<td>${order.order_type}</td>
-							<td class="text-l">${order.user_address}</td>
-							<c:choose>
-							<c:when test="${order.status == '已支付'}">
-							<td class="td-status"><span
-								class="label label-success radius">已支付</span></td>
-							</c:when>
-							<c:otherwise>
-							<td class="td-status"><span
-								class="label label-danger radius">${order.status}</span></td>
-							</c:otherwise>
-							</c:choose>
+							<td><input name="id" type="checkbox" value="${types.id}"></td>
+							<td>${types.id}</td>
+							<td >${types.type}</td>
 							<td class="td-manage"><a title="删除" href="javascript:;"
-								onclick="picture_del(this,'${order.id}')" class="ml-5"
+								onclick="picture_del(this,'${types.id}')" class="ml-5"
 								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 						</tr>
 					</c:forEach>
@@ -131,54 +108,37 @@
 		src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 	<script type="text/javascript">
-$('.table-sort').dataTable({
-	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-	"bStateSave": true,//状态保存
-	"aoColumnDefs": [
-	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[0,9]}// 制定列不参与排序
-	]
-});
+		
 
-/*用户-还原*/
-function member_huanyuan(obj,id){
-	layer.confirm('确认要通过吗？',function(index){
-		$.ajax({
-			type: 'POST',
-			url: 'modifyOpusByStatus.form?status=0&id='+id,
-			dataType: 'json',
-			success: function(data){
-				
-			},
-			error:function(data) {
-			    console.log(data.msg);
-				
-			}
-		});
-		$(obj).parents("tr").remove();
-		layer.msg('已通过!',{icon: 6,time:1000});
-	});
-}
-
-/*作品-删除*/
-function picture_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$.ajax({
-			type: 'POST',
-			url: 'deletOrder.form?id='+id,
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
-			},
-		});		
-	});
-}
-</script>
+		function tipic_add(title,url,w,h){
+			layer_show(title,url,w,h);
+		}
+		
+		/*作品-删除*/
+		function picture_del(obj, id) {
+			layer.confirm('确认要删除吗？', function(index) {
+				$.ajax({
+					type : 'POST',
+					url : 'deleteType.form?id=' + id,
+					dataType : 'json',
+					success : function(data) {
+						$(obj).parents("tr").remove();
+						layer.msg('已删除!', {
+							icon : 1,
+							time : 1000
+						});
+					},
+					error : function(data) {
+						console.log(data.msg);
+						$(obj).parents("tr").remove();
+						layer.msg('已删除!', {
+							icon : 1,
+							time : 1000
+						});
+					},
+				});
+			});
+		}
+	</script>
 </body>
 </html>
