@@ -43,7 +43,7 @@
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<div class="text-c">
-			日期范围： <input type="text"
+			<!-- 日期范围： <input type="text"
 				onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })"
 				id="datemin" class="input-text Wdate" style="width: 120px;">
 			- <input type="text"
@@ -53,7 +53,7 @@
 				placeholder="输入管理员名称" id="" name="">
 			<button type="submit" class="btn btn-success" id="" name="">
 				<i class="Hui-iconfont">&#xe665;</i> 搜用户
-			</button>
+			</button> -->
 		</div>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"><a href="javascript:;" onclick="datadel()"
@@ -71,7 +71,7 @@
 					<th scope="col" colspan="9">员工列表</th>
 				</tr>
 				<tr class="text-c">
-					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="25"><input type="checkbox" name="" value="" style="width:15px;"></th>
 					<th width="40">ID</th>
 					<th width="150">用户名</th>
 					<th width="90">手机</th>
@@ -83,7 +83,7 @@
 			<tbody>
 				<c:forEach items="${users}" var="user">
 					<tr class="text-c">
-						<td><input type="checkbox" value="${user.id}" name="id"></td>
+						<td><input type="checkbox" value="${user.id}" name="id" style="width:15px;"></td>
 						<td>${user.id}</td>
 						<td>${user.name}</td>
 						<td>${user.tel}</td>

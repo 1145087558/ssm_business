@@ -16,6 +16,8 @@
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
 <link rel="stylesheet" type="text/css"
+	href="static/h-ui/css/modify_style.css"/>
+<link rel="stylesheet" type="text/css"
 	href="static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="static/h-ui.admin/css/H-ui.admin.css" />
@@ -42,7 +44,7 @@
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<div class="text-c">
-			日期范围： <input type="text"
+			<!-- 日期范围： <input type="text"
 				onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })"
 				id="datemin" class="input-text Wdate" style="width: 120px;">
 			- <input type="text"
@@ -52,7 +54,23 @@
 				placeholder="输入关键词" id="" name="">
 			<button type="submit" class="btn btn-success radius" id="" name="">
 				<i class="Hui-iconfont">&#xe665;</i> 搜意见
-			</button>
+			</button> -->
+			<form class="Huiform" method="post" action="" target="_self">
+				<label>作品名称：</label><input type="text">
+				<label>用户名：</label>
+				<input type="text">
+				
+				<label>发布状态：</label>
+				<select>
+					<option value="全部">全部</option>
+					<option value="待审核">待审核</option>
+					<option value="已发布">已发布</option>
+				</select>
+				<br>
+				<label>评论时间：</label><input type="text">
+				<input type="submit" value="重置" style="margin-right:140px;">
+				<input type="submit" value="搜索" style="margin-right:10px;">
+			</form>
 		</div>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"><a href="javascript:;" onclick="datadel()"
@@ -66,7 +84,7 @@
 				class="table table-border table-bordered table-hover table-bg table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" name="" value=""></th>
+						<th width="25"><input type="checkbox" name="" value="" style="width:15px;"></th>
 						<th width="60">ID</th>
 						<th width="100">用户名</th>
 						<th width="100">作品名</th>
@@ -78,7 +96,7 @@
 				<tbody>
 					<c:forEach items="${discussList}" var="discuss">
 						<tr class="text-c">
-							<td><input type="checkbox" value="${discuss.id}" name="id"></td>
+							<td><input type="checkbox" value="${discuss.id}" name="id" style="width:15px;"></td>
 							<td>${discuss.id}</td>
 							<td>${discuss.user_name}</td>
 							<td>${discuss.opus_name}</td>

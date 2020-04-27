@@ -37,13 +37,13 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="container-fluid cl">
 			<a class="logo navbar-logo f-l mr-10 hidden-xs"
-				href="/aboutHui.shtml">H-ui.admin</a> <a
+				href="/aboutHui.shtml">墨韵书院后台管理系统</a> <!-- <a
 				class="logo navbar-logo-m f-l mr-10 visible-xs"
 				href="/aboutHui.shtml">H-ui</a> <span
 				class="logo navbar-slogan f-l mr-10 hidden-xs">v3.1</span> <a
 				aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs"
-				href="javascript:;">&#xe667;</a>
-			<nav class="nav navbar-nav">
+				href="javascript:;">&#xe667;</a> -->
+			<!-- <nav class="nav navbar-nav">
 			<ul class="cl">
 				<li class="dropDown dropDown_hover"><a href="javascript:;"
 					class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i
@@ -63,7 +63,7 @@
 								class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
 					</ul></li>
 			</ul>
-			</nav>
+			</nav> -->
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 			<ul class="cl">
 				<li>超级管理员</li>

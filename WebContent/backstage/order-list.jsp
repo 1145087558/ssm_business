@@ -16,6 +16,8 @@
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
 <link rel="stylesheet" type="text/css"
+	href="static/h-ui/css/modify_style.css"/>
+<link rel="stylesheet" type="text/css"
 	href="static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="static/h-ui.admin/css/H-ui.admin.css" />
@@ -42,7 +44,7 @@
 	<div class="page-container">
 		<div class="text-c">
 			<form class="Huiform" method="post" action="" target="_self">
-				<input type="text" placeholder="分类名称" value="" class="input-text"
+				<!-- <input type="text" placeholder="分类名称" value="" class="input-text"
 					style="width: 120px"> <span class="btn-upload form-group">
 					<input class="input-text upload-url" type="text"
 					name="uploadfile-2" id="uploadfile-2" readonly style="width: 200px">
@@ -58,7 +60,21 @@
 				<button type="button" class="btn btn-success" id="" name=""
 					onClick="picture_colume_add(this);">
 					<i class="Hui-iconfont">&#xe600;</i> 添加
-				</button>
+				</button> -->
+				
+				<label>订单编号：</label><input type="text">
+				<label>用户名：</label><input type="text">
+				<label>支付方式：</label>
+				<select>
+					<option value="全部">全部</option>
+					<option value="余额">余额</option>
+					<option value="支付宝">支付宝</option>
+				</select>
+				<br>
+				<label>下单时间：</label><input type="text">
+				<input type="submit" value="重置" style="margin-right:140px;">
+				<input type="submit" value="搜索" style="margin-right:10px;">
+				
 			</form>
 		</div>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -74,7 +90,7 @@
 			<table class="table table-border table-bordered table-bg table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" name="" value=""></th>
+						<th width="25"><input type="checkbox" name="" value="" style="width:15px;"></th>
 						<th width="100">订单号</th>
 						<th width="120">作品名称</th>
 						<th width="80">用户名称</th>
@@ -89,7 +105,7 @@
 				<tbody>
 					<c:forEach items="${orderList}" var="order">
 						<tr class="text-c">
-							<td><input name="id" type="checkbox" value="${order.id}"></td>
+							<td><input name="id" type="checkbox" value="${order.id}" style="width:15px;"></td>
 							<td class="text-l">${order.order_number}</td>
 							<!-- <td><input type="text" class="input-text text-c" value="1"></td> -->
 							<td>${order.opus_name}</td>
