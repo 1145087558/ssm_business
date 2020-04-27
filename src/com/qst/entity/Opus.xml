@@ -27,6 +27,14 @@
 		select *from tb_opus where
 		status =4
 	</select>
+	<!-- 获取已发货订单 -->
+	<select id="getDelivery" resultType="com.qst.entity.Order">
+		select *from tb_order where status = '已发货'
+	</select>
+	<!-- 获取催货的商品 -->
+	<select id="getPrompt" resultType="com.qst.entity.Order">
+		select * from tb_order where prompt > 0
+	</select>
 	<!-- 某件作品的详情 -->
 	<select id="opusDetail" parameterType="int" resultType="com.qst.entity.Opus">
 		select
@@ -181,6 +189,11 @@
 		insert into tb_collet(opus_id,user_id) values(#{param1},#{param2})
 	</insert>
 	
+	<!-- 添加评价 -->
+	<insert id="addEvaluate">
+		insert into tb_evaluate(star_type,order_id,opus_id) values(#{star_type},#{order_id},#{opus_id})
+	</insert>
+	
 	<!-- 统计某个人的浏览 -->
 	<select id="countBrowse" resultType="com.qst.entity.Opus">
 		select type as opus_tipic, count(*)  from tb_browse where userId=#{id} group by type order by count(*) desc  limit 0,1
@@ -198,6 +211,22 @@
 		select *from tb_order where
 		user_id=#{id} order by id desc
 	</select>
+	
+	<!-- 查询订单通过id -->
+	<select id="getOrderById" resultType="com.qst.entity.Order">
+		select *from tb_order where id=#{id}
+	</select>
+	
+	<!-- 查询某个人的订单评价 -->
+	<select id="getDeliveryByUser" resultType="com.qst.entity.Order">
+		select *from tb_order where user_id=#{id} and status='已收货' order by id desc
+	</select>
+	
+	<select id="seekEvaluate" resultType="com.qst.entity.Evaluate">
+		select *from tb_evaluate where order_id=#{id}
+	</select>
+	
+	
 
 	<!-- 查询某个作品的订单 -->
 	<select id="seekOrderByOpus" resultType="com.qst.entity.Order">
@@ -207,7 +236,7 @@
 
 	<!-- 查询所有订单 -->
 	<select id="seekOrderAll" resultType="com.qst.entity.Order">
-		select *from tb_order
+		select *from tb_order where status != '已发货'
 	</select>
 	
 	<!-- 根据订单状态查询所有订单 -->
@@ -387,6 +416,9 @@
 			</if>
 			<if test="order_date != null">
 				order_date=#{order_date,jdbcType=VARCHAR},
+			</if>
+			<if test="prompt != null">
+				prompt=#{prompt,jdbcType=INTEGER},
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}

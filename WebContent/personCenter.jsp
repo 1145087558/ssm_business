@@ -156,10 +156,7 @@
 				<a href="seekOrder.form">订单管理</a>
 			</p>
 			<p>
-				<a href="">收藏</a>
-			</p>
-			<p>
-				<a href="">评价</a>
+				<a href="seekEvaluate.form">评价</a>
 			</p>
 		</div>
 		<div class="content-right">

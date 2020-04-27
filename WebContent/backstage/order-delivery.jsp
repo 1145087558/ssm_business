@@ -98,25 +98,12 @@
 							<td>${order.order_date}</td>
 							<td>${order.order_type}</td>
 							<td class="text-l">${order.user_address}</td>
-							<c:choose>
-							<c:when test="${order.status == '已支付'}">
+							
 							<td class="td-status"><span
-								class="label label-success radius">已支付</span></td>
-							<td class="td-manage"><a title="发货" href="javascript:;"
-								onclick="picture_prompt(this,'${order.order_number}')" class="ml-5"
-								style="text-decoration: none"><i class="Hui-iconfont">&#xe6de;</i></a>
-								<a title="删除" href="javascript:;"
-								onclick="picture_del(this,'${order.id}')" class="ml-5"
-								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-							</c:when>
-							<c:otherwise>
-							<td class="td-status"><span
-								class="label label-danger radius">${order.status}</span></td>
+								class="label label-success radius">${order.status}</span></td>
 							<td class="td-manage"><a title="删除" href="javascript:;"
 								onclick="picture_del(this,'${order.id}')" class="ml-5"
 								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-							</c:otherwise>
-							</c:choose>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -122,8 +122,10 @@
 						<li><a data-href="getOrderWsh.form" data-title="退款审核"
 							href="javascript:void(0)">退款审核</a>
 						</li>
-						<li><a data-href="getSoldOpus.form" data-title="已售作品"
-						href="javascript:void(0)">已售作品</a></li>
+						<li><a data-href="getDelivery.form" data-title="已发货"
+						href="javascript:void(0)">已发货</a></li>
+						<li><a data-href="getPrompt.form" data-title="催促管理"
+						href="javascript:void(0)">催促管理</a></li>
 					</c:if>
 				</ul>
 			</dd>
@@ -143,6 +145,8 @@
 							href="javascript:void(0)">作品审核</a>
 						</li>
 					</c:if>
+					<li><a data-href="getSoldOpus.form" data-title="已售作品"
+						href="javascript:void(0)">已售作品</a></li>
 					<li><a data-href="getType.form" data-title="类型管理"
 						href="javascript:void(0)">类型管理</a>
 					</li>

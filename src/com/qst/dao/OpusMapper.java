@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
+import com.qst.entity.Evaluate;
 import com.qst.entity.Opus;
 import com.qst.entity.OpusType;
 import com.qst.entity.Order;
@@ -117,4 +118,16 @@ public interface OpusMapper {
 	public void addType(OpusType opusType);
 
 	public void deleteType(int id);
+
+	public List<Order> getPrompt();
+
+	public List<Order> getDelivery();
+
+	public Evaluate seekEvaluate(Integer id);
+
+	public List<Order> getDeliveryByUser(Integer id);
+
+	public Order getOrderById(Integer order_id);
+
+	public void addEvaluate(Evaluate evalute);
 }

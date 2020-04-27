@@ -14,6 +14,7 @@ public class Order {
 	private double opus_price;
 	private String order_date;
 	private String status;
+	private Integer prompt;
 	public Integer getId() {
 		return id;
 	}
@@ -85,6 +86,12 @@ public class Order {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public Integer getPrompt() {
+		return prompt;
+	}
+	public void setPrompt(Integer prompt) {
+		this.prompt = prompt;
 	}
 	
 	
