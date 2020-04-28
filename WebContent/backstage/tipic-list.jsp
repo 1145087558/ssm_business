@@ -41,7 +41,7 @@
 	<div class="page-container">
 		<div class="text-c">
 			<form class="Huiform" method="post" action="" target="_self">
-				<input type="text" placeholder="分类名称" value="" class="input-text"
+				<!-- <input type="text" placeholder="分类名称" value="" class="input-text"
 					style="width: 120px"> <span class="btn-upload form-group">
 					<input class="input-text upload-url" type="text"
 					name="uploadfile-2" id="uploadfile-2" readonly style="width: 200px">
@@ -57,7 +57,7 @@
 				<button type="button" class="btn btn-success" id="" name=""
 					onClick="picture_colume_add(this);">
 					<i class="Hui-iconfont">&#xe600;</i> 添加
-				</button>
+				</button> -->
 			</form>
 		</div>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -73,7 +73,7 @@
 			<table class="table table-border table-bordered table-bg table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" name="" value=""></th>
+						<th width="25"><input type="checkbox" name="" value="" style="width:15px;"></th>
 						<th width="100">ID</th>
 						<th width="120">题材名称</th>
 						<th width="70">操作</th>
@@ -82,7 +82,7 @@
 				<tbody>
 					<c:forEach items="${tipicList}" var="tipics">
 						<tr class="text-c">
-							<td><input name="id" type="checkbox" value="${tipics.id}"></td>
+							<td><input name="id" type="checkbox" value="${tipics.id}" style="width:15px;"></td>
 							<td>${tipics.id}</td>
 							<td >${tipics.tipic}</td>
 							<td class="td-manage"><a title="删除" href="javascript:;"

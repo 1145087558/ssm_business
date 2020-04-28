@@ -16,6 +16,8 @@
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <![endif]-->
 <link rel="stylesheet" type="text/css"
+	href="static/h-ui/css/modify_style.css"/>
+<link rel="stylesheet" type="text/css"
 	href="static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="static/h-ui.admin/css/H-ui.admin.css" />
@@ -41,7 +43,7 @@
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<div class="text-c">
-			日期范围： <input type="text"
+			<!-- 日期范围： <input type="text"
 				onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })"
 				id="datemin" class="input-text Wdate" style="width: 120px;">
 			- <input type="text"
@@ -51,7 +53,24 @@
 				placeholder="输入会员名称、电话、邮箱" id="" name="">
 			<button type="submit" class="btn btn-success radius" id="" name="">
 				<i class="Hui-iconfont">&#xe665;</i> 搜用户
-			</button>
+			</button> -->
+			
+			<form class="Huiform" method="post" action="" target="_self">
+				<label>手机号：</label><input type="text">
+				<label>用户名：</label>
+				<input type="text">
+				
+				<label>用户状态：</label>
+				<select>
+					<option value="全部">全部</option>
+					<option value="待审核">已启用</option>
+					<option value="已发布">已禁用</option>
+				</select>
+				<br>
+				<label style="margin-left:6px;">用户权限：</label><input type="text">
+				<input type="submit" value="重置" style="margin-right:140px;">
+				<input type="submit" value="搜索" style="margin-right:10px;">
+			</form>
 		</div>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"><a href="javascript:;" onclick="datadel()"
@@ -70,7 +89,7 @@
 				class="table table-border table-bordered table-hover table-bg table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" name="" value=""></th>
+						<th width="25"><input type="checkbox" name="" value="" style="width:15px;"></th>
 						<th width="80">ID</th>
 						<th width="100">用户名</th>
 						<th width="90">手机</th>
@@ -82,7 +101,7 @@
 				<tbody>
 					<c:forEach items="${users}" var="user">
 						<tr class="text-c">
-							<td><input type="checkbox" name="id" value="${user.id}"></td>
+							<td><input type="checkbox" name="id" value="${user.id}" style="width:15px;"></td>
 							<td>${user.id}</td>
 							<td><u style="cursor: pointer" class="text-primary"
 								onclick="member_show('','showUser.form?type=show&userId=${user.id}','10001','360','400')">${user.name}</u></td>

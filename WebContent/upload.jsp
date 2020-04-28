@@ -145,7 +145,7 @@
 			<label>题材：</label><br> <input type="text" name="tipic"><br>
 			<label>价格：</label><br> <input type="text" name="price"><br>
 			<label>创作时间：</label><br> <input type="text" name="create_time"
-				id="birth" placeholder="请选择" style="width: 800px;"><br>
+				id="birth" placeholder="请选择" style="width: 850px;"><br>
 			<label>作者个人简介：</label><br>
 			<textarea name="syponsis"></textarea>
 			<br> <label>作品详细介绍：</label><br>

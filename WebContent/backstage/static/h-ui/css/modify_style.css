@@ -1,0 +1,28 @@
+.text-c{
+	margin-left:100px;
+} 
+.text-c input{
+	width:200px;
+	height:26px;
+	border:1px solid black;
+	vertical-align:baseline;
+	margin:10px 0px 0px 0px;
+	border-radius: 4px;
+}
+.text-c label{
+	margin:0px 0px 0px 20px;
+}
+.text-c input[type="submit"]{
+	width:50px;
+	height:30px;
+	background: #f5fafe;
+	float:right;
+	border-radius: 4px;
+	/* margin:10px 150px 0px 0px; */
+}
+.text-c select{
+	width:200px;
+	height:28px;
+	border:1px solid black;
+	border-radius: 4px;
+}

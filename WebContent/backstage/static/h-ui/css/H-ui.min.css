@@ -1709,8 +1709,8 @@ pre {
 }
 
 .text-c {
-	text-align: center
-}
+	text-align: inherit;
+} 
 
 .va * {
 	vertical-align: sub !important;
