@@ -330,7 +330,7 @@ public class OpusBackstageController {
 					// response.getSubMsg();//失败会返回错误信息(出现交易信息被篡改一般是同一个订单被多次退款)
 					System.out.println(response.getSubMsg());
 				}
-			}catch (AlipayApiException e){
+			} catch (AlipayApiException e) {
 				order.setStatus("已退款");
 				opusService.updateOrder(order);
 			} catch (Exception e) {
@@ -378,7 +378,7 @@ public class OpusBackstageController {
 
 		opusService.deleteTipic(id);
 	}
-	
+
 	/**
 	 * 作品管理，获取所有类型
 	 */
@@ -391,7 +391,7 @@ public class OpusBackstageController {
 
 		return "backstage/type-list";
 	}
-	
+
 	/**
 	 * 作品管理，添加类型
 	 */
@@ -400,7 +400,7 @@ public class OpusBackstageController {
 
 		opusService.addType(opusType);
 	}
-	
+
 	/**
 	 * 作品管理，删除类型
 	 */
@@ -408,5 +408,24 @@ public class OpusBackstageController {
 	public void deleteType(int id) {
 
 		opusService.deleteType(id);
+	}
+
+	/**
+	 * 作品管理，删选作品
+	 */
+	@RequestMapping("searchOpus.form")
+	public String searchOpus(HttpServletRequest request,Opus opus) {
+		
+		if("".equals(opus.getOpus_name())){
+			opus.setOpus_name(null);
+		}
+		if("全部".equals(opus.getOpus_tipic())){
+			opus.setOpus_tipic(null);
+		}
+		System.out.println(opus.getOpus_name());
+		List<Opus> opusList = opusService.searchOpus(opus);
+		request.setAttribute("opusList", opusList);
+		return "backstage/product-brand";
+
 	}
 }

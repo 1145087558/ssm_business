@@ -66,13 +66,13 @@
 				<label>用户名：</label><input type="text" name="user_name">
 				<label>支付方式：</label>
 				<select name="order_type">
-					<option value="全部">全部</option>
+					<option value= "全部">全部</option>
 					<option value="余额">余额</option>
 					<option value="支付宝">支付宝</option>
 				</select>
 				<br>
 				<label>下单时间：</label><input type="text">
-				<input type="reset" value="重置" style="margin-right:140px;">
+				<input type="submit" value="重置" style="margin-right:140px;">
 				<input type="submit" value="搜索" style="margin-right:10px;">
 				
 			</form>

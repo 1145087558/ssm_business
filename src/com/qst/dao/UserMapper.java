@@ -53,4 +53,7 @@ public interface UserMapper {
 	
 	User getPasswordByid(@Param(value = "pwd") String pwd, @Param(value = "id") int id);
 
+	List<User> searchUser(@Param(value = "tel") String tel, @Param(value = "name") String name,
+			@Param(value = "status") Integer status);
+
 }

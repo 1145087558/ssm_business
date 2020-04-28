@@ -55,19 +55,19 @@
 				<i class="Hui-iconfont">&#xe665;</i> 搜用户
 			</button> -->
 			
-			<form class="Huiform" method="post" action="" target="_self">
-				<label>手机号：</label><input type="text">
+			<form class="Huiform" method="post" action="searchUser.form" target="_self">
+				<label>手机号：</label><input type="text" name="tel">
 				<label>用户名：</label>
-				<input type="text">
+				<input type="text" name="name">
 				
 				<label>用户状态：</label>
-				<select>
-					<option value="全部">全部</option>
-					<option value="待审核">已启用</option>
-					<option value="已发布">已禁用</option>
+				<select name="status">
+					<option value="0">全部</option>
+					<option value="0">已启用</option>
+					<option value="2">已禁用</option>
 				</select>
 				<br>
-				<label style="margin-left:6px;">用户权限：</label><input type="text">
+				<!-- <label style="margin-left:6px;">用户权限：</label><input type="text"> -->
 				<input type="submit" value="重置" style="margin-right:140px;">
 				<input type="submit" value="搜索" style="margin-right:10px;">
 			</form>

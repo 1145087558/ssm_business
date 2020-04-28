@@ -131,5 +131,11 @@ public interface OpusMapper {
 
 	public void addEvaluate(Evaluate evalute);
 
-	public List<Order> searchCartAll();
+	public List<Order> searchCartAll(@Param(value = "order_number") String order_number, @Param(value = "order_type") String order_type,
+			@Param(value = "user_name") String user_name);
+
+	public List<Opus> searchOpus(@Param(value = "opus_name")String opus_name, @Param(value = "opus_tipic")String opus_tipic,
+			@Param(value = "status")Integer status);
+
+	public List<Discuss> serachDiscussmsg(@Param(value = "opus_name")String opus_name, @Param(value = "user_name") String user_name);
 }

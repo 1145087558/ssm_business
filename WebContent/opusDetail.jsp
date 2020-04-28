@@ -315,7 +315,7 @@
 			window
 					.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='
 							+ document.location.href
-							+ '?sharesource=qzone&title='
+							+ '&sharesource=qzone&title='
 							+ ftit
 							+ '&pics='
 							+ flink + '&summary=' + content);
@@ -323,13 +323,13 @@
 		//新浪微博接口的传参
 		if (stype == 'sina') {
 			window.open('http://service.weibo.com/share/share.php?url='
-					+ document.location.href + '?sharesource=weibo&title='
+					+ document.location.href + '&sharesource=weibo&title='
 					+ ftit + '&pic=' + flink + '&appkey=2706825840');
 		}
 		//qq好友接口的传参
 		if (stype == 'qq') {
 			window.open('http://connect.qq.com/widget/shareqq/index.html?url='
-					+ document.location.href + '?sharesource=qzone&title='
+					+ document.location.href + '&sharesource=qzone&title='
 					+ ftit + '&pics=' + flink + '&summary=' + content);
 		}
 		//生成二维码给微信扫描分享

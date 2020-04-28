@@ -273,4 +273,19 @@
 	<delete id="deleteAddress">
 		delete from tb_address where id=#{id}
 	</delete>
+	
+	<!-- 根据条件筛选用户 -->
+	<select id="searchUser" resultType="com.qst.entity.User">
+		select * from tb_user where 1=1
+		<if test="tel !=null">
+		 and tel = #{tel}
+		</if>
+		<if test="name !=null">
+		 and name = #{name}
+		</if>
+		<if test="status !=null">
+		 and status = #{status}
+		</if>
+		order by id desc
+	</select>
 </mapper>

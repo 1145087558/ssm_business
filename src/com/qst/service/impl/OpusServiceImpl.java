@@ -2,6 +2,7 @@ package com.qst.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -390,9 +391,21 @@ public class OpusServiceImpl implements OpusService {
 	}
 
 	@Override
-	public List<Order> searchCartAll() {
+	public List<Order> searchCartAll(String order_number, String order_type,String user_name) {
 		
-		return opusMapper.searchCartAll();
+		return opusMapper.searchCartAll(order_number, order_type, user_name);
+	}
+
+	@Override
+	public List<Opus> searchOpus(Opus opus) {
+		
+		return opusMapper.searchOpus(opus.getOpus_name(),opus.getOpus_tipic(),opus.getStatus());
+	}
+
+	@Override
+	public List<Discuss> serachDiscussmsg(Discuss discuss) {
+		
+		return opusMapper.serachDiscussmsg(discuss.getOpus_name(),discuss.getUser_name());
 	}
 	
 	

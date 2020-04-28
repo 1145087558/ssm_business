@@ -2,6 +2,7 @@ package com.qst.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -145,6 +146,12 @@ public class UserServiceImpl implements UserService{
 			return false;
 		}
 		
+	}
+
+	@Override
+	public List<User> searchUser(User user) {
+		
+		return userMapper.searchUser(user.getTel(),user.getName(),user.getStatus());
 	}
 	
 	//@Override

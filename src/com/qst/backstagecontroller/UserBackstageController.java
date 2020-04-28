@@ -48,8 +48,8 @@ public class UserBackstageController {
 		if (user == null) {
 			request.setAttribute("error", "账号或者密码错误!");
 			return "backstage/login";
-		}else{
-			if(user.getStatus()==2||user.getStatus()==3){
+		} else {
+			if (user.getStatus() == 2 || user.getStatus() == 3) {
 				request.setAttribute("error", "用户被禁用或者已删除!");
 				return "backstage/login";
 			}
@@ -135,9 +135,9 @@ public class UserBackstageController {
 		request.setAttribute("users", users);
 
 		return "backstage/member-list";
-		
+
 	}
-	
+
 	/**
 	 * 用户管理，获取所有被删除的用户（删除只是状态的修改）
 	 */
@@ -149,7 +149,7 @@ public class UserBackstageController {
 
 		return "backstage/member-del";
 	}
-	
+
 	/**
 	 * 用户管理，获取所有的用户（普通用户+管理员）
 	 */
@@ -267,15 +267,30 @@ public class UserBackstageController {
 				userService.modifyUserStatus(i, status);
 		}
 	}
-	
+
 	/**
 	 * 用户管理，地图统计用户地址数量
 	 */
 	@RequestMapping("/mapUser.form")
 	@ResponseBody
-	public List<UserAddress> mapUser( HttpServletResponse resp,HttpServletRequest req) {
-		return  userService.mapUser();
+	public List<UserAddress> mapUser(HttpServletResponse resp, HttpServletRequest req) {
+		return userService.mapUser();
+
+	}
+
+	@RequestMapping("/searchUser.form")
+	public String searchUser(HttpServletRequest request, User user) {
+
+		if("".equals(user.getTel())){
+			user.setTel(null);
+		}
+		if("".equals(user.getName())){
+			user.setName(null);
+		}
 		
+		List<User> users = userService.searchUser(user);
+		request.setAttribute("users", users);
 		
+		return "backstage/member-list";
 	}
 }

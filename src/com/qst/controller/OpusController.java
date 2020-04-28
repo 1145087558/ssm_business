@@ -95,7 +95,7 @@ public class OpusController {
 		opus.setId(id);
 		opus.setOpus_like_times(like_times);
 		opusService.dealWithLikeTimes(opus);
-		return "index";
+		return "redirect:opusDetail.form?id="+id;
 	}
 
 	/**
@@ -265,7 +265,7 @@ public class OpusController {
 	 * 前端页面，根据用户的余额进行下单
 	 */
 	@RequestMapping("orderWaller.form")
-	public void orderDealWith(String[] orderDatas,String[] cartIds, String useraddress,int addressId,
+	public void orderDealWith(String[] orderDatas,String[] cartIds, String useraddress,Integer addressId,
 			HttpServletRequest request,HttpServletResponse response) throws IOException {
 		
 		int length = orderDatas.length;
@@ -388,7 +388,7 @@ public class OpusController {
 	 * 前端页面，支付宝支付多件作品
 	 */
 	@RequestMapping("orderPay.form")
-	public void zifubaoPay(String[] orderDatas, String[] cartIds,String useraddress,int addressId,
+	public void zifubaoPay(String[] orderDatas, String[] cartIds,String useraddress,Integer addressId,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		int length = orderDatas.length;
