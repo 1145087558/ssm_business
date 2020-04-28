@@ -388,6 +388,12 @@ public class OpusServiceImpl implements OpusService {
 		opusMapper.addEvaluate(evalute);
 		
 	}
+
+	@Override
+	public List<Order> searchCartAll() {
+		
+		return opusMapper.searchCartAll();
+	}
 	
 	
 }

@@ -111,4 +111,20 @@ public class CartBackstageController {
 		
 		return "backstage/order-delivery";
 	}
+	
+	@RequestMapping("searchCartAll.form")
+	public String searchCartAll(HttpServletRequest request,Order order) {
+		
+		if("全部".equals(order.getOrder_type())){
+			order.setOrder_type(null);
+		}else if("".equals(order.getOrder_number())){
+			order.setOrder_number(null);
+		}else if("".equals(order.getOpus_name())){
+			order.setOpus_name(null);
+		}
+		
+		List<Order> orderList = opusService.searchCartAll();
+		request.setAttribute("orderList", orderList);
+		return "backstage/order-list";
+	}
 }

@@ -481,5 +481,20 @@
 		</if>
 		and status = 0 order by id desc
 	</select>
+	
+	<!-- 根据条件筛选订单 -->
+	<select id="searchCartAll" resultType="com.qst.entity.Order">
+		select * from tb_order where 1=1
+		<if test="order_number !=null">
+		 and order_number = #{order_number}
+		</if>
+		<if test="order_type !=null">
+		 and order_type = #{order_type}
+		</if>
+		<if test="user_name !=null">
+		 and user_name = #{user_name}
+		</if>
+		order by id desc
+	</select>
 </mapper>
 

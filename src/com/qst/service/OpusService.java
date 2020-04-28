@@ -126,5 +126,7 @@ public interface OpusService {
 	public Order getOrderById(Integer order_id);
 
 	public void addEvaluate(Evaluate evalute);
+
+	public List<Order> searchCartAll();
 	
 }
