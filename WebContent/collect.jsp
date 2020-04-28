@@ -117,7 +117,7 @@
 						href="calligraphy.form?type_status=6">书画装裱知识</a> <a
 						href="calligraphy.form?type_status=7">中国书画流派</a>
 				</div></li>
-			<li><a href="findAll.form">我的收藏</a></li>
+			<li><a href="collect.jsp">我的收藏</a></li>
 
 			<li class="dropdown" id="type"><span style="font-size: 20px;">
 					中国名画艺术欣赏</span>

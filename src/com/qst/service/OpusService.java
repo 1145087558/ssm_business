@@ -126,5 +126,11 @@ public interface OpusService {
 	public Order getOrderById(Integer order_id);
 
 	public void addEvaluate(Evaluate evalute);
+
+	public List<Order> searchCartAll(String order_number, String order_type,String user_name);
+
+	public List<Opus> searchOpus(Opus opus);
+
+	public List<Discuss> serachDiscussmsg(Discuss discuss);
 	
 }

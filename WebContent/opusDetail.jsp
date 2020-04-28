@@ -93,7 +93,10 @@
 		<ul>
 			<li class="dropdown" id="type"><span style="font-size: 20px;">艺术品分类</span>
 				<div class="dropdown-content" id="art-type">
-					<a href="">类型</a> <a href="">题材</a> <a href="">地域</a>
+					<a href="search.form?search=国画">国画</a> <a
+						href="search.form?search=油画">油画</a> <a
+						href="search.form?search=书法">书法</a> <a
+						href="search.form?search=版画">版画</a>
 				</div></li>
 
 			<li><a href="findAll.form">艺淘宝</a></li>
@@ -108,10 +111,7 @@
 						href="calligraphy.form?type_status=6">书画装裱知识</a> <a
 						href="calligraphy.form?type_status=7">中国书画流派</a>
 				</div></li>
-			<li class="dropdown" id="type"><span style="font-size: 20px;">艺术动态</span>
-				<div class="dropdown-content" id="art-type">
-					<a href="#">书画大赛动态信息</a> <a href="#">艺术展览信息</a>
-				</div></li>
+			<li><a href="collect.jsp">我的收藏</a></li>
 
 			<li class="dropdown" id="type"><span style="font-size: 20px;">
 					中国名画艺术欣赏</span>
@@ -120,7 +120,7 @@
 					<a href="#">中国油画欣赏</a> <a href="#">中国山水画欣赏</a> <a href="#">中国花鸟画欣赏</a>
 					<a href="#">中国版画欣赏</a>
 				</div></li>
-			<li><a href="">名人榜</a></li>
+			<li><a href="hof.jsp">名人榜</a></li>
 			<li class="dropdown" id="type"><span style="font-size: 20px;">关于我们</span>
 
 				<div class="dropdown-content" id="art-type">
@@ -315,7 +315,7 @@
 			window
 					.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='
 							+ document.location.href
-							+ '?sharesource=qzone&title='
+							+ '&sharesource=qzone&title='
 							+ ftit
 							+ '&pics='
 							+ flink + '&summary=' + content);
@@ -323,13 +323,13 @@
 		//新浪微博接口的传参
 		if (stype == 'sina') {
 			window.open('http://service.weibo.com/share/share.php?url='
-					+ document.location.href + '?sharesource=weibo&title='
+					+ document.location.href + '&sharesource=weibo&title='
 					+ ftit + '&pic=' + flink + '&appkey=2706825840');
 		}
 		//qq好友接口的传参
 		if (stype == 'qq') {
 			window.open('http://connect.qq.com/widget/shareqq/index.html?url='
-					+ document.location.href + '?sharesource=qzone&title='
+					+ document.location.href + '&sharesource=qzone&title='
 					+ ftit + '&pics=' + flink + '&summary=' + content);
 		}
 		//生成二维码给微信扫描分享

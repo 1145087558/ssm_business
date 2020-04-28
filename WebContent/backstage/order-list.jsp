@@ -43,7 +43,7 @@
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<div class="text-c">
-			<form class="Huiform" method="post" action="" target="_self">
+			<form class="Huiform" method="post" action="searchCartAll.form" target="_self">
 				<!-- <input type="text" placeholder="分类名称" value="" class="input-text"
 					style="width: 120px"> <span class="btn-upload form-group">
 					<input class="input-text upload-url" type="text"
@@ -62,11 +62,11 @@
 					<i class="Hui-iconfont">&#xe600;</i> 添加
 				</button> -->
 				
-				<label>订单编号：</label><input type="text">
-				<label>用户名：</label><input type="text">
+				<label>订单编号：</label><input type="text" name="order_number">
+				<label>用户名：</label><input type="text" name="user_name">
 				<label>支付方式：</label>
-				<select>
-					<option value="全部">全部</option>
+				<select name="order_type">
+					<option value= "全部">全部</option>
 					<option value="余额">余额</option>
 					<option value="支付宝">支付宝</option>
 				</select>

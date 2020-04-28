@@ -55,10 +55,10 @@
 			<button type="submit" class="btn btn-success radius" id="" name="">
 				<i class="Hui-iconfont">&#xe665;</i> 搜意见
 			</button> -->
-			<form class="Huiform" method="post" action="" target="_self">
-				<label>作品名称：</label><input type="text">
+			<form class="Huiform" method="post" action="serachDiscussmsg.form" target="_self">
+				<label>作品名称：</label><input type="text" name="opus_name">
 				<label>用户名：</label>
-				<input type="text">
+				<input type="text" name="user_name">
 				
 				<label>发布状态：</label>
 				<select>

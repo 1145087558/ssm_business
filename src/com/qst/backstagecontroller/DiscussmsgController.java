@@ -56,4 +56,23 @@ public class DiscussmsgController {
 		opusService.deleteDiscussmsg(id);
 
 	}
+	
+	/**
+	 * 评论管理，筛选评论
+	 */
+	@RequestMapping("serachDiscussmsg.form")
+	public String serachDiscussmsg(HttpServletRequest request,Discuss discuss) {
+		
+		if("".equals(discuss.getOpus_name())){
+			discuss.setOpus_name(null);
+		}
+		if("".equals(discuss.getUser_name())){
+			discuss.setUser_name(null);
+		}
+		
+		
+		List<Discuss> discussList = opusService.serachDiscussmsg(discuss);
+		request.setAttribute("discussList", discussList);
+		return "backstage/feedback-list";
+	}
 }

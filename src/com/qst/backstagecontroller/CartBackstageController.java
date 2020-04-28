@@ -111,4 +111,26 @@ public class CartBackstageController {
 		
 		return "backstage/order-delivery";
 	}
+	
+	@RequestMapping("searchCartAll.form")
+	public String searchCartAll(HttpServletRequest request,Order order) {
+		
+		if("全部".equals(order.getOrder_type())){
+			order.setOrder_type(null);
+		}
+		if("".equals(order.getOrder_number())){
+			order.setOrder_number(null);
+		}
+		if("".equals(order.getUser_name())){
+			order.setUser_name(null);
+		}
+		System.out.println(order.getOrder_number());
+		System.out.println(order.getOrder_type());
+		System.out.println(order.getOpus_name());
+		List<Order> orderList = opusService.searchCartAll(order.getOrder_number(),order.getOrder_type(),
+				order.getUser_name());
+		System.out.println(orderList.size());
+		request.setAttribute("orderList", orderList);
+		return "backstage/order-list";
+	}
 }

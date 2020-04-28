@@ -5,17 +5,22 @@
 <mapper namespace="com.qst.dao.OpusMapper">
 	<!--统计点赞数排名前十的作品 -->
 	<select id="liketoplist" resultType="com.qst.entity.Opus">
-		select opus_name ,opus_like_times from tb_opus ORDER BY opus_like_times desc
+		select opus_name
+		,opus_like_times from tb_opus ORDER BY opus_like_times desc
 		limit 0,10
 	</select>
 	<!--统计购买数排名前十的作品 -->
 	<select id="getOrderLike" resultType="com.qst.entity.Opus">
-		select opus_name ,COUNT(opus_name) as opus_like_times from tb_order group by opus_name ORDER BY opus_like_times desc
+		select opus_name
+		,COUNT(opus_name) as opus_like_times from tb_order group by opus_name
+		ORDER BY opus_like_times desc
 		limit 0,10
 	</select>
 	<!--统计热度前十的作家 -->
 	<select id="getAuthorLike" resultType="com.qst.entity.Opus">
-		SELECT author_name,SUM(opus_like_times) `status` FROM tb_opus GROUP BY author_name ORDER BY `status` DESC LIMIT 0,10
+		SELECT
+		author_name,SUM(opus_like_times) `status` FROM tb_opus GROUP BY
+		author_name ORDER BY `status` DESC LIMIT 0,10
 	</select>
 	<!-- 显示所有 -->
 	<select id="findAll" resultType="com.qst.entity.Opus">
@@ -29,11 +34,13 @@
 	</select>
 	<!-- 获取已发货订单 -->
 	<select id="getDelivery" resultType="com.qst.entity.Order">
-		select *from tb_order where status = '已发货'
+		select *from tb_order where
+		status = '已发货'
 	</select>
 	<!-- 获取催货的商品 -->
 	<select id="getPrompt" resultType="com.qst.entity.Order">
-		select * from tb_order where prompt > 0
+		select * from tb_order where
+		prompt > 0
 	</select>
 	<!-- 某件作品的详情 -->
 	<select id="opusDetail" parameterType="int" resultType="com.qst.entity.Opus">
@@ -97,17 +104,18 @@
 	<delete id="deleteDiscussmsg">
 		delete from tb_discussmsg where id=#{id}
 	</delete>
-	
+
 	<!-- 取消收藏 -->
 	<delete id="deleteCollet">
-		delete from tb_collet where opus_id=#{param1} and user_id=#{param2}
+		delete from tb_collet where opus_id=#{param1} and
+		user_id=#{param2}
 	</delete>
-	
+
 	<!-- 删除题材 -->
 	<delete id="deleteTipic">
 		delete from tb_tipic where id=#{id}
 	</delete>
-	
+
 	<!-- 删除类型 -->
 	<delete id="deleteType">
 		delete from tb_type where id=#{id}
@@ -146,15 +154,17 @@
 		(user_id,user_name,opus_id,opus_name,discuss_msg,discuss_date)
 		values(#{user_id},#{user_name},#{opus_id},#{opus_name},#{discuss_msg},#{discuss_date})
 	</insert>
-	
+
 	<!-- 添加题材 -->
 	<insert id="addTipic" parameterType="com.qst.entity.Tipic">
-		insert into tb_tipic (tipic) values(#{tipic})
+		insert into tb_tipic (tipic)
+		values(#{tipic})
 	</insert>
-	
+
 	<!-- 添加类型 -->
 	<insert id="addType" parameterType="com.qst.entity.OpusType">
-		insert into tb_type (type) values(#{type})
+		insert into tb_type (type)
+		values(#{type})
 	</insert>
 
 	<!-- 查找某件作品的全部评论信息 -->
@@ -182,51 +192,61 @@
 	</insert>
 	<!-- 添加浏览记录 -->
 	<insert id="addBrowse">
-		insert into tb_browse(type,userId) values(#{param1},#{param2})
+		insert into tb_browse(type,userId)
+		values(#{param1},#{param2})
 	</insert>
 	<!-- 添加收藏作品 -->
 	<insert id="addCollet">
-		insert into tb_collet(opus_id,user_id) values(#{param1},#{param2})
+		insert into tb_collet(opus_id,user_id)
+		values(#{param1},#{param2})
 	</insert>
-	
+
 	<!-- 添加评价 -->
 	<insert id="addEvaluate">
-		insert into tb_evaluate(star_type,order_id,opus_id) values(#{star_type},#{order_id},#{opus_id})
+		insert into tb_evaluate(star_type,order_id,opus_id)
+		values(#{star_type},#{order_id},#{opus_id})
 	</insert>
-	
+
 	<!-- 统计某个人的浏览 -->
 	<select id="countBrowse" resultType="com.qst.entity.Opus">
-		select type as opus_tipic, count(*)  from tb_browse where userId=#{id} group by type order by count(*) desc  limit 0,1
+		select type as opus_tipic,
+		count(*) from tb_browse where userId=#{id} group by type order by
+		count(*) desc limit 0,1
 	</select>
 	<!-- 判断该作品是否被收藏 -->
 	<select id="checkCollet" resultType="Integer">
-		select opus_id from tb_collet where opus_id=#{param1} and user_id=#{param2}
+		select opus_id from
+		tb_collet where opus_id=#{param1} and user_id=#{param2}
 	</select>
 	<!-- 获取用户收藏的所有作品 -->
 	<select id="getCollet" resultType="com.qst.entity.Opus">
-		select o.* from tb_opus o,tb_collet c where c.user_id =#{id} and c.opus_id=o.id
+		select o.* from tb_opus
+		o,tb_collet c where c.user_id =#{id} and c.opus_id=o.id
 	</select>
 	<!-- 查询某个人的订单 -->
 	<select id="seekOrder" resultType="com.qst.entity.Order">
 		select *from tb_order where
 		user_id=#{id} order by id desc
 	</select>
-	
+
 	<!-- 查询订单通过id -->
 	<select id="getOrderById" resultType="com.qst.entity.Order">
-		select *from tb_order where id=#{id}
+		select *from tb_order where
+		id=#{id}
 	</select>
-	
+
 	<!-- 查询某个人的订单评价 -->
 	<select id="getDeliveryByUser" resultType="com.qst.entity.Order">
-		select *from tb_order where user_id=#{id} and status='已收货' order by id desc
+		select *from tb_order
+		where user_id=#{id} and status='已收货' order by id desc
 	</select>
-	
+
 	<select id="seekEvaluate" resultType="com.qst.entity.Evaluate">
-		select *from tb_evaluate where order_id=#{id}
+		select *from tb_evaluate
+		where order_id=#{id}
 	</select>
-	
-	
+
+
 
 	<!-- 查询某个作品的订单 -->
 	<select id="seekOrderByOpus" resultType="com.qst.entity.Order">
@@ -236,12 +256,14 @@
 
 	<!-- 查询所有订单 -->
 	<select id="seekOrderAll" resultType="com.qst.entity.Order">
-		select *from tb_order where status != '已发货'
+		select *from tb_order where
+		status != '已发货'
 	</select>
-	
+
 	<!-- 根据订单状态查询所有订单 -->
 	<select id="getOrderByStatus" resultType="com.qst.entity.Order">
-		select *from tb_order where status=#{status}
+		select *from tb_order
+		where status=#{status}
 	</select>
 
 	<!-- 根据订单号查询订单 -->
@@ -249,12 +271,12 @@
 		select *from tb_order
 		where order_number=#{order_number}
 	</select>
-	
+
 	<!-- 查找所有的题材信息 -->
 	<select id="getTipicAll" resultType="com.qst.entity.Tipic">
 		select *from tb_tipic
 	</select>
-	
+
 	<!-- 查找所有的类型信息 -->
 	<select id="getTypeAll" resultType="com.qst.entity.OpusType">
 		select *from tb_type
@@ -469,17 +491,62 @@
 		select *from tb_opus where
 		status =0 order by id desc
 	</select>
-	
+
 	<!-- 根据条件筛选作品 -->
 	<select id="getScreen" resultType="com.qst.entity.Opus">
 		select * from tb_opus where 1=1
 		<if test="tipic !=null">
-		 and opus_tipic = #{tipic}
+			and opus_tipic = #{tipic}
 		</if>
 		<if test="minprice !=null">
-		 and opus_price between #{minprice} and #{maxprice}
+			and opus_price between #{minprice} and #{maxprice}
 		</if>
 		and status = 0 order by id desc
+	</select>
+
+	<!-- 根据条件筛选订单 -->
+	<select id="searchCartAll" resultType="com.qst.entity.Order">
+		select * from tb_order where 1=1
+
+		<if test="order_number !=null">
+			and order_number = #{order_number}
+		</if>
+		<if test="order_type !=null">
+			and order_type = #{order_type}
+		</if>
+		<if test="user_name !=null">
+			and user_name = #{user_name}
+		</if>
+		order by id desc
+	</select>
+
+	<!-- 根据条件筛选订单 -->
+	<select id="searchOpus" resultType="com.qst.entity.Opus">
+		select * from tb_opus where 1=1
+
+		<if test="opus_name !=null">
+			and opus_name = #{opus_name}
+		</if>
+		<if test="opus_tipic !=null">
+			and opus_tipic = #{opus_tipic}
+		</if>
+		<if test="status !=null">
+			and status = #{status}
+		</if>
+		order by id desc
+	</select>
+	
+	<!-- 根据条件筛选评论 -->
+	<select id="serachDiscussmsg" resultType="com.qst.entity.Discuss">
+		select * from tb_discussmsg where 1=1
+
+		<if test="opus_name !=null">
+			and opus_name = #{opus_name}
+		</if>
+		<if test="user_name !=null">
+			and user_name = #{user_name}
+		</if>
+		order by id desc
 	</select>
 </mapper>
 

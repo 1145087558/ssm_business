@@ -43,7 +43,7 @@
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
 		<div class="text-c">
-			<form class="Huiform" method="post" action="" target="_self">
+			<form class="Huiform" method="post" action="searchOpus.form" target="_self">
 				<!-- <input type="text" placeholder="分类名称" value="" class="input-text"
 					style="width: 120px"> <span class="btn-upload form-group">
 					<input class="input-text upload-url" type="text"
@@ -62,9 +62,9 @@
 					<i class="Hui-iconfont">&#xe600;</i> 添加
 				</button> -->
 				
-				<label>作品名称：</label><input type="text">
+				<label>作品名称：</label><input type="text" name="opus_name">
 				<label>类型：</label>
-				<select>
+				<select name="opus_tipic">
 					<option value="全部">全部</option>
 					<option value="国画">国画</option>
 					<option value="油画">油画</option>
@@ -72,10 +72,10 @@
 				</select>
 				
 				<label>发布状态：</label>
-				<select>
-					<option value="全部">全部</option>
-					<option value="待审核">待审核</option>
-					<option value="已发布">已发布</option>
+				<select name="status">
+					<option value="0">全部</option>
+					<option value="1">待审核</option>
+					<option value="0">已发布</option>
 				</select>
 				<br>
 				<label>上传时间：</label><input type="text">
