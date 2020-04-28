@@ -118,15 +118,21 @@
 							<c:when test="${order.status == '已支付'}">
 							<td class="td-status"><span
 								class="label label-success radius">已支付</span></td>
+							<td class="td-manage"><a title="发货" href="javascript:;"
+								onclick="picture_prompt(this,'${order.order_number}')" class="ml-5"
+								style="text-decoration: none"><i class="Hui-iconfont">&#xe6de;</i></a>
+								<a title="删除" href="javascript:;"
+								onclick="picture_del(this,'${order.id}')" class="ml-5"
+								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 							</c:when>
 							<c:otherwise>
 							<td class="td-status"><span
 								class="label label-danger radius">${order.status}</span></td>
-							</c:otherwise>
-							</c:choose>
 							<td class="td-manage"><a title="删除" href="javascript:;"
 								onclick="picture_del(this,'${order.id}')" class="ml-5"
 								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+							</c:otherwise>
+							</c:choose>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -191,6 +197,25 @@ function picture_del(obj,id){
 				console.log(data.msg);
 				$(obj).parents("tr").remove();
 				layer.msg('已删除!',{icon:1,time:1000});
+			},
+		});		
+	});
+}
+
+/*作品-发货*/
+function picture_prompt(obj,id){
+	layer.confirm('确认要发货吗？',function(index){
+		$.ajax({
+			type: 'POST',
+			url: 'doDelivery.form?order_number='+id,
+			success: function(data){
+				$(obj).parents("tr").remove();
+				layer.msg('已发货!',{icon:1,time:1000});
+			},
+			error:function(data) {
+				console.log(data.msg);
+				$(obj).parents("tr").remove();
+				layer.msg('已发货!',{icon:1,time:1000});
 			},
 		});		
 	});

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -74,5 +75,40 @@ public class CartBackstageController {
 	@ResponseBody
 	public List<Opus> getOrderLike() {
 		return opusService.getOrderLike();
+	}
+	
+	/**
+	 * 获取催促订单
+	 */
+	@RequestMapping("getPrompt.form")
+	public String getPrompt(Model model) {
+		
+		List<Order> orderList = opusService.getPrompt();
+		model.addAttribute("orderList", orderList);
+		return "backstage/order-prompt";
+	}
+	
+	/**
+	 * 发货作品
+	 */
+	@RequestMapping("doDelivery.form")
+	public void doDelivery(String order_number) {
+		
+		Order order = opusService.seekOrderByNumber(order_number);
+		order.setPrompt(0);
+		order.setStatus("已发货");
+		opusService.updateOrder(order);
+	}
+	
+	/**
+	 * 获取所有发货作品
+	 */
+	@RequestMapping("getDelivery.form")
+	public String getDelivery(Model model) {
+		
+		List<Order> orderList = opusService.getDelivery();
+		model.addAttribute("orderList", orderList);
+		
+		return "backstage/order-delivery";
 	}
 }

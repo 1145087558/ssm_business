@@ -1,6 +1,5 @@
 package com.qst.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.qst.dao.OpusMapper;
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
+import com.qst.entity.Evaluate;
 import com.qst.entity.Opus;
 import com.qst.entity.OpusType;
 import com.qst.entity.Order;
@@ -343,6 +343,50 @@ public class OpusServiceImpl implements OpusService {
 	public void deleteType(int id) {
 		
 		opusMapper.deleteType(id);
+	}
+
+	@Override
+	public void prompt(String out_trade_no) {
+		Order order = opusMapper.seekOrderByNumber(out_trade_no);
+		
+		order.setPrompt(order.getPrompt()+1);
+		opusMapper.updateOrder(order);
+	}
+
+	@Override
+	public List<Order> getPrompt() {
+		
+		return opusMapper.getPrompt();
+	}
+
+	@Override
+	public List<Order> getDelivery() {
+		
+		return opusMapper.getDelivery();
+	}
+
+	@Override
+	public Evaluate seekEvaluate(Integer id) {
+		
+		return opusMapper.seekEvaluate(id);
+	}
+
+	@Override
+	public List<Order> getDeliveryByUser(Integer id) {
+		
+		return opusMapper.getDeliveryByUser(id);
+	}
+
+	@Override
+	public Order getOrderById(Integer order_id) {
+		
+		return opusMapper.getOrderById(order_id);
+	}
+
+	@Override
+	public void addEvaluate(Evaluate evalute) {
+		opusMapper.addEvaluate(evalute);
+		
 	}
 	
 	

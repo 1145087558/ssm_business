@@ -150,128 +150,150 @@
 		</table>
 	</div>
  --%>
- 
- 
- 
- 		<div class="content">
-			<div class="content-left">
-				<p>个人中心</p>
-				<hr>
-					<p><a href="personCenter.jsp">个人资料</a></p>
-					<p><a href="safe_setup.jsp">安全设置</a></p>
-					<p><a href="address_manage.jsp">收货地址</a></p>
-					<p><a href="seekOrder.form">订单管理</a></p>
-					<p><a href="">收藏</a></p>
-					<p><a href="">评价</a></p>
-			</div>
-			<div class="content-right">
-				<h3>订单管理/Order Manage</h3>
-				<hr>
-				
-				<table class="table table-hover">
-					<thead><th>商品</th><th>价格</th><th>商品操作</th><th>交易状态</th><th>交易操作</th></thead>
-					<tbody>
-					
+
+
+
+	<div class="content">
+		<div class="content-left">
+			<p>个人中心</p>
+			<hr>
+			<p>
+				<a href="personCenter.jsp">个人资料</a>
+			</p>
+			<p>
+				<a href="safe_setup.jsp">安全设置</a>
+			</p>
+			<p>
+				<a href="address_manage.jsp">收货地址</a>
+			</p>
+			<p>
+				<a href="seekOrder.form">订单管理</a>
+			</p>
+			<p>
+				<a href="">收藏</a>
+			</p>
+			<p>
+				<a href="">评价</a>
+			</p>
+		</div>
+		<div class="content-right">
+			<h3>订单管理/Order Manage</h3>
+			<hr>
+
+			<table class="table table-hover">
+				<thead>
+					<th>商品</th>
+					<th>价格</th>
+					<th>商品操作</th>
+					<th>交易状态</th>
+					<th>交易操作</th>
+				</thead>
+				<tbody>
+
 					<c:forEach items="${orderList}" var="order" varStatus="i">
-						<tr><td style="width:200px;">订单编号:${order.order_number}</td><td colspan="3">交易时间:${order.order_date}</td><td></td><td></td><td></td></tr>
-					<tr>
-						<td>
-							<div class="opusMsg">
-								<div class="opusMsg-left">
-									<img src="${opusList[i.index].opus_image}" style="width:100%;height:100%;">
+						<tr>
+							<td style="width: 200px;">订单编号:${order.order_number}</td>
+							<td colspan="3">交易时间:${order.order_date}</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="opusMsg">
+									<div class="opusMsg-left">
+										<img src="${opusList[i.index].opus_image}"
+											style="width: 100%; height: 100%;">
+									</div>
+									<div class="opusMsg-right">
+										<p>作品名称：${order.opus_name}</p>
+										<p>作者：${opusList[i.index].author_name}</p>
+									</div>
 								</div>
-								<div class="opusMsg-right">
-									<p>作品名称：${order.opus_name}</p>
-									<p>作者：${opusList[i.index].author_name}</p>
-								</div>
-							</div>
-						</td>
-						<td style="line-height:100px;">${order.opus_price}￥</td>
-						<c:choose>
-						<c:when test="${order.status =='已支付'}">
-						<td style="line-height:100px;"><a href="javascript:;" onclick="prompt('${order.order_number}',this)">催促发货</a>
-						</td>
-						</c:when>
-						<c:when test="${order.status =='已发货'}">
-						<td style="line-height:100px;"><a href="javascript:;" onclick="receive('${order.order_number}',this)">确认收货</a>
-						</td>
-						</c:when>
-						<c:otherwise>
-						<td style="line-height:100px;"></td>
-						</c:otherwise>
-						</c:choose>
-						<td style="line-height:100px;">${order.status}</td>
-						<td style="line-height:100px;"><a href="javascript:;" onclick="deleteOrder(${order.id},this)">删除订单</a>
-						<a href="javascript:;" onclick="refundRequest('${order.order_number}',this)">退款</a></td>
-					</tr>
+							</td>
+							<td style="line-height: 100px;">${order.opus_price}￥</td>
+							<td style="line-height: 100px;">未评价</td>
+							<td style="line-height: 100px;">${order.status}</td>
+							<td style="line-height: 100px;" name="${order.id}"><a href="javascript:;"
+								onclick="modalShow('${order.id}')">评价</a></td>
+						</tr>
 					</c:forEach>
-					</tbody>
-				</table>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- 评价功能模态框 -->
+	<div id="tenant-model-box" class="tenant-model">
+		<div class="tenant-model-content">
+			<header class="tenant-model-header">
+			<h4
+				style="margin-left: 20px; padding: 5px; font-weight: bold; height: 30px; line-height: 30px;">评价</h4>
+			<span id="closeModel">×</span> </header>
+			<div class="tenant-model-body">
+				<form id="score_form">
+					<input name="orderNumber" type="hidden">
+					<div class="star_evaluate">
+						<input type="radio" id="scoreId_1" class="score score_1"
+							name="score" value="1" /> <label for="scoreId_1"
+							class="star star_1"></label> <input type="radio" id="scoreId_2"
+							class="score score_2" name="score" value="2" /> <label
+							for="scoreId_2" class="star star_2"></label> <input type="radio"
+							id="scoreId_3" class="score score_3" name="score" value="3" /> <label
+							for="scoreId_3" class="star star_3"></label> <input type="radio"
+							id="scoreId_4" class="score score_4" name="score" value="4" /> <label
+							for="scoreId_4" class="star star_4"></label> <input type="radio"
+							id="scoreId_5" class="score score_5" name="score" value="5" /> <label
+							for="scoreId_5" class="star star_5"></label>
+					</div>
+				</form>
+				<button onclick="doevaluate()">提交</button>
 			</div>
 		</div>
+	</div>
 </body>
 
 <script type="text/javascript">
+	function doevaluate() {
+		
+		
+		var star_type = $("input[type='radio']:checked").val();
+		var orderNumber = $("input[name='orderNumber']").val();
+		 $.ajax({
+			url : "evaluate.form",
+			type : "post",
+			data : {
+				"order_id" : orderNumber,
+				"star_type": star_type
+			},
+			success : function() {
+				$("#tenant-model-box").css("display", "none");
+				$(".table-hover tr td:last-child").each(function(i,e){
+					var name = $(e).attr("name");
+					console.log(name);
+					if(name==orderNumber){
+						$(e).text("已评价");
+					}
+				}); 
+			}
+		})
+	}
 
-function deleteOrder(id,obj){
-	$.ajax({
-		url:"deleteOrder.form",
-		type:"post",
-		data:{
-			"id":id
-		},
-		success:function(){
-			
-		}
-	})
-	var parent = $(obj).parent().parent();
-	parent.prev().remove();
-	parent.remove();
-}
-
-function refundRequest(orderNumber,obj){
-	$.ajax({
-		url:"refundSH.form",
-		type:"post",
-		data:{
-			"out_trade_no":orderNumber
-		},
-		success:function(){
-			
-		}
-	})
-	$(obj).parent().next().text("退款中");
-	$(obj).parent().next().prev().text("");
-}
-
-function prompt(orderNumber,obj){
-	$.ajax({
-		url:"prompt.form",
-		type:"post",
-		data:{
-			"out_trade_no":orderNumber
-		},
-		success:function(){
-			
-		}
-	})
-	$(obj).parent().next().text("已催促");
-	$(obj).parent().next().prev().text("");
-}
-
-function receive(orderNumber,obj){
-	$.ajax({
-		url:"receive.form",
-		type:"post",
-		data:{
-			"out_trade_no":orderNumber
-		},
-		success:function(){
-			
-		}
-	})
-	$(obj).parent().next().text("已收货");
-	$(obj).parent().next().prev().text("");
-}
+	function display(x) {
+		$(".cate-list").css("display", "inline");
+	}
+	function hid(x) {
+		$(".cate-list").css("display", "none");
+	}
+	function modalShow(orderNumber) {
+		$("#tenant-model-box").show();
+		$("#score_form input[name='orderNumber']").val(orderNumber);
+		$("input[type='radio']").prop("checked", false);
+		$("#closeModel").click(function() {
+			$("#searchTenant").val("");
+			$("#divSelectLi").empty();
+			$("#tenant-model-box").hide();
+		});
+	}
 </script>
 </html>

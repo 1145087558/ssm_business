@@ -29,7 +29,7 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>品牌管理</title>
+<title>订单管理</title>
 </head>
 <body>
 	<nav class="breadcrumb">
@@ -42,7 +42,7 @@
 	<div class="page-container">
 		<div class="text-c">
 			<form class="Huiform" method="post" action="" target="_self">
-				<!-- <input type="text" placeholder="分类名称" value="" class="input-text"
+				<input type="text" placeholder="分类名称" value="" class="input-text"
 					style="width: 120px"> <span class="btn-upload form-group">
 					<input class="input-text upload-url" type="text"
 					name="uploadfile-2" id="uploadfile-2" readonly style="width: 200px">
@@ -58,13 +58,15 @@
 				<button type="button" class="btn btn-success" id="" name=""
 					onClick="picture_colume_add(this);">
 					<i class="Hui-iconfont">&#xe600;</i> 添加
-				</button> -->
+				</button>
 			</form>
 		</div>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"><a href="javascript:;" onclick="datadel()"
 				class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i>
-					批量删除</a></span> <span class="r">共有数据：<strong>${fn:length(opusList)}</strong>
+					批量删除</a><a class="btn btn-primary radius"
+				 href="downloadOder.form"><iclass="Hui-iconfont">&#xe600;</i> 导出信息</a></span> 
+				 <span class="r">共有数据：<strong>${fn:length(orderList)}</strong>
 				条
 			</span>
 		</div>
@@ -73,38 +75,35 @@
 				<thead>
 					<tr class="text-c">
 						<th width="25"><input type="checkbox" name="" value=""></th>
-						<th width="50">ID</th>
-						<th width="80">类型</th>
-						<th width="150">图片</th>
+						<th width="100">订单号</th>
 						<th width="120">作品名称</th>
-						<th width="70">价格</th>
-						<th width="80">上传时间</th>
-						<th>具体描述</th>
+						<th width="80">用户名称</th>
+						<th width="80">价格</th>
+						<th width="100">下单时间</th>
+						<th width="80">支付方式</th>
+						<th>收获地址</th>
 						<th width="60">发布状态</th>
 						<th width="70">操作</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${opusList}" var="opus">
+					<c:forEach items="${orderList}" var="order">
 						<tr class="text-c">
-							<td><input name="id" type="checkbox" value="${opus.id}"></td>
-							<td>${opus.id}</td>
+							<td><input name="id" type="checkbox" value="${order.id}"></td>
+							<td class="text-l">${order.order_number}</td>
 							<!-- <td><input type="text" class="input-text text-c" value="1"></td> -->
-							<td>${opus.opus_tipic}</td>
-							<td><img src="../${opus.opus_image}" style="width: 150px;"></td>
-							<td class="text-l">
-								<!-- <img title="国内品牌" src="static/h-ui.admin/images/cn.gif"> -->
-								${opus.opus_name}
-							</td>
-							<td>${opus.opus_price}元</td>
-							<td>${opus.opus_create_time}</td>
-							<td class="text-l">${opus.opus_synopsis}</td>
+							<td>${order.opus_name}</td>
+							<td>${order.user_name}</td>
+							<td>${order.opus_price}</td>
+							<td>${order.order_date}</td>
+							<td>${order.order_type}</td>
+							<td class="text-l">${order.user_address}</td>
+							
 							<td class="td-status"><span
-									class="label label-success radius">已出售</span></td>
-							<td class="td-manage"> 
-									<a style="text-decoration: none" class="ml-5"
-									onClick="picture_del(this,'${opus.id}')" href="javascript:;"
-									title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+								class="label label-success radius">${order.status}</span></td>
+							<td class="td-manage"><a title="删除" href="javascript:;"
+								onclick="picture_del(this,'${order.id}')" class="ml-5"
+								style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -130,35 +129,13 @@ $('.table-sort').dataTable({
 	"bStateSave": true,//状态保存
 	"aoColumnDefs": [
 	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[0,3,7,9]}// 制定列不参与排序
+	  {"orderable":false,"aTargets":[0,9]}// 制定列不参与排序
 	]
 });
 
-/*图片-下架*/
-function picture_stop(obj,id){
-	layer.confirm('确认要下架吗？',function(index){
-		$.ajax({
-			type: 'POST',
-			url: 'modifyOpusByStatus.form?status=1&id='+id,
-			dataType: 'json',
-			success: function(data){
-				
-			},
-			error:function(data) {
-				console.log(data.msg);
-			}
-		});	
-		
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="picture_start(this,'+id+')" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
-		$(obj).remove();
-		layer.msg('已下架!',{icon: 5,time:1000});
-	});
-}
-
-/*作品-发布*/
-function picture_start(obj,id){
-	layer.confirm('确认要发布吗？',function(index){
+/*用户-还原*/
+function member_huanyuan(obj,id){
+	layer.confirm('确认要通过吗？',function(index){
 		$.ajax({
 			type: 'POST',
 			url: 'modifyOpusByStatus.form?status=0&id='+id,
@@ -167,41 +144,13 @@ function picture_start(obj,id){
 				
 			},
 			error:function(data) {
-				console.log(data.msg);
+			    console.log(data.msg);
+				
 			}
-		});	
-		
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="picture_stop(this,'+id+')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-		$(obj).remove();
-		layer.msg('已发布!',{icon: 6,time:1000});
+		});
+		$(obj).parents("tr").remove();
+		layer.msg('已通过!',{icon: 6,time:1000});
 	});
-}
-
-/*作品-编辑*/
-function picture_edit(title,url,id){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url,
-		end: function () {
-	        location.reload();
-	    }
-	});
-	layer.full(index);
-}
-
-/*作品-添加*/
-function picture_add(title,url){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url,
-		end: function () {
-	        location.reload();
-	    }
-	});
-	layer.full(index);
 }
 
 /*作品-删除*/
@@ -209,7 +158,7 @@ function picture_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: 'deleteOpus.form?id='+id,
+			url: 'deletOrder.form?id='+id,
 			dataType: 'json',
 			success: function(data){
 				$(obj).parents("tr").remove();
@@ -219,6 +168,25 @@ function picture_del(obj,id){
 				console.log(data.msg);
 				$(obj).parents("tr").remove();
 				layer.msg('已删除!',{icon:1,time:1000});
+			},
+		});		
+	});
+}
+
+/*作品-发货*/
+function picture_prompt(obj,id){
+	layer.confirm('确认要发货吗？',function(index){
+		$.ajax({
+			type: 'POST',
+			url: 'doDelivery.form?order_number='+id,
+			success: function(data){
+				$(obj).parents("tr").remove();
+				layer.msg('已发货!',{icon:1,time:1000});
+			},
+			error:function(data) {
+				console.log(data.msg);
+				$(obj).parents("tr").remove();
+				layer.msg('已发货!',{icon:1,time:1000});
 			},
 		});		
 	});

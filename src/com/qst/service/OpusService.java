@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
+import com.qst.entity.Evaluate;
 import com.qst.entity.Opus;
 import com.qst.entity.OpusType;
 import com.qst.entity.Order;
@@ -111,5 +112,19 @@ public interface OpusService {
 	public void addType(OpusType opusType);
 
 	public void deleteType(int id);
+
+	public void prompt(String out_trade_no);
+
+	public List<Order> getPrompt();
+
+	public List<Order> getDelivery();
+
+	public Evaluate seekEvaluate(Integer id);
+
+	public List<Order> getDeliveryByUser(Integer id);
+
+	public Order getOrderById(Integer order_id);
+
+	public void addEvaluate(Evaluate evalute);
 	
 }

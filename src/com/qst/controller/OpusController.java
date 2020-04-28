@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +35,7 @@ import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.qst.entity.Cart;
 import com.qst.entity.Discuss;
+import com.qst.entity.Evaluate;
 import com.qst.entity.Opus;
 import com.qst.entity.Order;
 import com.qst.entity.User;
@@ -512,6 +514,40 @@ public class OpusController {
 	}
 	
 	/**
+	 * 前端页面，查询个人订单信息
+	 */
+	@RequestMapping("seekEvaluate.form")
+	public String seekEvaluate(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if(user!=null){
+			List<Order> orderList = opusService.getDeliveryByUser(user.getId());
+			
+			Iterator<Order> iterator = orderList.iterator();
+			
+			while (iterator.hasNext()) {
+				Order order = iterator.next();
+				if(opusService.seekEvaluate(order.getId())!=null){
+					iterator.remove();
+				}
+				
+			}
+			
+			List<Opus> opusList = new ArrayList<Opus>();
+			Opus opus = null;
+			for(int i=0;i<orderList.size();i++){
+				opus = opusService.opusDetail(orderList.get(i).getOpus_id());
+				opusList.add(opus);
+			}
+			request.setAttribute("orderList", orderList);
+			request.setAttribute("opusList", opusList);
+			return "evaluate";
+		}else{
+			return "redirect:findAll.form";
+		}
+		
+	}
+	
+	/**
 	 * 前端页面，删除订单
 	 */
 	@RequestMapping("deleteOrder.form")
@@ -668,6 +704,38 @@ public class OpusController {
 		User user = (User)request.getSession().getAttribute("user");
 		
 		return opusService.getCollet(user.getId());
+	}
+	
+	/**
+	 * 前端页面，催促发货
+	 */
+	@RequestMapping("prompt.form")
+	public void prompt(String out_trade_no) {
+
+		opusService.prompt(out_trade_no);
+		
+	}
+	
+	/**
+	 * 前端页面，确认收获
+	 */
+	@RequestMapping("receive.form")
+	public void receive(String out_trade_no) {
+
+		Order order = opusService.seekOrderByNumber(out_trade_no);
+		order.setStatus("已收货");
+		opusService.updateOrder(order);
+	}
+	
+	/**
+	 * 前端页面，评价商品
+	 */
+	@RequestMapping("evaluate.form")
+	public void evaluate(Evaluate evalute) {
+
+		Order order = opusService.getOrderById(evalute.getOrder_id());
+		evalute.setOpus_id(order.getOpus_id());
+		opusService.addEvaluate(evalute);
 	}
 
 
