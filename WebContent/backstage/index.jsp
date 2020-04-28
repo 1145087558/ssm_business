@@ -123,9 +123,9 @@
 							href="javascript:void(0)">退款审核</a>
 						</li>
 						<li><a data-href="getDelivery.form" data-title="已发货"
-						href="javascript:void(0)">已发货</a></li>
+						href="javascript:void(0)">发货列表</a></li>
 						<li><a data-href="getPrompt.form" data-title="催促管理"
-						href="javascript:void(0)">催促管理</a></li>
+						href="javascript:void(0)">催单管理</a></li>
 					</c:if>
 				</ul>
 			</dd>
@@ -283,7 +283,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display: none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
+			<!-- <iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe> -->
 		</div>
 	</div>
 	</section>

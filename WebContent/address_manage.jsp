@@ -148,7 +148,7 @@
 				<hr>
 			<div class="Caddress">
 				<div class="open_new">
-					<button class="open_btn" onclick="modalShow()">使用新地址</button>
+					<button class="open_btn" onclick="modalShow()">添加新地址</button>
 				</div>
 				
 			</div>

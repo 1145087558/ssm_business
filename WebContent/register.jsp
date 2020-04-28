@@ -29,7 +29,7 @@
 	<div class="res-banner">
 		<div class="res-main">
 			<div class="login-banner-bg">
-				<span></span><img src="image/login-background.jpg" />
+				<span></span><img src="image/login.jpg" style="width:600px;height:430px;margin:20px 0px 20px 0px;"/>
 			</div>
 			<div class="login-box">
 

@@ -42,7 +42,7 @@
 	<div class="page-container">
 		<div class="text-c">
 			<form class="Huiform" method="post" action="" target="_self">
-				<input type="text" placeholder="分类名称" value="" class="input-text"
+				<!-- <input type="text" placeholder="分类名称" value="" class="input-text"
 					style="width: 120px"> <span class="btn-upload form-group">
 					<input class="input-text upload-url" type="text"
 					name="uploadfile-2" id="uploadfile-2" readonly style="width: 200px">
@@ -58,7 +58,7 @@
 				<button type="button" class="btn btn-success" id="" name=""
 					onClick="picture_colume_add(this);">
 					<i class="Hui-iconfont">&#xe600;</i> 添加
-				</button>
+				</button> -->
 			</form>
 		</div>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -82,7 +82,7 @@
 						<th width="100">下单时间</th>
 						<th width="80">支付方式</th>
 						<th>收获地址</th>
-						<th width="60">催促次数</th>
+						<th width="60">催单次数</th>
 						<th width="70">操作</th>
 					</tr>
 				</thead>
